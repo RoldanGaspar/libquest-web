@@ -1,0 +1,64 @@
+rules_version = '2';
+
+// LibQuest — Cloud Firestore security rules
+//
+// Collections in use:
+//   users/{uid}     — one document per registered account: name, student ID, email,
+//                     character type, and a role field ("student" or "admin").
+//   catalogs/{id}   — the DDC shelf catalog published by the administrator dashboard
+//                     and read by the mobile application. Contains no personal data.
+//
+// Replaces the Firebase test-mode default, which allowed any client to read and write
+// every document and would have denied all requests after 23 October 2026.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // An administrator is a signed-in user whose own user document says so.
+    // The role field cannot be set or changed by the account holder (see below),
+    // so a student cannot promote themselves.
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    function isSelf(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // Student accounts. A student reads and updates only their own record;
+    // only an administrator may list the registry or delete a record.
+    match /users/{uid} {
+      allow get: if isSelf(uid) || isAdmin();
+      allow list: if isAdmin();
+
+      // On sign-up the account may only be created for oneself, and only as a student.
+      allow create: if isSelf(uid)
+        && request.resource.data.role == 'student';
+
+      // A student may correct their own profile but may never change their role.
+      allow update: if (isSelf(uid) && request.resource.data.role == resource.data.role)
+        || isAdmin();
+
+      allow delete: if isAdmin();
+    }
+
+    // The published shelf catalog. Readable by anyone, because the mobile
+    // application downloads it without signing in and it holds no personal data.
+    // Only an administrator may publish changes.
+    match /catalogs/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Everything else is denied.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
