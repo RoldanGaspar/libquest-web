@@ -31,17 +31,23 @@ export async function GET(request: NextRequest) {
         status: 304,
         headers: {
           "ETag": versionTag,
-          "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+          "Pragma": "no-cache",
+          "Expires": "0",
+          "Surrogate-Control": "no-store",
         },
       });
     }
 
-    // 2. Return compact JSON payload
+    // 2. Return compact JSON payload with zero edge caching
     return NextResponse.json(catalog, {
       status: 200,
       headers: {
         "ETag": versionTag,
-        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+        "Pragma": "no-cache",
+        "Expires": "0",
+        "Surrogate-Control": "no-store",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, OPTIONS",
       },
@@ -51,7 +57,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(INITIAL_CATALOG, {
       status: 200,
       headers: {
-        "Cache-Control": "no-cache",
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0",
+        "Access-Control-Allow-Origin": "*",
       },
     });
   }

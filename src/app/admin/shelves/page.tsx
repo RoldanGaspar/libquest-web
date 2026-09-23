@@ -16,6 +16,7 @@ import {
   Sparkles,
   MapPin,
   HelpCircle,
+  RotateCcw,
   X
 } from "lucide-react";
 
@@ -37,7 +38,16 @@ export default function DDCShelfManagerPage() {
         if (snap.exists()) {
           const data = snap.data() as DDCShelfCatalog;
           if (data.shelves && Array.isArray(data.shelves)) {
-            setShelves(data.shelves);
+            // Reconcile with INITIAL_DDC_SHELVES so all 16 PSAU shelves are available,
+            // while preserving any custom changes already published to Firestore.
+            const shelfMap = new Map<string, DDCShelf>();
+            INITIAL_DDC_SHELVES.forEach((def) => shelfMap.set(def.shelfID, def));
+            data.shelves.forEach((custom) => {
+              if (custom && custom.shelfID) {
+                shelfMap.set(custom.shelfID, custom);
+              }
+            });
+            setShelves(Array.from(shelfMap.values()));
           }
         }
       } catch (err) {
@@ -53,6 +63,14 @@ export default function DDCShelfManagerPage() {
   const handleEditClick = (shelf: DDCShelf) => {
     setEditingShelf({ ...shelf });
     setPreviewShelf({ ...shelf });
+  };
+
+  const handleResetToDefaults = () => {
+    if (confirm("Reset all 16 shelves to original PSAU library defaults? Any unsaved edits will be discarded.")) {
+      setShelves([...INITIAL_DDC_SHELVES]);
+      setSuccessMessage("Shelves reset to 16 default PSAU library categories. Click 'Publish' to deploy to mobile.");
+      setTimeout(() => setSuccessMessage(""), 5000);
+    }
   };
 
   const handleSaveEdit = () => {
@@ -101,18 +119,30 @@ export default function DDCShelfManagerPage() {
             Dewey Decimal (DDC) Shelf Manager
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            Configure shelf classification titles, Dewey call number ranges, and student guidance for Free Exploration Mode.
+            Configure shelf classification titles, Dewey call number ranges, and student guidance for Free Exploration Mode ({shelves.length} shelves active).
           </p>
         </div>
 
-        <button
-          onClick={handlePublishToGame}
-          disabled={saving}
-          className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-300 hover:to-emerald-300 shadow-lg shadow-teal-500/20 transition-all disabled:opacity-50"
-        >
-          {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-          <span>Publish Updates to Mobile App</span>
-        </button>
+        <div className="flex items-center space-x-3">
+          <button
+            onClick={handleResetToDefaults}
+            disabled={saving}
+            title="Reset to 16 standard PSAU library shelves"
+            className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 bg-slate-900 border border-slate-800 hover:bg-slate-800 hover:text-white transition-all disabled:opacity-50"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Reset Defaults</span>
+          </button>
+
+          <button
+            onClick={handlePublishToGame}
+            disabled={saving}
+            className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-300 hover:to-emerald-300 shadow-lg shadow-teal-500/20 transition-all disabled:opacity-50"
+          >
+            {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+            <span>Publish Updates to Mobile App</span>
+          </button>
+        </div>
       </div>
 
       {/* Success Banner */}
