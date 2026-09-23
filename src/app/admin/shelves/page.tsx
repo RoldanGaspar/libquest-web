@@ -123,12 +123,12 @@ export default function DDCShelfManagerPage() {
           </p>
         </div>
 
-        <div className="flex items-center space-x-3">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full sm:w-auto">
           <button
             onClick={handleResetToDefaults}
             disabled={saving}
             title="Reset to 16 standard PSAU library shelves"
-            className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 bg-slate-900 border border-slate-800 hover:bg-slate-800 hover:text-white transition-all disabled:opacity-50"
+            className="inline-flex items-center justify-center space-x-1.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 bg-slate-900 border border-slate-800 hover:bg-slate-800 hover:text-white transition-all disabled:opacity-50"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Reset Defaults</span>
@@ -137,7 +137,7 @@ export default function DDCShelfManagerPage() {
           <button
             onClick={handlePublishToGame}
             disabled={saving}
-            className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-300 hover:to-emerald-300 shadow-lg shadow-teal-500/20 transition-all disabled:opacity-50"
+            className="inline-flex items-center justify-center space-x-2 px-5 py-2.5 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-300 hover:to-emerald-300 shadow-lg shadow-teal-500/20 transition-all disabled:opacity-50"
           >
             {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
             <span>Publish Updates to Mobile App</span>
@@ -211,22 +211,23 @@ export default function DDCShelfManagerPage() {
 
       {/* Edit Shelf Modal */}
       {editingShelf && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
-          <div className="w-full max-w-xl bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl text-white">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
+          <div className="w-full max-w-xl max-h-[92vh] flex flex-col bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl text-white my-auto overflow-hidden">
+            <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-800 flex-shrink-0">
               <div className="flex items-center space-x-2">
                 <BookMarked className="w-5 h-5 text-teal-400" />
-                <h3 className="text-base font-bold">Edit Shelf: {editingShelf.shelfCode}</h3>
+                <h3 className="text-sm sm:text-base font-bold">Edit Shelf: {editingShelf.shelfCode}</h3>
               </div>
               <button
                 onClick={() => setEditingShelf(null)}
-                className="p-1 text-slate-400 hover:text-white"
+                className="p-1 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
+                aria-label="Close edit modal"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="space-y-3.5 text-xs">
+            <div className="p-4 sm:p-6 overflow-y-auto space-y-3.5 text-xs">
               <div>
                 <label className="block text-slate-300 font-medium mb-1">
                   Shelf Code (Display Badge)
@@ -319,18 +320,18 @@ export default function DDCShelfManagerPage() {
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-slate-800 flex justify-end space-x-3">
+            <div className="p-4 sm:p-5 border-t border-slate-800 flex justify-end space-x-3 flex-shrink-0 bg-slate-900/90">
               <button
                 type="button"
                 onClick={() => setEditingShelf(null)}
-                className="px-4 py-2 rounded-lg text-xs font-semibold text-slate-400 hover:text-white bg-slate-800"
+                className="px-4 py-2 rounded-lg text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleSaveEdit}
-                className="px-5 py-2 rounded-lg text-xs font-bold text-slate-950 bg-teal-400 hover:bg-teal-300"
+                className="px-5 py-2 rounded-lg text-xs font-bold text-slate-950 bg-teal-400 hover:bg-teal-300 transition-colors"
               >
                 Apply Changes
               </button>
@@ -341,23 +342,24 @@ export default function DDCShelfManagerPage() {
 
       {/* Live In-Game Hologram Preview Modal */}
       {previewShelf && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
-          <div className="w-full max-w-md bg-slate-900 border-2 border-teal-500/40 rounded-3xl p-6 shadow-2xl text-white relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
+          <div className="w-full max-w-md max-h-[92vh] bg-slate-900 border-2 border-teal-500/40 rounded-3xl p-5 sm:p-6 shadow-2xl text-white relative my-auto overflow-y-auto">
             <button
               onClick={() => setPreviewShelf(null)}
-              className="absolute top-4 right-4 p-1 text-slate-400 hover:text-white"
+              className="absolute top-4 right-4 p-1 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
+              aria-label="Close preview"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="text-center mb-4">
+            <div className="text-center mb-4 pr-6 sm:pr-0">
               <span className="text-[10px] font-mono uppercase tracking-widest text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full border border-teal-500/30">
                 Unity Mobile In-Game Preview
               </span>
             </div>
 
             {/* Simulated RuleDiscoveryModalUI */}
-            <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-3">
+            <div className="p-4 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-3">
               <div className="w-12 h-12 mx-auto rounded-xl bg-teal-500/20 border border-teal-500/40 flex items-center justify-center text-teal-300">
                 <BookMarked className="w-6 h-6" />
               </div>
@@ -379,7 +381,7 @@ export default function DDCShelfManagerPage() {
 
               <button
                 onClick={() => setPreviewShelf(null)}
-                className="w-full py-2.5 rounded-xl font-bold text-xs text-slate-950 bg-gradient-to-r from-teal-400 to-emerald-400"
+                className="w-full py-2.5 rounded-xl font-bold text-xs text-slate-950 bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-300 hover:to-emerald-300 transition-colors"
               >
                 Close Discovery Card
               </button>

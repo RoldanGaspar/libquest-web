@@ -147,7 +147,7 @@ export default function StudentRegistryPage() {
         <button
           onClick={handleExportCSV}
           disabled={filteredStudents.length === 0}
-          className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 transition-all shadow-md shadow-emerald-500/20 disabled:opacity-50"
+          className="inline-flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 transition-all shadow-md shadow-emerald-500/20 disabled:opacity-50 w-full sm:w-auto"
         >
           <Download className="w-4 h-4" />
           <span>Export to CSV</span>
@@ -183,8 +183,68 @@ export default function StudentRegistryPage() {
         </div>
       </div>
 
-      {/* Students Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+      {/* Mobile Card View (screens < md) */}
+      <div className="md:hidden space-y-3">
+        {loading ? (
+          <div className="p-8 rounded-2xl bg-slate-900 border border-slate-800 text-center text-slate-500 text-xs">
+            <Loader2 className="w-6 h-6 animate-spin mx-auto mb-2 text-emerald-400" />
+            <span>Loading student registry...</span>
+          </div>
+        ) : filteredStudents.length === 0 ? (
+          <div className="p-8 rounded-2xl bg-slate-900 border border-slate-800 text-center text-slate-500 text-xs">
+            No students found matching your search.
+          </div>
+        ) : (
+          filteredStudents.map((student) => (
+            <div
+              key={student.uid || student.studentId}
+              className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2.5 text-xs shadow-sm"
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-mono font-bold text-emerald-400 text-xs px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                  {student.studentId}
+                </span>
+                <span
+                  className={`inline-block px-2 py-0.5 rounded text-[10px] font-semibold ${
+                    student.characterType === "Boy"
+                      ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
+                      : "bg-teal-500/10 text-teal-400 border border-teal-500/20"
+                  }`}
+                >
+                  {student.characterType} Cadet
+                </span>
+              </div>
+
+              <div>
+                <div className="font-bold text-white text-sm">
+                  {student.fullName}
+                </div>
+                <div className="text-slate-400 text-xs flex items-center space-x-1.5 mt-1 truncate">
+                  <Mail className="w-3.5 h-3.5 text-slate-500 flex-shrink-0" />
+                  <span className="truncate">{student.email}</span>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+                <span className="inline-flex items-center space-x-1 text-emerald-400">
+                  <UserCheck className="w-3.5 h-3.5" />
+                  <span className="capitalize">{student.role}</span>
+                </span>
+                <span className="font-mono text-slate-500 text-[10px]">
+                  Reg: {new Date(student.createdAt).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric"
+                  })}
+                </span>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Desktop / Tablet Table View (screens >= md) */}
+      <div className="hidden md:block bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="bg-slate-950/70 border-b border-slate-800 text-slate-400 uppercase tracking-wider text-[10px]">

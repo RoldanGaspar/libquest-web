@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { AdminSidebar } from "@/components/AdminSidebar";
-import { ShieldAlert, Lock, Mail, Loader2, Sparkles } from "lucide-react";
+import { ShieldAlert, Lock, Mail, Loader2, Sparkles, Menu } from "lucide-react";
 import Link from "next/link";
 
 export default function AdminLayout({
@@ -16,6 +16,7 @@ export default function AdminLayout({
   const [password, setPassword] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState("");
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   if (loading) {
     return (
@@ -129,20 +130,34 @@ export default function AdminLayout({
 
   // Authorized Admin View
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex">
-      <AdminSidebar />
-      <div className="flex-1 flex flex-col overflow-y-auto">
-        <header className="h-16 border-b border-slate-800 px-6 flex items-center justify-between bg-slate-900/50 backdrop-blur-sm">
-          <div className="text-xs text-slate-400">
-            Pampanga State Agricultural University · <span className="text-amber-400 font-semibold">Library Management System</span>
+    <div className="min-h-screen bg-slate-950 text-white flex flex-col md:flex-row">
+      <AdminSidebar
+        isOpen={mobileSidebarOpen}
+        onClose={() => setMobileSidebarOpen(false)}
+      />
+      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        <header className="h-16 border-b border-slate-800 px-4 sm:px-6 flex items-center justify-between bg-slate-900/50 backdrop-blur-sm sticky top-0 z-30">
+          <div className="flex items-center space-x-3 min-w-0">
+            {/* Hamburger Button for Mobile */}
+            <button
+              type="button"
+              onClick={() => setMobileSidebarOpen(true)}
+              className="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-1 focus:ring-amber-400 flex-shrink-0"
+              aria-label="Open navigation menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+            <div className="text-[11px] sm:text-xs text-slate-400 truncate">
+              PSAU · <span className="text-amber-400 font-semibold">Library Management System</span>
+            </div>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 flex-shrink-0 ml-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs text-slate-300 font-medium">Sync Server Online</span>
+            <span className="text-[11px] sm:text-xs text-slate-300 font-medium whitespace-nowrap">Sync Online</span>
           </div>
         </header>
 
-        <main className="flex-1 p-6 sm:p-8 bg-slate-950">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-slate-950">
           {children}
         </main>
       </div>
