@@ -82,7 +82,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // portal always authenticates against Firebase and the fixed demo password grants nothing.
     if (
       process.env.NODE_ENV === "development" &&
-      (email.toLowerCase() === "admin@psau.edu.ph" || email.toLowerCase().includes("admin")) &&
+      (email.toLowerCase() === "admin@psau.edu.ph" || email.toLowerCase() === "librarian@psau.edu.ph") &&
       (pass === "admin123" || pass === "admin123456")
     ) {
       try {
@@ -150,7 +150,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const isAdmin = Boolean(
-    studentProfile?.role === "admin" || (user?.email && user.email.toLowerCase().includes("admin"))
+    studentProfile?.role === "admin" ||
+    (user?.email && (
+      user.email.toLowerCase() === "admin@psau.edu.ph" ||
+      user.email.toLowerCase() === "librarian@psau.edu.ph"
+    ))
   );
 
   return (

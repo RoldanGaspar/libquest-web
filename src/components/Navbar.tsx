@@ -39,20 +39,11 @@ export const Navbar: React.FC = () => {
             <Link href="#ddc-guide" className="text-sm font-medium text-slate-300 hover:text-emerald-400 transition-colors">
               DDC Guide
             </Link>
-            {isAdmin && (
-              <Link 
-                href="/admin" 
-                className="flex items-center space-x-1 text-sm font-semibold text-amber-400 hover:text-amber-300 bg-amber-400/10 px-3 py-1.5 rounded-lg border border-amber-400/30 transition-all"
-              >
-                <ShieldCheck className="w-4 h-4" />
-                <span>Admin Dashboard</span>
-              </Link>
-            )}
           </div>
 
           {/* Desktop Right Side Actions */}
           <div className="hidden md:flex items-center space-x-3">
-            {user ? (
+            {user && isAdmin && (
               <div className="flex items-center space-x-3">
                 <Link
                   href="/admin"
@@ -69,15 +60,6 @@ export const Navbar: React.FC = () => {
                   <LogOut className="w-4 h-4" />
                 </button>
               </div>
-            ) : (
-              <Link
-                href="/admin"
-                className="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-amber-400 hover:bg-slate-800/60 rounded-lg transition-all"
-                title="Head Librarian Portal & DDC CMS"
-              >
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Librarian Portal</span>
-              </Link>
             )}
 
             <a
@@ -128,8 +110,8 @@ export const Navbar: React.FC = () => {
           </Link>
 
           <div className="pt-3 border-t border-slate-800 space-y-2">
-            {user ? (
-              <div className="flex items-center justify-between">
+            {user && isAdmin && (
+              <div className="flex items-center justify-between pb-1">
                 <Link
                   href="/admin"
                   onClick={() => setMobileMenuOpen(false)}
@@ -148,15 +130,6 @@ export const Navbar: React.FC = () => {
                   Sign Out
                 </button>
               </div>
-            ) : (
-              <Link
-                href="/admin"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center space-x-1.5 text-xs font-medium text-slate-400 hover:text-amber-400 py-1.5"
-              >
-                <ShieldCheck className="w-4 h-4 text-amber-400" />
-                <span>Librarian Portal</span>
-              </Link>
             )}
 
             <a
