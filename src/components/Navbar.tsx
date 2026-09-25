@@ -3,14 +3,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
-import { BookOpen, Download, User, LogOut, ShieldCheck, Menu, X } from "lucide-react";
+import { BookOpen, Download, LogOut, ShieldCheck, Menu, X } from "lucide-react";
 
-interface NavbarProps {
-  onOpenAuthModal: (mode: "login" | "register") => void;
-}
-
-export const Navbar: React.FC<NavbarProps> = ({ onOpenAuthModal }) => {
-  const { user, studentProfile, isAdmin, logout } = useAuth();
+export const Navbar: React.FC = () => {
+  const { user, isAdmin, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -54,18 +50,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuthModal }) => {
             )}
           </div>
 
-          {/* Desktop Auth Buttons */}
+          {/* Desktop Right Side Actions */}
           <div className="hidden md:flex items-center space-x-3">
             {user ? (
               <div className="flex items-center space-x-3">
-                <div className="text-right">
-                  <div className="text-xs font-semibold text-white">
-                    {studentProfile?.fullName || user.email}
-                  </div>
-                  <div className="text-[10px] text-emerald-400 font-mono">
-                    {studentProfile?.studentId || "Student"}
-                  </div>
-                </div>
+                <Link
+                  href="/admin"
+                  className="flex items-center space-x-1.5 text-xs font-semibold text-amber-400 bg-amber-400/10 px-3 py-1.5 rounded-lg border border-amber-400/30 hover:bg-amber-400/20 transition-all"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Admin Portal</span>
+                </Link>
                 <button
                   onClick={() => logout()}
                   title="Sign out"
@@ -75,25 +70,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuthModal }) => {
                 </button>
               </div>
             ) : (
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={() => onOpenAuthModal("login")}
-                  className="px-3.5 py-1.5 text-xs font-semibold text-slate-200 hover:text-white bg-slate-800/80 hover:bg-slate-700 rounded-lg border border-slate-700 transition-all"
-                >
-                  Sign In
-                </button>
-                <button
-                  onClick={() => onOpenAuthModal("register")}
-                  className="px-3.5 py-1.5 text-xs font-semibold text-slate-950 bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 rounded-lg shadow-sm shadow-emerald-500/20 transition-all"
-                >
-                  Register Account
-                </button>
-              </div>
+              <Link
+                href="/admin"
+                className="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-amber-400 hover:bg-slate-800/60 rounded-lg transition-all"
+                title="Head Librarian Portal & DDC CMS"
+              >
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>Librarian Portal</span>
+              </Link>
             )}
 
             <a
               href="#download"
-              className="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 rounded-lg transition-all"
+              className="flex items-center space-x-1.5 px-3.5 py-1.5 text-xs font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 rounded-lg shadow-sm shadow-emerald-500/20 transition-all"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Get APK</span>
@@ -105,6 +94,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuthModal }) => {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none"
+              aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -136,23 +126,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuthModal }) => {
           >
             DDC Guide
           </Link>
-          {isAdmin && (
-            <Link
-              href="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-sm font-semibold text-amber-400 py-1"
-            >
-              Admin Dashboard
-            </Link>
-          )}
 
-          <div className="pt-3 border-t border-slate-800">
+          <div className="pt-3 border-t border-slate-800 space-y-2">
             {user ? (
               <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-sm font-semibold text-white">{studentProfile?.fullName || user.email}</div>
-                  <div className="text-xs text-emerald-400">{studentProfile?.studentId}</div>
-                </div>
+                <Link
+                  href="/admin"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center space-x-1.5 text-xs font-semibold text-amber-400 py-1"
+                >
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Admin Dashboard</span>
+                </Link>
                 <button
                   onClick={() => {
                     logout();
@@ -164,27 +149,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuthModal }) => {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  onClick={() => {
-                    onOpenAuthModal("login");
-                    setMobileMenuOpen(false);
-                  }}
-                  className="w-full py-2 text-xs font-semibold text-slate-300 bg-slate-800 rounded-lg text-center"
-                >
-                  Sign In
-                </button>
-                <button
-                  onClick={() => {
-                    onOpenAuthModal("register");
-                    setMobileMenuOpen(false);
-                  }}
-                  className="w-full py-2 text-xs font-semibold text-slate-950 bg-emerald-400 rounded-lg text-center"
-                >
-                  Register
-                </button>
-              </div>
+              <Link
+                href="/admin"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center space-x-1.5 text-xs font-medium text-slate-400 hover:text-amber-400 py-1.5"
+              >
+                <ShieldCheck className="w-4 h-4 text-amber-400" />
+                <span>Librarian Portal</span>
+              </Link>
             )}
+
+            <a
+              href="#download"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-center space-x-1.5 w-full py-2.5 text-xs font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-lg text-center"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Download Android APK</span>
+            </a>
           </div>
         </div>
       )}

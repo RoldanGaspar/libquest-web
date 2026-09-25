@@ -3,11 +3,7 @@
 import React from "react";
 import { Download, Sparkles, BookOpen, Compass, Award, Smartphone } from "lucide-react";
 
-interface HeroSectionProps {
-  onOpenAuthModal: (mode: "login" | "register") => void;
-}
-
-export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenAuthModal }) => {
+export const HeroSection: React.FC = () => {
   return (
     <section className="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900">
       {/* Background Glow effects */}
@@ -47,12 +43,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenAuthModal }) => 
               <span>Download Android APK</span>
             </a>
 
-            <button
-              onClick={() => onOpenAuthModal("register")}
+            <a
+              href="#features"
               className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-7 py-3.5 rounded-xl font-semibold text-slate-200 bg-slate-800/80 hover:bg-slate-800 hover:text-white border border-slate-700 hover:border-slate-600 shadow-md transition-all"
             >
-              <span>Create Student Account</span>
-            </button>
+              <span>Explore Features</span>
+            </a>
           </div>
 
           {/* Quick Specs / Highlight Pill */}

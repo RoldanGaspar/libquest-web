@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
 import { DownloadStation } from "@/components/DownloadStation";
 import { DDCQuickReference } from "@/components/DDCQuickReference";
 import { Footer } from "@/components/Footer";
-import { StudentAuthModal } from "@/components/StudentAuthModal";
 import { 
   Compass, 
   BookOpen, 
@@ -19,22 +18,14 @@ import {
 } from "lucide-react";
 
 export default function Home() {
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authModalMode, setAuthModalMode] = useState<"login" | "register">("login");
-
-  const handleOpenAuth = (mode: "login" | "register") => {
-    setAuthModalMode(mode);
-    setAuthModalOpen(true);
-  };
-
   return (
     <div className="min-h-screen bg-slate-950 text-white flex flex-col font-sans selection:bg-emerald-500 selection:text-slate-950">
       {/* Navigation */}
-      <Navbar onOpenAuthModal={handleOpenAuth} />
+      <Navbar />
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <HeroSection onOpenAuthModal={handleOpenAuth} />
+        <HeroSection />
 
         {/* Features Section */}
         <section id="features" className="py-20 bg-slate-900/60 border-t border-slate-800/80">
@@ -133,12 +124,6 @@ export default function Home() {
       {/* Footer */}
       <Footer />
 
-      {/* Auth Modal */}
-      <StudentAuthModal
-        isOpen={authModalOpen}
-        initialMode={authModalMode}
-        onClose={() => setAuthModalOpen(false)}
-      />
     </div>
   );
 }
