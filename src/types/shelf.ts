@@ -9,6 +9,7 @@ export interface DDCShelf {
   floor: "ground" | "second" | "third";
   zone?: "circulation" | "ddc_stacks" | "filipiniana" | "theses" | "periodicals" | "reference" | "facility" | "general";
   position?: { x: number; y: number };
+  subdivisions?: string[];
   lastUpdated: string;
 }
 

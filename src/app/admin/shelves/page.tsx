@@ -588,6 +588,35 @@ export default function DDCShelfManagerPage() {
                 />
               </div>
 
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-slate-300 font-medium">
+                    Subdivisions & Subject Areas (One topic per line)
+                  </label>
+                  <span className="text-[10px] text-teal-400 font-mono">
+                    {(editingShelf.subdivisions || []).length} items
+                  </span>
+                </div>
+                <textarea
+                  rows={4}
+                  value={(editingShelf.subdivisions || []).join("\n")}
+                  onChange={(e) =>
+                    setEditingShelf({
+                      ...editingShelf,
+                      subdivisions: e.target.value
+                        .split("\n")
+                        .map((s) => s.trim())
+                        .filter((s) => s.length > 0),
+                    })
+                  }
+                  placeholder="e.g.&#10;630 - Agriculture & Related Technologies&#10;631 - Techniques, Equipment & Materials&#10;632 - Plant Injuries, Diseases & Pests"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-teal-400 leading-relaxed"
+                />
+                <p className="text-[10px] text-slate-500 mt-1">
+                  Ang mga paksang ito ang magiging interactive bullet points sa in-game discovery modal sa mobile app at web preview.
+                </p>
+              </div>
+
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-slate-300 font-medium mb-1">Floor</label>
@@ -646,47 +675,104 @@ export default function DDCShelfManagerPage() {
       {/* ========================================================================= */}
       {previewShelf && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
-          <div className="w-full max-w-md max-h-[92vh] bg-slate-900 border-2 border-teal-500/40 rounded-3xl p-5 sm:p-6 shadow-2xl text-white relative my-auto overflow-y-auto">
-            <button
-              onClick={() => setPreviewShelf(null)}
-              className="absolute top-4 right-4 p-1 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
-              aria-label="Close preview"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="text-center mb-4 pr-6 sm:pr-0">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full border border-teal-500/30">
-                Unity Mobile In-Game Preview
+          <div className="w-full max-w-xl max-h-[92vh] bg-slate-900/95 border-2 border-cyan-500/40 rounded-3xl p-5 sm:p-6 shadow-2xl text-white relative my-auto overflow-y-auto">
+            {/* Top Bar with Badge Pill and Close Button */}
+            <div className="flex items-center justify-between mb-4">
+              <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-300 font-mono text-xs font-bold border border-cyan-500/30">
+                {previewShelf.shelfCode}
               </span>
+              <button
+                onClick={() => setPreviewShelf(null)}
+                className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold"
+                aria-label="Close preview"
+              >
+                ✕
+              </button>
             </div>
 
-            {/* Simulated RuleDiscoveryModalUI */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-3">
-              <div className="w-12 h-12 mx-auto rounded-xl bg-teal-500/20 border border-teal-500/40 flex items-center justify-center text-teal-300">
-                <BookMarked className="w-6 h-6" />
+            {/* Header Content: Icon + Title */}
+            <div className="flex items-center space-x-3 mb-3">
+              <div className="w-14 h-14 rounded-2xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300 flex-shrink-0">
+                <BookMarked className="w-7 h-7" />
               </div>
-
-              <div className="font-mono text-xs font-bold text-teal-400">
-                {previewShelf.shelfCode}
-              </div>
-
-              <h4 className="text-base font-bold text-white">
-                {previewShelf.categoryTitle}
-              </h4>
-
-              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800/80 text-left text-xs text-slate-300 leading-relaxed">
-                <p>{previewShelf.generalCollectionSummary}</p>
-                <p className="mt-2 font-semibold text-teal-300">
-                  Hanapin: <span className="font-normal text-slate-300">{previewShelf.studentGuidance}</span>
+              <div>
+                <h3 className="text-base sm:text-lg font-extrabold text-white tracking-tight">
+                  {previewShelf.categoryTitle}
+                </h3>
+                <p className="text-[11px] text-slate-400 capitalize">
+                  {previewShelf.floor} Floor • {previewShelf.targetCollege}
                 </p>
+              </div>
+            </div>
+
+            {/* Top Divider */}
+            <div className="h-[2px] w-full bg-gradient-to-r from-cyan-500/50 via-cyan-500/20 to-transparent mb-3" />
+
+            {/* Body Inset Frosted Panel */}
+            <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3 mb-4">
+              {/* Subdivisions List */}
+              {previewShelf.subdivisions && previewShelf.subdivisions.length > 0 ? (
+                <div>
+                  <h4 className="text-[11px] font-bold text-sky-400 uppercase tracking-wider mb-2">
+                    MGA SAKOP NA PAKSA AT SUBDIVISIONS:
+                  </h4>
+                  <ul className="space-y-1 text-xs text-slate-200">
+                    {previewShelf.subdivisions.map((sub, i) => (
+                      <li key={i} className="flex items-start space-x-1.5">
+                        <span className="text-cyan-400 font-bold">•</span>
+                        <span>{sub}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <div>
+                  <h4 className="text-[11px] font-bold text-sky-400 uppercase tracking-wider mb-1">
+                    KOLEKSIYON AT MGA MATERYALES:
+                  </h4>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    {previewShelf.generalCollectionSummary}
+                  </p>
+                </div>
+              )}
+
+              {/* Shelf Span & Guidance Callouts */}
+              <div className="pt-2 border-t border-slate-800/80 space-y-1.5 text-xs">
+                <div className="flex items-baseline space-x-1.5">
+                  <span className="font-bold text-amber-400 text-[11px]">LOKASYON / SHELF SPAN:</span>
+                  <span className="text-slate-200 font-mono text-[11px]">{previewShelf.shelfID}</span>
+                </div>
+                {previewShelf.studentGuidance && (
+                  <div className="flex items-baseline space-x-1.5">
+                    <span className="font-bold text-emerald-400 text-[11px]">GABAY SA PAGHAHANAP:</span>
+                    <span className="text-slate-300 text-[11px]">{previewShelf.studentGuidance}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Bottom Divider */}
+            <div className="h-[2px] w-full bg-gradient-to-r from-slate-700/50 via-slate-700/20 to-transparent mb-4" />
+
+            {/* Interactive Navigation Footer */}
+            <div className="flex items-center justify-between gap-2">
+              <button
+                disabled
+                className="px-4 py-2 rounded-xl text-xs font-bold text-cyan-400/50 bg-slate-900 border border-slate-800 cursor-not-allowed"
+              >
+                ◀ BUMALIK
+              </button>
+
+              <div className="px-4 py-1.5 rounded-full bg-slate-950 border border-cyan-500/30 text-xs text-slate-300 font-bold">
+                <span className="text-cyan-400 text-[10px] font-normal mr-1">PAHINA</span>
+                <span>1 / 1</span>
               </div>
 
               <button
                 onClick={() => setPreviewShelf(null)}
-                className="w-full py-2.5 rounded-xl font-bold text-xs text-slate-950 bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-300 hover:to-emerald-300 transition-colors"
+                className="px-5 py-2 rounded-xl font-bold text-xs text-slate-950 bg-gradient-to-r from-cyan-400 to-emerald-400 hover:from-cyan-300 hover:to-emerald-300 transition-colors shadow-lg shadow-cyan-500/20"
               >
-                Close Discovery Card
+                NAIINTINDIHAN KO
               </button>
             </div>
           </div>

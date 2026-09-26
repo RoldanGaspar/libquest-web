@@ -15,6 +15,14 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "ddc_stacks",
     position: { x: 12.4, y: 16.2 },
+    subdivisions: [
+      "000 - Generalities, Information & Computer Systems",
+      "100 - Philosophy, Psychology & Ethics",
+      "200 - Religion & Theology",
+      "300 - Social Sciences & Economics",
+      "370 - Education & Pedagogy",
+      "400 - Language & Linguistics"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -28,6 +36,15 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "ddc_stacks",
     position: { x: 16.4, y: 16.2 },
+    subdivisions: [
+      "425 - English Grammar & Syntax",
+      "500 - Pure Sciences & Natural Sciences",
+      "510 - Mathematics & Geometry",
+      "530 - Physics & Chemistry",
+      "550 - Earth Sciences & Geology",
+      "570 - Life Sciences & Biology",
+      "610 - Human Anatomy & Medical Sciences"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -41,6 +58,15 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "ddc_stacks",
     position: { x: 20.5, y: 16.2 },
+    subdivisions: [
+      "612 - Human Physiology & Health",
+      "620 - Engineering & Applied Sciences",
+      "630 - Agriculture & Farming Systems",
+      "631 - Agronomy, Soil Sciences & Irrigation",
+      "632 - Plant Pathology & Pest Management",
+      "633 - Field Crops & Cereals",
+      "634 - Orchards, Fruit Culture & Forestry"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -54,6 +80,14 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "ddc_stacks",
     position: { x: 10.6, y: 53.9 },
+    subdivisions: [
+      "635 - Garden Crops & Horticulture",
+      "636 - Animal Husbandry & Poultry",
+      "637 - Dairy Products & Processing",
+      "639 - Fisheries, Aquaculture & Wildlife",
+      "640 - Home Economics & Food Management",
+      "650 - Business & Management Auxiliaries"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -67,6 +101,13 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "ddc_stacks",
     position: { x: 10.6, y: 67.9 },
+    subdivisions: [
+      "658.1 - Corporate Organization & Finance",
+      "658.3 - Human Resource Management",
+      "658.4 - Executive Leadership & Strategy",
+      "658.5 - Production & Operations Management",
+      "658.7 - Materials Management & Logistics"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -80,6 +121,13 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "ddc_stacks",
     position: { x: 10.6, y: 48.4 },
+    subdivisions: [
+      "658 - Enterprise & Business Management",
+      "660 - Chemical Engineering & Technology",
+      "670 - Manufacturing & Factory Operations",
+      "680 - Manufacture for Specific Uses",
+      "690 - Construction & Building Trades"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -93,6 +141,15 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "ddc_stacks",
     position: { x: 15.2, y: 70.4 },
+    subdivisions: [
+      "700 - The Arts & Art History",
+      "720 - Architectural Design & Spaces",
+      "740 - Graphic Arts & Drawing",
+      "770 - Photography & Digital Imaging",
+      "780 - Music & Performing Arts",
+      "790 - Sports, Recreation & Athletics",
+      "800 - Literature, Criticism & Rhetoric"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -106,6 +163,13 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "ddc_stacks",
     position: { x: 20.6, y: 70.4 },
+    subdivisions: [
+      "808.0 - Composition & Style Guides",
+      "808.1 - Poetry Analysis & Anthologies",
+      "808.3 - Fiction Writing Techniques",
+      "808.5 - Public Speaking & Debate",
+      "808.8 - World Literary Collections"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -119,6 +183,15 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "ddc_stacks",
     position: { x: 25.4, y: 70.4 },
+    subdivisions: [
+      "808.82 - Drama & Theatrical Works",
+      "820 - English Literature & Essays",
+      "899 - Philippine & Austronesian Literatures",
+      "900 - World History & Civilization",
+      "910 - Geography, Cartography & Travel",
+      "920 - Biography & Memoir Collections",
+      "930 - Ancient History to 499 AD"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -132,6 +205,11 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "circulation",
     position: { x: 6.0, y: 47.4 },
+    subdivisions: [
+      "Contemporary Philippine Novels (A-H)",
+      "Young Adult Fiction & Bestsellers",
+      "Literary Classics & Drama (A-H)"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -145,6 +223,11 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "circulation",
     position: { x: 6.0, y: 56.4 },
+    subdivisions: [
+      "World Literature & Novels (I-P)",
+      "Mystery, Adventure & Historical Fiction",
+      "Filipino Contemporary Literature (I-P)"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -158,6 +241,11 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "circulation",
     position: { x: 6.0, y: 66.8 },
+    subdivisions: [
+      "Classic Masterpieces & Anthologies (Q-Z)",
+      "Science Fiction & Modern Fantasy",
+      "Literature & Translated Works (Q-Z)"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -171,6 +259,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "circulation",
     position: { x: 25.8, y: 51.2 },
+    subdivisions: [
+      "Doctoral Dissertations (Ph.D. / Ed.D.)",
+      "Master of Science Theses (M.S. Agriculture / Forestry)",
+      "Master in Business Administration (MBA Papers)",
+      "Educational Leadership & Curriculum Studies"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -184,6 +278,11 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "circulation",
     position: { x: 25.8, y: 60.6 },
+    subdivisions: [
+      "Agriculture & Life Sciences (2016-Present)",
+      "Veterinary & Animal Science Recent Titles",
+      "Environmental Science & Agroforestry"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -197,6 +296,11 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "circulation",
     position: { x: 25.8, y: 55.8 },
+    subdivisions: [
+      "Engineering & Computer Science (2016-Present)",
+      "Business & Hospitality Recent Publications",
+      "Teacher Education & Social Sciences"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -210,6 +314,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "facility",
     position: { x: 43.5, y: 76.8 },
+    subdivisions: [
+      "Biometric Fingerprint Scanner",
+      "Barcode & RFID Student ID Reader",
+      "Automated Turnstile Gate Entry",
+      "Library Attendance Monitoring System"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -223,6 +333,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "facility",
     position: { x: 39.1, y: 69.0 },
+    subdivisions: [
+      "Bag Deposit Counter",
+      "Personal Belongings Security Cubbies",
+      "Visitor Baggage Pass Verification",
+      "Library Security Checkpoint"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -236,6 +352,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "ground",
     zone: "facility",
     position: { x: 28.8, y: 28.0 },
+    subdivisions: [
+      "Koha Online Public Access Catalog",
+      "Title, Author & Subject Search",
+      "Book Call Number & Shelf Location Finder",
+      "Real-Time Book Availability Check"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
 
@@ -253,6 +375,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "facility",
     position: { x: 21.0, y: 52.3 },
+    subdivisions: [
+      "Automated Book Return Drop Slot",
+      "Circulation Check-In Station",
+      "Barcode Return Scanner",
+      "Cleared Borrowing Account Status"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -266,6 +394,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "filipiniana",
     position: { x: 21.0, y: 64.3 },
+    subdivisions: [
+      "FIL 001 - Philippine Generalities & Research",
+      "FIL 100 - Filipino Philosophy & Values",
+      "FIL 200 - Philippine Church History & Faith",
+      "FIL 300 - Filipino Social Systems & Culture"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -279,6 +413,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "filipiniana",
     position: { x: 21.0, y: 71.5 },
+    subdivisions: [
+      "FIL 305 - Social Groups & Philippine Communities",
+      "FIL 320 - Philippine Politics & Governance",
+      "FIL 330 - Philippine Economics & Agrarian Reform",
+      "FIL 338 - Philippine Agricultural Industries"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -292,6 +432,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "filipiniana",
     position: { x: 21.0, y: 78.0 },
+    subdivisions: [
+      "FIL 338.4 - Philippine Services & Manufacturing",
+      "FIL 340 - Philippine Constitution & Laws",
+      "FIL 350 - Public Administration & Local Government",
+      "FIL 370 - Philippine Education System"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -305,6 +451,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "filipiniana",
     position: { x: 21.0, y: 84.0 },
+    subdivisions: [
+      "FIL 371 - School Management & Educational Tests",
+      "FIL 380 - Philippine Commerce & Trade",
+      "FIL 390 - Filipino Customs, Folklore & Traditions",
+      "FIL 400 - Wikang Filipino & Katutubong Wika"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -318,6 +470,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "filipiniana",
     position: { x: 10.1, y: 82.9 },
+    subdivisions: [
+      "FIL 428 - Philippine English & Bilingualism",
+      "FIL 499 - Tagalog, Kapampangan & Regional Dialects",
+      "FIL 500 - Philippine Flora, Fauna & Natural Sciences",
+      "FIL 550 - Philippine Geology & Natural Hazards"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -331,6 +489,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "filipiniana",
     position: { x: 12.5, y: 82.8 },
+    subdivisions: [
+      "FIL 574 - Philippine Ecology & Biodiversity",
+      "FIL 610 - Traditional Philippine Herbal Medicine",
+      "FIL 620 - Philippine Engineering Innovations",
+      "FIL 630 - Tropical Agriculture & Crop Production"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -344,6 +508,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "filipiniana",
     position: { x: 15.1, y: 82.7 },
+    subdivisions: [
+      "FIL 631 - Philippine Soil Science & Irrigation",
+      "FIL 632 - Tropical Pest Management in PH",
+      "FIL 633 - Rice (Palay) Cultivation & Corn Crops",
+      "FIL 633.18 - Comprehensive Philippine Rice Studies"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -357,6 +527,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "filipiniana",
     position: { x: 17.4, y: 82.8 },
+    subdivisions: [
+      "FIL 634 - Philippine Fruit Crops & Agroforestry",
+      "FIL 636 - Carabao, Cattle & Poultry in PH",
+      "FIL 639 - Philippine Freshwater & Marine Aquaculture",
+      "FIL 641 - Kapampangan & Regional Filipino Cuisine"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -370,6 +546,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "filipiniana",
     position: { x: 10.1, y: 90.0 },
+    subdivisions: [
+      "FIL 641 - Culinary Arts & Food Technology",
+      "FIL 650 - Philippine Small & Medium Enterprises (SMEs)",
+      "FIL 657 - Philippine Accounting & Taxation",
+      "FIL 658 - Filipino Corporate Management Styles"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -383,6 +565,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "filipiniana",
     position: { x: 12.5, y: 90.0 },
+    subdivisions: [
+      "FIL 660 - Philippine Biotechnology & Sugar Tech",
+      "FIL 700 - Traditional Filipino Arts & Architecture",
+      "FIL 780 - Kundiman & Original Pilipino Music (OPM)",
+      "FIL 800 - Panitikang Pilipino & Sanaysay"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -396,6 +584,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "filipiniana",
     position: { x: 15.1, y: 90.0 },
+    subdivisions: [
+      "FIL 808 - Philippine Speeches & Balagtasan",
+      "FIL 899 - Tagalog, Ilokano & Kapampangan Literature",
+      "FIL 899.2 - Mga Maikling Kwento at Nobela",
+      "FIL 899.3 - Contemporary Philippine Poetry"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -409,6 +603,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "filipiniana",
     position: { x: 17.4, y: 90.0 },
+    subdivisions: [
+      "FIL 900 - Kasaysayan ng Pilipinas (Pre-Colonial to Present)",
+      "FIL 910 - Heograpiya at Turismo ng Pilipinas",
+      "FIL 920 - Talambuhay ng mga Bayani at Pangulo",
+      "FIL 929 - Talaangkanan at Historical Chronicles"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -422,6 +622,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "filipiniana",
     position: { x: 21.0, y: 90.0 },
+    subdivisions: [
+      "Buhay, Ginawa at Sinulat ni Dr. Jose Rizal",
+      "Noli Me Tangere & El Filibusterismo Analyses",
+      "Rizal's Letters, Poems & Historical Essays",
+      "The Philippine Revolution & Katipunan History"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -435,6 +641,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "filipiniana",
     position: { x: 11.5, y: 41.1 },
+    subdivisions: [
+      "Recent Philippine Academic Publications",
+      "Updated Philippine Law & Jurisprudence (2016-Present)",
+      "Philippine Statistics Authority (PSA) Compendiums",
+      "Contemporary Philippine Agricultural Research"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
 
@@ -450,6 +662,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "theses",
     position: { x: 19.3, y: 35.8 },
+    subdivisions: [
+      "Business Feasibility Studies & Business Plans",
+      "Agri-Enterprise Startup Models",
+      "Market Demand & Product Innovation Theses",
+      "Terminal Reports on Small Business Incubation"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -463,6 +681,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "theses",
     position: { x: 23.7, y: 35.8 },
+    subdivisions: [
+      "Plant & Animal Botanical Surveys (Mt. Arayat)",
+      "Microbiology & Ethnobotanical Studies",
+      "Freshwater Tilapia & Catfish Aquaculture",
+      "Fish Nutrition, Water Quality & Hatchery Studies"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -476,6 +700,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "theses",
     position: { x: 28.0, y: 35.8 },
+    subdivisions: [
+      "Agribusiness Supply Chain Management",
+      "Value Chain Analysis of Rice & Sweet Potato",
+      "Agricultural Cooperative Management",
+      "Special Problem Practicum Research"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -489,6 +719,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "theses",
     position: { x: 16.5, y: 46.2 },
+    subdivisions: [
+      "Web & Mobile Information Systems",
+      "Internet of Things (IoT) in Smart Agriculture",
+      "Library Management & E-Learning Portals",
+      "Database & Android Mobile Applications"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -502,6 +738,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "theses",
     position: { x: 21.3, y: 46.2 },
+    subdivisions: [
+      "Swine & Broiler Growth Performance Studies",
+      "Alternative Forage & Feed Formulations",
+      "Ruminant Nutrition (Goat, Cattle, Carabao)",
+      "Poultry Farm Practicum Operations"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -515,6 +757,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "theses",
     position: { x: 25.0, y: 46.2 },
+    subdivisions: [
+      "Livestock Disease Prevention & Sanitation",
+      "Animal Breeding & Reproductive Physiology",
+      "Pasture Management & Silage Production",
+      "Commercial Livestock Farm Practices"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -528,6 +776,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "theses",
     position: { x: 16.5, y: 53.0 },
+    subdivisions: [
+      "Livestock Production Management",
+      "Applied Statistical Models & Mathematical Research",
+      "Agroforestry Farming Systems & Carbon Sequestration",
+      "Watershed & Forest Nursery Practicum"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -541,6 +795,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "theses",
     position: { x: 21.3, y: 53.0 },
+    subdivisions: [
+      "Community Journalism & Development Broadcasting",
+      "Educational Information Campaigns in Agriculture",
+      "Silviculture & Forest Tree Species Ecology",
+      "Timber & Non-Timber Forest Product Valuation"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -554,6 +814,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "theses",
     position: { x: 25.0, y: 53.0 },
+    subdivisions: [
+      "Hotel & Resort Front Office Operations",
+      "Food & Beverage Management Practicum",
+      "Housekeeping Operations & Customer Service",
+      "Culinary Industry On-the-Job Training Archives"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -567,6 +833,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "theses",
     position: { x: 29.8, y: 53.0 },
+    subdivisions: [
+      "Tourism Destination Planning & Development",
+      "Food Safety & Sanitation Compliance Studies",
+      "Event Management & Catering Case Studies",
+      "Hospitality Customer Satisfaction Research"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -580,6 +852,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "theses",
     position: { x: 16.5, y: 59.5 },
+    subdivisions: [
+      "Discourse Analysis & Sociolinguistic Studies",
+      "English Language Teaching & Pedagogy",
+      "Topographic Land Surveying & Cadastral Mapping",
+      "Geographic Information Systems (GIS) Remote Sensing"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -593,6 +871,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "theses",
     position: { x: 21.3, y: 59.5 },
+    subdivisions: [
+      "Farm Power & Agricultural Machinery Design",
+      "Postharvest Handling, Drying & Processing Systems",
+      "Soil & Water Conservation Engineering",
+      "Farm Structures & Renewable Energy Applications"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -606,6 +890,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "second",
     zone: "theses",
     position: { x: 29.8, y: 46.2 },
+    subdivisions: [
+      "Organic Fertilizer & Biostimulant Field Trials",
+      "Crop Protection against Pests & Fungi",
+      "Varietal Evaluation of Corn, Rice & Vegetables",
+      "Seed Technology, Propagation & Farm Practicum"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
 
@@ -623,6 +913,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "third",
     zone: "facility",
     position: { x: 48.0, y: 35.0 },
+    subdivisions: [
+      "Office of Library Services Management",
+      "Student Clearance & Account Validation",
+      "Reference Librarian Consultation Desk",
+      "Inter-Library Loan & External Resource Inquiries"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -636,6 +932,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "third",
     zone: "reference",
     position: { x: 18.0, y: 40.0 },
+    subdivisions: [
+      "General Encyclopedias (Britannica, Americana)",
+      "English & Multilingual Dictionaries (Oxford, Webster)",
+      "Thesauri & Language Reference Handbooks",
+      "Biographical Dictionaries & World Almanacs"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -649,6 +951,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "third",
     zone: "reference",
     position: { x: 22.0, y: 40.0 },
+    subdivisions: [
+      "Science & Technology Reference Handbooks",
+      "CRC Handbooks of Chemistry & Physics",
+      "Engineering Formulas & Technical Tables",
+      "Biological & Environmental Science Encyclopedias"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -662,6 +970,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "third",
     zone: "reference",
     position: { x: 26.0, y: 40.0 },
+    subdivisions: [
+      "Agricultural Reference Encyclopedias",
+      "Soil, Fertilizer & Plant Nutrient Manuals",
+      "Veterinary Drug Compendiums & Disease Handbooks",
+      "Pest & Weed Control Global Manuals"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -675,6 +989,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "third",
     zone: "reference",
     position: { x: 18.0, y: 55.0 },
+    subdivisions: [
+      "Social Science & Law Reference Collections",
+      "Philippine Law Reprints & Legal Dictionaries",
+      "Education & Educational Research Handbooks",
+      "Business & Financial Reference Manuals"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -688,6 +1008,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "third",
     zone: "reference",
     position: { x: 22.0, y: 55.0 },
+    subdivisions: [
+      "Literature Reference & Poetry Indexes",
+      "Historical Atlases & World Gazetteers",
+      "Philosophical & Theological Reference Works",
+      "Bibliographical Directories & Citation Guides"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -701,6 +1027,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "third",
     zone: "periodicals",
     position: { x: 28.0, y: 55.0 },
+    subdivisions: [
+      "Philippine Agricultural Research Journals",
+      "CHED-Accredited Scholarly Journals",
+      "International Science & Technology Serials",
+      "Bound Scholarly Periodicals & Archives"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -714,6 +1046,12 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     floor: "third",
     zone: "facility",
     position: { x: 45.0, y: 65.0 },
+    subdivisions: [
+      "Designated Silent Study Booths",
+      "Wide Collaborative Research Desks",
+      "Comfortable Ergonomic Seating",
+      "Power Outlets for Academic Laptops"
+],
     lastUpdated: "2026-09-27T00:00:00Z"
   }
 ];
