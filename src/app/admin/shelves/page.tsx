@@ -752,7 +752,7 @@ export default function DDCShelfManagerPage() {
               <div className="pt-2 border-t border-slate-800/80 space-y-1.5 text-xs">
                 <div className="flex items-baseline space-x-1.5">
                   <span className="font-bold text-amber-400 text-[11px]">LOKASYON / SHELF SPAN:</span>
-                  <span className="text-slate-200 font-mono text-[11px]">{previewShelf.shelfID}</span>
+                  <span className="text-slate-200 font-mono text-[11px]">{previewShelf.shelfCode || previewShelf.shelfID}</span>
                 </div>
                 {previewShelf.studentGuidance && (
                   <div className="flex items-baseline space-x-1.5">
