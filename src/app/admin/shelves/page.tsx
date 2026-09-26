@@ -717,12 +717,24 @@ export default function DDCShelfManagerPage() {
                     MGA SAKOP NA PAKSA AT SUBDIVISIONS:
                   </h4>
                   <ul className="space-y-1 text-xs text-slate-200">
-                    {previewShelf.subdivisions.map((sub, i) => (
-                      <li key={i} className="flex items-start space-x-1.5">
-                        <span className="text-cyan-400 font-bold">•</span>
-                        <span>{sub}</span>
-                      </li>
-                    ))}
+                    {previewShelf.subdivisions.map((sub, i) => {
+                      if (sub.startsWith("[") && sub.endsWith("]")) {
+                        return (
+                          <li
+                            key={i}
+                            className="pt-2.5 pb-1 text-xs font-bold text-cyan-300 border-b border-cyan-500/20 list-none tracking-wide"
+                          >
+                            {sub.slice(1, -1)}
+                          </li>
+                        );
+                      }
+                      return (
+                        <li key={i} className="flex items-start space-x-1.5 pl-2">
+                          <span className="text-cyan-400 font-bold">•</span>
+                          <span>{sub}</span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               ) : (
