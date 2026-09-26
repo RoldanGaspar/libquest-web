@@ -32,6 +32,50 @@ type ViewMode = "map" | "list";
 type MapStyle = "official_blueprint" | "vector_schematic";
 type SelectedZone = "circulation" | "ddc_stacks" | "filipiniana";
 
+export interface SectionData {
+  title: string;
+  items: string[];
+}
+
+export function parseSubdivisionSections(subs: string[] = []): SectionData[] {
+  const sections: SectionData[] = [];
+  let currentTitle = "";
+  let currentItems: string[] = [];
+
+  for (const line of subs) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+    if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+      if (currentTitle || currentItems.length > 0) {
+        sections.push({ title: currentTitle, items: currentItems });
+      }
+      currentTitle = trimmed.slice(1, -1).trim();
+      currentItems = [];
+    } else {
+      currentItems.push(trimmed);
+    }
+  }
+
+  if (currentTitle || currentItems.length > 0) {
+    sections.push({ title: currentTitle, items: currentItems });
+  }
+
+  return sections;
+}
+
+export function serializeSubdivisionSections(sections: SectionData[]): string[] {
+  const result: string[] = [];
+  for (const sec of sections) {
+    if (sec.title) {
+      result.push(`[${sec.title.trim()}]`);
+    }
+    for (const itm of sec.items) {
+      if (itm.trim()) result.push(itm.trim());
+    }
+  }
+  return result;
+}
+
 export default function DDCShelfManagerPage() {
   const [shelves, setShelves] = useState<DDCShelf[]>(INITIAL_DDC_SHELVES);
   const [loading, setLoading] = useState(true);
@@ -52,6 +96,9 @@ export default function DDCShelfManagerPage() {
   // Editing & Preview state
   const [editingShelf, setEditingShelf] = useState<DDCShelf | null>(null);
   const [previewShelf, setPreviewShelf] = useState<DDCShelf | null>(null);
+  const [activeSectionTab, setActiveSectionTab] = useState(0);
+  const [useRawEditor, setUseRawEditor] = useState(false);
+  const [previewPageIndex, setPreviewPageIndex] = useState(0);
 
   useEffect(() => {
     async function loadShelvesCatalog() {
@@ -86,11 +133,16 @@ export default function DDCShelfManagerPage() {
   const handleSelectShelfFromMap = (shelf: DDCShelf) => {
     setSelectedShelf(shelf);
     setEditingShelf({ ...shelf });
+    setActiveSectionTab(0);
+    setUseRawEditor(false);
   };
 
   const handleEditClick = (shelf: DDCShelf) => {
     setEditingShelf({ ...shelf });
     setPreviewShelf({ ...shelf });
+    setActiveSectionTab(0);
+    setUseRawEditor(false);
+    setPreviewPageIndex(0);
   };
 
   const handleResetToDefaults = () => {
@@ -588,33 +640,172 @@ export default function DDCShelfManagerPage() {
                 />
               </div>
 
+              {/* Subdivisions & Subject Areas (Smart Tabbed / Sectioned Form) */}
               <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="block text-slate-300 font-medium">
-                    Subdivisions & Subject Areas (One topic per line)
-                  </label>
-                  <span className="text-[10px] text-teal-400 font-mono">
-                    {(editingShelf.subdivisions || []).length} items
-                  </span>
-                </div>
-                <textarea
-                  rows={4}
-                  value={(editingShelf.subdivisions || []).join("\n")}
-                  onChange={(e) =>
-                    setEditingShelf({
-                      ...editingShelf,
-                      subdivisions: e.target.value
-                        .split("\n")
-                        .map((s) => s.trim())
-                        .filter((s) => s.length > 0),
-                    })
-                  }
-                  placeholder="e.g.&#10;630 - Agriculture & Related Technologies&#10;631 - Techniques, Equipment & Materials&#10;632 - Plant Injuries, Diseases & Pests"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-teal-400 leading-relaxed"
-                />
-                <p className="text-[10px] text-slate-500 mt-1">
-                  Ang mga paksang ito ang magiging interactive bullet points sa in-game discovery modal sa mobile app at web preview.
-                </p>
+                {(() => {
+                  const sections = parseSubdivisionSections(editingShelf.subdivisions || []);
+                  const hasSections = sections.length > 1 || (sections.length === 1 && !!sections[0]?.title);
+                  const safeTabIndex = Math.min(activeSectionTab, Math.max(0, sections.length - 1));
+                  const currentSection = sections[safeTabIndex] || { title: "", items: [] };
+
+                  return (
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-slate-300 font-medium">
+                          Subdivisions & Subject Areas
+                        </label>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-[10px] text-teal-400 font-mono">
+                            {(editingShelf.subdivisions || []).length} items
+                          </span>
+                          {hasSections && (
+                            <button
+                              type="button"
+                              onClick={() => setUseRawEditor(!useRawEditor)}
+                              className="text-[11px] text-cyan-400 hover:text-cyan-300 font-medium underline"
+                            >
+                              {useRawEditor ? "← Switch to Class Tabs" : "Raw Bulk Editor →"}
+                            </button>
+                          )}
+                        </div>
+                      </div>
+
+                      {!useRawEditor && hasSections ? (
+                        <div className="space-y-2.5">
+                          {/* Class Section Tabs */}
+                          <div className="flex flex-wrap gap-1 p-1 bg-slate-950/80 border border-slate-800 rounded-xl">
+                            {sections.map((sec, idx) => {
+                              const label = sec.title ? sec.title.split("–")[0].trim() : `Page ${idx + 1}`;
+                              const isActive = safeTabIndex === idx;
+                              return (
+                                <button
+                                  key={idx}
+                                  type="button"
+                                  onClick={() => setActiveSectionTab(idx)}
+                                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                                    isActive
+                                      ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 shadow-sm"
+                                      : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
+                                  }`}
+                                >
+                                  {label}
+                                </button>
+                              );
+                            })}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = [...sections, { title: "New Class Section", items: [] }];
+                                setEditingShelf({
+                                  ...editingShelf,
+                                  subdivisions: serializeSubdivisionSections(updated),
+                                });
+                                setActiveSectionTab(sections.length);
+                              }}
+                              className="px-2.5 py-1.5 rounded-lg text-xs text-slate-500 hover:text-slate-300 hover:bg-slate-900 border border-dashed border-slate-800"
+                              title="Add Class Section"
+                            >
+                              + Add Tab
+                            </button>
+                          </div>
+
+                          {/* Active Section Editor */}
+                          <div className="p-3 bg-slate-950/90 border border-slate-800/80 rounded-xl space-y-2.5">
+                            <div>
+                              <div className="flex items-center justify-between mb-1">
+                                <label className="text-[11px] font-bold text-cyan-400">
+                                  Class Header Title (Card Title sa Mobile App)
+                                </label>
+                                {sections.length > 1 && (
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      if (confirm(`Delete section '${currentSection.title}'?`)) {
+                                        const updated = sections.filter((_, idx) => idx !== safeTabIndex);
+                                        setEditingShelf({
+                                          ...editingShelf,
+                                          subdivisions: serializeSubdivisionSections(updated),
+                                        });
+                                        setActiveSectionTab(Math.max(0, safeTabIndex - 1));
+                                      }
+                                    }}
+                                    className="text-[10px] text-rose-400 hover:text-rose-300"
+                                  >
+                                    Delete Tab
+                                  </button>
+                                )}
+                              </div>
+                              <input
+                                type="text"
+                                value={currentSection.title}
+                                onChange={(e) => {
+                                  const updated = [...sections];
+                                  updated[safeTabIndex] = {
+                                    ...currentSection,
+                                    title: e.target.value,
+                                  };
+                                  setEditingShelf({
+                                    ...editingShelf,
+                                    subdivisions: serializeSubdivisionSections(updated),
+                                  });
+                                }}
+                                placeholder="e.g. 000 – GENERALITIES & INFORMATION"
+                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white font-semibold focus:outline-none focus:border-cyan-400"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                                Mga Sakop na Paksa / Subdivisions para sa Tab na ito (Isang paksa bawat linya)
+                              </label>
+                              <textarea
+                                rows={4}
+                                value={currentSection.items.join("\n")}
+                                onChange={(e) => {
+                                  const updated = [...sections];
+                                  updated[safeTabIndex] = {
+                                    ...currentSection,
+                                    items: e.target.value
+                                      .split("\n")
+                                      .map((s) => s.trim())
+                                      .filter((s) => s.length > 0),
+                                  };
+                                  setEditingShelf({
+                                    ...editingShelf,
+                                    subdivisions: serializeSubdivisionSections(updated),
+                                  });
+                                }}
+                                placeholder="e.g.&#10;Bibliography&#10;Library & Information Sciences"
+                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-cyan-400 leading-relaxed"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div>
+                          <textarea
+                            rows={5}
+                            value={(editingShelf.subdivisions || []).join("\n")}
+                            onChange={(e) =>
+                              setEditingShelf({
+                                ...editingShelf,
+                                subdivisions: e.target.value
+                                  .split("\n")
+                                  .map((s) => s.trim())
+                                  .filter((s) => s.length > 0),
+                              })
+                            }
+                            placeholder="e.g.&#10;630 - Agriculture & Related Technologies&#10;631 - Techniques, Equipment & Materials&#10;632 - Plant Injuries, Diseases & Pests"
+                            className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-teal-400 leading-relaxed"
+                          />
+                          <p className="text-[10px] text-slate-500 mt-1">
+                            Tip: Gumamit ng <code className="text-cyan-400 font-mono">[000 - Title]</code> para awtomatikong lumikha ng panibagong class section o pahina sa mobile app.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
               </div>
 
               <div className="grid grid-cols-2 gap-3">
@@ -673,123 +864,146 @@ export default function DDCShelfManagerPage() {
       {/* ========================================================================= */}
       {/* LIVE IN-GAME HOLOGRAM PREVIEW MODAL                                       */}
       {/* ========================================================================= */}
-      {previewShelf && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
-          <div className="w-full max-w-xl max-h-[92vh] bg-slate-900/95 border-2 border-cyan-500/40 rounded-3xl p-5 sm:p-6 shadow-2xl text-white relative my-auto overflow-y-auto">
-            {/* Top Bar with Badge Pill and Close Button */}
-            <div className="flex items-center justify-between mb-4">
-              <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-300 font-mono text-xs font-bold border border-cyan-500/30">
-                {previewShelf.shelfCode}
-              </span>
-              <button
-                onClick={() => setPreviewShelf(null)}
-                className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold"
-                aria-label="Close preview"
-              >
-                ✕
-              </button>
-            </div>
+      {previewShelf && (() => {
+        const previewSections = parseSubdivisionSections(previewShelf.subdivisions || []);
+        const hasMultiPages = previewSections.length > 1;
+        const totalPages = hasMultiPages ? previewSections.length : 1;
+        const safePageIndex = Math.min(previewPageIndex, Math.max(0, totalPages - 1));
+        const currentSec = hasMultiPages ? previewSections[safePageIndex] : null;
+        const displayTitle = currentSec?.title || previewShelf.categoryTitle;
+        const displayItems = currentSec ? currentSec.items : previewShelf.subdivisions || [];
 
-            {/* Header Content: Icon + Title */}
-            <div className="flex items-center space-x-3 mb-3">
-              <div className="w-14 h-14 rounded-2xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300 flex-shrink-0">
-                <BookMarked className="w-7 h-7" />
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
+            <div className="w-full max-w-xl max-h-[92vh] bg-slate-900/95 border-2 border-cyan-500/40 rounded-3xl p-5 sm:p-6 shadow-2xl text-white relative my-auto overflow-y-auto">
+              {/* Top Bar with Badge Pill and Close Button */}
+              <div className="flex items-center justify-between mb-4">
+                <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-300 font-mono text-xs font-bold border border-cyan-500/30">
+                  {previewShelf.shelfCode}
+                </span>
+                <button
+                  onClick={() => {
+                    setPreviewShelf(null);
+                    setPreviewPageIndex(0);
+                  }}
+                  className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold cursor-pointer"
+                  aria-label="Close preview"
+                >
+                  ✕
+                </button>
               </div>
-              <div>
-                <h3 className="text-base sm:text-lg font-extrabold text-white tracking-tight">
-                  {previewShelf.categoryTitle}
-                </h3>
-                <p className="text-[11px] text-slate-400 capitalize">
-                  {previewShelf.floor} Floor • {previewShelf.targetCollege}
-                </p>
-              </div>
-            </div>
 
-            {/* Top Divider */}
-            <div className="h-[2px] w-full bg-gradient-to-r from-cyan-500/50 via-cyan-500/20 to-transparent mb-3" />
-
-            {/* Body Inset Frosted Panel */}
-            <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3 mb-4">
-              {/* Subdivisions List */}
-              {previewShelf.subdivisions && previewShelf.subdivisions.length > 0 ? (
+              {/* Header Content: Icon + Title */}
+              <div className="flex items-center space-x-3 mb-3">
+                <div className="w-14 h-14 rounded-2xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300 flex-shrink-0">
+                  <BookMarked className="w-7 h-7" />
+                </div>
                 <div>
-                  <h4 className="text-[11px] font-bold text-sky-400 uppercase tracking-wider mb-2">
-                    MGA SAKOP NA PAKSA AT SUBDIVISIONS:
-                  </h4>
-                  <ul className="space-y-1 text-xs text-slate-200">
-                    {previewShelf.subdivisions.map((sub, i) => {
-                      if (sub.startsWith("[") && sub.endsWith("]")) {
-                        return (
-                          <li
-                            key={i}
-                            className="pt-2.5 pb-1 text-xs font-bold text-cyan-300 border-b border-cyan-500/20 list-none tracking-wide"
-                          >
-                            {sub.slice(1, -1)}
-                          </li>
-                        );
-                      }
-                      return (
+                  <h3 className="text-base sm:text-lg font-extrabold text-white tracking-tight">
+                    {displayTitle}
+                  </h3>
+                  <p className="text-[11px] text-slate-400 capitalize">
+                    {previewShelf.floor} Floor • {previewShelf.targetCollege}
+                  </p>
+                </div>
+              </div>
+
+              {/* Top Divider */}
+              <div className="h-[2px] w-full bg-gradient-to-r from-cyan-500/50 via-cyan-500/20 to-transparent mb-3" />
+
+              {/* Body Inset Frosted Panel */}
+              <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3 mb-4">
+                {/* Subdivisions List */}
+                {displayItems && displayItems.length > 0 ? (
+                  <div>
+                    <h4 className="text-[11px] font-bold text-sky-400 uppercase tracking-wider mb-2">
+                      MGA SAKOP NA PAKSA AT SUBDIVISIONS:
+                    </h4>
+                    <ul className="space-y-1.5 text-xs text-slate-200">
+                      {displayItems.map((sub, i) => (
                         <li key={i} className="flex items-start space-x-1.5 pl-2">
                           <span className="text-cyan-400 font-bold">•</span>
                           <span>{sub}</span>
                         </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              ) : (
-                <div>
-                  <h4 className="text-[11px] font-bold text-sky-400 uppercase tracking-wider mb-1">
-                    KOLEKSIYON AT MGA MATERYALES:
-                  </h4>
-                  <p className="text-xs text-slate-300 leading-relaxed">
-                    {previewShelf.generalCollectionSummary}
-                  </p>
-                </div>
-              )}
-
-              {/* Shelf Span & Guidance Callouts */}
-              <div className="pt-2 border-t border-slate-800/80 space-y-1.5 text-xs">
-                <div className="flex items-baseline space-x-1.5">
-                  <span className="font-bold text-amber-400 text-[11px]">LOKASYON / SHELF SPAN:</span>
-                  <span className="text-slate-200 font-mono text-[11px]">{previewShelf.shelfCode || previewShelf.shelfID}</span>
-                </div>
-                {previewShelf.studentGuidance && (
-                  <div className="flex items-baseline space-x-1.5">
-                    <span className="font-bold text-emerald-400 text-[11px]">GABAY SA PAGHAHANAP:</span>
-                    <span className="text-slate-300 text-[11px]">{previewShelf.studentGuidance}</span>
+                      ))}
+                    </ul>
                   </div>
+                ) : (
+                  <div>
+                    <h4 className="text-[11px] font-bold text-sky-400 uppercase tracking-wider mb-1">
+                      KOLEKSIYON AT MGA MATERYALES:
+                    </h4>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      {previewShelf.generalCollectionSummary}
+                    </p>
+                  </div>
+                )}
+
+                {/* Shelf Span & Guidance Callouts */}
+                <div className="pt-2 border-t border-slate-800/80 space-y-1.5 text-xs">
+                  <div className="flex items-baseline space-x-1.5">
+                    <span className="font-bold text-amber-400 text-[11px]">LOKASYON / SHELF SPAN:</span>
+                    <span className="text-slate-200 font-mono text-[11px]">
+                      {previewShelf.shelfCode || previewShelf.shelfID}
+                    </span>
+                  </div>
+                  {previewShelf.studentGuidance && (
+                    <div className="flex items-baseline space-x-1.5">
+                      <span className="font-bold text-emerald-400 text-[11px]">GABAY SA PAGHAHANAP:</span>
+                      <span className="text-slate-300 text-[11px]">{previewShelf.studentGuidance}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Bottom Divider */}
+              <div className="h-[2px] w-full bg-gradient-to-r from-slate-700/50 via-slate-700/20 to-transparent mb-4" />
+
+              {/* Interactive Navigation Footer */}
+              <div className="flex items-center justify-between gap-2">
+                <button
+                  type="button"
+                  disabled={safePageIndex === 0}
+                  onClick={() => setPreviewPageIndex(Math.max(0, safePageIndex - 1))}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                    safePageIndex > 0
+                      ? "text-cyan-300 bg-slate-800 border border-slate-700 hover:bg-slate-700 cursor-pointer"
+                      : "text-slate-600 bg-slate-900 border border-slate-800 cursor-not-allowed"
+                  }`}
+                >
+                  ◀ BUMALIK
+                </button>
+
+                <div className="px-4 py-1.5 rounded-full bg-slate-950 border border-cyan-500/30 text-xs text-slate-300 font-bold">
+                  <span className="text-cyan-400 text-[10px] font-normal mr-1">PAHINA</span>
+                  <span>{safePageIndex + 1} / {totalPages}</span>
+                </div>
+
+                {hasMultiPages && safePageIndex < totalPages - 1 ? (
+                  <button
+                    type="button"
+                    onClick={() => setPreviewPageIndex(safePageIndex + 1)}
+                    className="px-5 py-2 rounded-xl font-bold text-xs text-slate-950 bg-gradient-to-r from-cyan-400 to-emerald-400 hover:from-cyan-300 hover:to-emerald-300 transition-colors shadow-lg shadow-cyan-500/20 cursor-pointer"
+                  >
+                    SUSUNOD &gt;
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPreviewShelf(null);
+                      setPreviewPageIndex(0);
+                    }}
+                    className="px-5 py-2 rounded-xl font-bold text-xs text-slate-950 bg-gradient-to-r from-cyan-400 to-emerald-400 hover:from-cyan-300 hover:to-emerald-300 transition-colors shadow-lg shadow-cyan-500/20 cursor-pointer"
+                  >
+                    NAIINTINDIHAN KO
+                  </button>
                 )}
               </div>
             </div>
-
-            {/* Bottom Divider */}
-            <div className="h-[2px] w-full bg-gradient-to-r from-slate-700/50 via-slate-700/20 to-transparent mb-4" />
-
-            {/* Interactive Navigation Footer */}
-            <div className="flex items-center justify-between gap-2">
-              <button
-                disabled
-                className="px-4 py-2 rounded-xl text-xs font-bold text-cyan-400/50 bg-slate-900 border border-slate-800 cursor-not-allowed"
-              >
-                ◀ BUMALIK
-              </button>
-
-              <div className="px-4 py-1.5 rounded-full bg-slate-950 border border-cyan-500/30 text-xs text-slate-300 font-bold">
-                <span className="text-cyan-400 text-[10px] font-normal mr-1">PAHINA</span>
-                <span>1 / 1</span>
-              </div>
-
-              <button
-                onClick={() => setPreviewShelf(null)}
-                className="px-5 py-2 rounded-xl font-bold text-xs text-slate-950 bg-gradient-to-r from-cyan-400 to-emerald-400 hover:from-cyan-300 hover:to-emerald-300 transition-colors shadow-lg shadow-cyan-500/20"
-              >
-                NAIINTINDIHAN KO
-              </button>
-            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 }
