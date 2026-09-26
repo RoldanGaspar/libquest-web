@@ -25,7 +25,16 @@ import {
   Compass,
   LayoutGrid,
   Map as MapIcon,
-  Search
+  Search,
+  Plus,
+  Trash2,
+  ArrowUp,
+  ArrowDown,
+  Download,
+  Upload,
+  FileSpreadsheet,
+  FileText,
+  ListPlus
 } from "lucide-react";
 
 type ViewMode = "map" | "list";
@@ -35,6 +44,250 @@ type SelectedZone = "circulation" | "ddc_stacks" | "filipiniana";
 export interface SectionData {
   title: string;
   items: string[];
+}
+
+export const DDC_CLASS_PRESETS = [
+  {
+    code: "000",
+    label: "000 – GENERALITIES & INFORMATION",
+    defaultItems: [
+      "010 Bibliography",
+      "020 Library & Information Sciences",
+      "030 General Encyclopedic works",
+      "050 General serials & their indexes",
+      "060 General organizations & Museology",
+      "070 News media, journalism, publishing"
+    ]
+  },
+  {
+    code: "100",
+    label: "100 – PHILOSOPHY & PSYCHOLOGY",
+    defaultItems: [
+      "110 Metaphysics",
+      "120 Epistemology, causation, humankind",
+      "130 Paranormal phenomena",
+      "140 Specific Philosophical Schools",
+      "150 Psychology",
+      "160 Logic",
+      "170 Ethics (Moral Philosophy)"
+    ]
+  },
+  {
+    code: "200",
+    label: "200 – RELIGION",
+    defaultItems: [
+      "210 Philosophy & theory of religion",
+      "220 Bible",
+      "230 Christianity & Christian theology",
+      "240 Christian practice & observance",
+      "290 Other religions & comparative religion"
+    ]
+  },
+  {
+    code: "300",
+    label: "300 – SOCIAL SCIENCES",
+    defaultItems: [
+      "310 Collections of general statistics",
+      "320 Political science (Politics & Gov)",
+      "330 Economics",
+      "340 Law",
+      "350 Public administration & military",
+      "360 Social problems & services",
+      "370 Education",
+      "380 Commerce, communications, transport",
+      "390 Customs, etiquette, folklore"
+    ]
+  },
+  {
+    code: "400",
+    label: "400 – LANGUAGE",
+    defaultItems: [
+      "410 Linguistics",
+      "420 English & Old English",
+      "430 Germanic languages; German",
+      "440 Romance languages; French",
+      "450 Italian, Romanian, Rhaeto-Romantic",
+      "460 Spanish & Portuguese languages",
+      "490 Other languages (Filipino / Tagalog)"
+    ]
+  },
+  {
+    code: "500",
+    label: "500 – NATURAL SCIENCES & MATHEMATICS",
+    defaultItems: [
+      "510 Mathematics",
+      "520 Astronomy & allied sciences",
+      "530 Physics",
+      "540 Chemistry & allied sciences",
+      "550 Earth sciences",
+      "560 Paleontology; Paleozoology",
+      "570 Life sciences; Biology",
+      "580 Plants (Botany)",
+      "590 Animals (Zoology)"
+    ]
+  },
+  {
+    code: "600",
+    label: "600 – TECHNOLOGY & APPLIED SCIENCES",
+    defaultItems: [
+      "610 Medical sciences; Medicine",
+      "620 Engineering & allied operations",
+      "630 Agriculture (Agronomy, Crops, Animal husbandry)",
+      "640 Home economics & family living",
+      "650 Management & auxiliary services",
+      "660 Chemical engineering",
+      "670 Manufacturing",
+      "690 Buildings"
+    ]
+  },
+  {
+    code: "700",
+    label: "700 – THE ARTS & RECREATION",
+    defaultItems: [
+      "710 Civic & Landscape art",
+      "720 Architecture",
+      "730 Plastic arts; Sculpture",
+      "740 Drawing & Decorative arts",
+      "750 Painting & paintings",
+      "760 Graphic arts; Printmaking",
+      "770 Photography & photographs",
+      "780 Music",
+      "790 Recreation & Performing arts"
+    ]
+  },
+  {
+    code: "800",
+    label: "800 – LITERATURE & RHETORIC",
+    defaultItems: [
+      "810 American literature in English",
+      "820 English & Old English literatures",
+      "830 Literatures of Germanic languages",
+      "840 Literatures of Romance languages",
+      "860 Spanish & Portuguese literatures",
+      "890 Literatures of other languages (Philippine Literature)"
+    ]
+  },
+  {
+    code: "900",
+    label: "900 – GEOGRAPHY & HISTORY",
+    defaultItems: [
+      "910 Geography & travel",
+      "920 Biography, genealogy, insignia",
+      "930 History of Ancient World to c.499",
+      "940 Gen. history of Europe",
+      "950 Gen. history of Asia; Far East (Philippine History)",
+      "960 Gen. history of Africa",
+      "970 Gen. history of North America",
+      "980 Gen. history of South America"
+    ]
+  }
+];
+
+function escapeCSVField(str: string | undefined | null): string {
+  if (str === null || str === undefined) return '""';
+  const val = String(str);
+  if (val.includes('"') || val.includes(',') || val.includes('\n') || val.includes('\r')) {
+    return `"${val.replace(/"/g, '""')}"`;
+  }
+  return `"${val}"`;
+}
+
+export function exportShelvesToCSV(shelves: DDCShelf[]): string {
+  const headers = [
+    "shelfID",
+    "shelfCode",
+    "categoryTitle",
+    "floor",
+    "targetCollege",
+    "generalCollectionSummary",
+    "studentGuidance",
+    "subdivisions"
+  ];
+  
+  const rows = shelves.map((s) => [
+    escapeCSVField(s.shelfID),
+    escapeCSVField(s.shelfCode),
+    escapeCSVField(s.categoryTitle),
+    escapeCSVField(s.floor),
+    escapeCSVField(s.targetCollege),
+    escapeCSVField(s.generalCollectionSummary),
+    escapeCSVField(s.studentGuidance),
+    escapeCSVField((s.subdivisions || []).join("\n"))
+  ].join(","));
+
+  return [headers.join(","), ...rows].join("\r\n");
+}
+
+export function parseCSV(csvText: string): Record<string, string>[] {
+  const rows: string[][] = [];
+  let currentRow: string[] = [];
+  let currentField = "";
+  let insideQuotes = false;
+  
+  for (let i = 0; i < csvText.length; i++) {
+    const char = csvText[i];
+    const nextChar = csvText[i + 1];
+
+    if (insideQuotes) {
+      if (char === '"') {
+        if (nextChar === '"') {
+          currentField += '"';
+          i++; // skip escaped quote
+        } else {
+          insideQuotes = false;
+        }
+      } else {
+        currentField += char;
+      }
+    } else {
+      if (char === '"') {
+        insideQuotes = true;
+      } else if (char === ',') {
+        currentRow.push(currentField);
+        currentField = "";
+      } else if (char === '\r') {
+        if (nextChar === '\n') i++;
+        currentRow.push(currentField);
+        currentField = "";
+        if (currentRow.length > 0 && currentRow.some((f) => f.trim().length > 0)) {
+          rows.push(currentRow);
+        }
+        currentRow = [];
+      } else if (char === '\n') {
+        currentRow.push(currentField);
+        currentField = "";
+        if (currentRow.length > 0 && currentRow.some((f) => f.trim().length > 0)) {
+          rows.push(currentRow);
+        }
+        currentRow = [];
+      } else {
+        currentField += char;
+      }
+    }
+  }
+
+  if (currentField || currentRow.length > 0) {
+    currentRow.push(currentField);
+    if (currentRow.some((f) => f.trim().length > 0)) {
+      rows.push(currentRow);
+    }
+  }
+
+  if (rows.length < 2) return [];
+
+  const headers = rows[0].map((h) => h.trim().replace(/^["']|["']$/g, ""));
+  const data: Record<string, string>[] = [];
+
+  for (let r = 1; r < rows.length; r++) {
+    const row = rows[r];
+    const obj: Record<string, string> = {};
+    for (let c = 0; c < headers.length; c++) {
+      obj[headers[c]] = row[c] !== undefined ? row[c] : "";
+    }
+    data.push(obj);
+  }
+
+  return data;
 }
 
 export function parseSubdivisionSections(subs: string[] = []): SectionData[] {
@@ -100,6 +353,13 @@ export default function DDCShelfManagerPage() {
   const [useRawEditor, setUseRawEditor] = useState(false);
   const [previewPageIndex, setPreviewPageIndex] = useState(0);
 
+  // Item-by-item topic input & tab presets state
+  const [newTopicInput, setNewTopicInput] = useState("");
+  const [activeItemEditMode, setActiveItemEditMode] = useState<"list" | "bulk">("list");
+  const [bulkTextDraft, setBulkTextDraft] = useState("");
+  const [showAddTabMenu, setShowAddTabMenu] = useState(false);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     async function loadShelvesCatalog() {
       try {
@@ -135,6 +395,11 @@ export default function DDCShelfManagerPage() {
     setEditingShelf({ ...shelf });
     setActiveSectionTab(0);
     setUseRawEditor(false);
+    setActiveItemEditMode("list");
+    setNewTopicInput("");
+    setShowAddTabMenu(false);
+    const sections = parseSubdivisionSections(shelf.subdivisions || []);
+    setBulkTextDraft(sections[0]?.items.join("\n") || (shelf.subdivisions || []).join("\n"));
   };
 
   const handleEditClick = (shelf: DDCShelf) => {
@@ -142,7 +407,12 @@ export default function DDCShelfManagerPage() {
     setPreviewShelf({ ...shelf });
     setActiveSectionTab(0);
     setUseRawEditor(false);
+    setActiveItemEditMode("list");
+    setNewTopicInput("");
+    setShowAddTabMenu(false);
     setPreviewPageIndex(0);
+    const sections = parseSubdivisionSections(shelf.subdivisions || []);
+    setBulkTextDraft(sections[0]?.items.join("\n") || (shelf.subdivisions || []).join("\n"));
   };
 
   const handleResetToDefaults = () => {
@@ -168,6 +438,191 @@ export default function DDCShelfManagerPage() {
       setSelectedShelf({ ...editingShelf, lastUpdated: new Date().toISOString() });
     }
     setEditingShelf(null);
+  };
+
+  const handleExportCSV = () => {
+    try {
+      const csvContent = exportShelvesToCSV(shelves);
+      const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `psau_library_ddc_catalog_${new Date().toISOString().split("T")[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      setSuccessMessage(`Exported ${shelves.length} shelves to CSV successfully!`);
+      setTimeout(() => setSuccessMessage(""), 5000);
+    } catch (err) {
+      console.error("Export error:", err);
+      alert("Failed to export CSV.");
+    }
+  };
+
+  const handleImportCSVFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      try {
+        const text = evt.target?.result as string;
+        if (!text) return;
+
+        const records = parseCSV(text);
+        if (records.length === 0) {
+          alert("Walang nahanap na valid shelf records sa CSV file.");
+          return;
+        }
+
+        let updatedCount = 0;
+        setShelves((prevShelves) => {
+          const shelfMap = new Map<string, DDCShelf>();
+          prevShelves.forEach((s) => shelfMap.set(s.shelfID.toLowerCase(), { ...s }));
+
+          records.forEach((row) => {
+            const id = (row.shelfID || row.shelfCode || "").trim().toLowerCase();
+            if (!id) return;
+
+            let targetShelf = shelfMap.get(id);
+            if (!targetShelf) {
+              for (const s of shelfMap.values()) {
+                if (s.shelfCode.toLowerCase() === id) {
+                  targetShelf = s;
+                  break;
+                }
+              }
+            }
+
+            if (targetShelf) {
+              updatedCount++;
+              if (row.shelfCode) targetShelf.shelfCode = row.shelfCode.trim();
+              if (row.categoryTitle) targetShelf.categoryTitle = row.categoryTitle.trim();
+              if (row.floor && ["ground", "second", "third"].includes(row.floor.toLowerCase())) {
+                targetShelf.floor = row.floor.toLowerCase() as "ground" | "second" | "third";
+              }
+              if (row.targetCollege) targetShelf.targetCollege = row.targetCollege.trim();
+              if (row.generalCollectionSummary) targetShelf.generalCollectionSummary = row.generalCollectionSummary.trim();
+              if (row.studentGuidance) targetShelf.studentGuidance = row.studentGuidance.trim();
+              if (row.subdivisions) {
+                const lines = row.subdivisions
+                  .split(/\r?\n|\|/)
+                  .map((l) => l.trim())
+                  .filter((l) => l.length > 0);
+                targetShelf.subdivisions = lines;
+              }
+              targetShelf.lastUpdated = new Date().toISOString();
+            }
+          });
+
+          return Array.from(shelfMap.values());
+        });
+
+        setSuccessMessage(`Matagumpay na na-import ang ${updatedCount} shelf records mula sa CSV! Pindutin ang 'Publish to Mobile' upang ma-deploy.`);
+        setTimeout(() => setSuccessMessage(""), 6000);
+      } catch (err) {
+        console.error("Import CSV Error:", err);
+        alert("Nagka-error sa pag-parse ng CSV file.");
+      } finally {
+        if (e.target) e.target.value = "";
+      }
+    };
+    reader.readAsText(file, "UTF-8");
+  };
+
+  const handleAddTopicToCurrentSection = (sections: SectionData[], safeTabIndex: number) => {
+    if (!newTopicInput.trim() || !editingShelf) return;
+    const currentSection = sections[safeTabIndex] || { title: "", items: [] };
+
+    const updatedSections = [...sections];
+    updatedSections[safeTabIndex] = {
+      ...currentSection,
+      items: [...currentSection.items, newTopicInput.trim()],
+    };
+
+    setEditingShelf({
+      ...editingShelf,
+      subdivisions: serializeSubdivisionSections(updatedSections),
+    });
+    setNewTopicInput("");
+  };
+
+  const handleDeleteTopic = (sections: SectionData[], safeTabIndex: number, itemIdx: number) => {
+    if (!editingShelf) return;
+    const currentSection = sections[safeTabIndex];
+    if (!currentSection) return;
+
+    const updatedSections = [...sections];
+    updatedSections[safeTabIndex] = {
+      ...currentSection,
+      items: currentSection.items.filter((_, idx) => idx !== itemIdx),
+    };
+
+    setEditingShelf({
+      ...editingShelf,
+      subdivisions: serializeSubdivisionSections(updatedSections),
+    });
+  };
+
+  const handleMoveTopic = (sections: SectionData[], safeTabIndex: number, itemIdx: number, dir: -1 | 1) => {
+    if (!editingShelf) return;
+    const currentSection = sections[safeTabIndex];
+    if (!currentSection) return;
+
+    const targetIdx = itemIdx + dir;
+    if (targetIdx < 0 || targetIdx >= currentSection.items.length) return;
+
+    const newItems = [...currentSection.items];
+    const temp = newItems[itemIdx];
+    newItems[itemIdx] = newItems[targetIdx];
+    newItems[targetIdx] = temp;
+
+    const updatedSections = [...sections];
+    updatedSections[safeTabIndex] = {
+      ...currentSection,
+      items: newItems,
+    };
+
+    setEditingShelf({
+      ...editingShelf,
+      subdivisions: serializeSubdivisionSections(updatedSections),
+    });
+  };
+
+  const handleUpdateTopicText = (sections: SectionData[], safeTabIndex: number, itemIdx: number, val: string) => {
+    if (!editingShelf) return;
+    const currentSection = sections[safeTabIndex];
+    if (!currentSection) return;
+
+    const newItems = [...currentSection.items];
+    newItems[itemIdx] = val;
+
+    const updatedSections = [...sections];
+    updatedSections[safeTabIndex] = {
+      ...currentSection,
+      items: newItems,
+    };
+
+    setEditingShelf({
+      ...editingShelf,
+      subdivisions: serializeSubdivisionSections(updatedSections),
+    });
+  };
+
+  const handleAddClassSection = (preset?: typeof DDC_CLASS_PRESETS[0]) => {
+    if (!editingShelf) return;
+    const sections = parseSubdivisionSections(editingShelf.subdivisions || []);
+    const newTitle = preset ? preset.label : `Panibagong Seksyon (Page ${sections.length + 1})`;
+    const newItems = preset ? [...preset.defaultItems] : [];
+
+    const updatedSections = [...sections, { title: newTitle, items: newItems }];
+    setEditingShelf({
+      ...editingShelf,
+      subdivisions: serializeSubdivisionSections(updatedSections),
+    });
+    setActiveSectionTab(sections.length);
+    setShowAddTabMenu(false);
   };
 
   // Update hotspot position from floor plan drag-and-drop
@@ -300,6 +755,33 @@ export default function DDCShelfManagerPage() {
             <RotateCcw className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Reset Defaults</span>
           </button>
+
+          <button
+            onClick={handleExportCSV}
+            disabled={saving}
+            title="Export all shelves to CSV file for Excel / Google Sheets"
+            className="inline-flex items-center justify-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 bg-slate-900 border border-slate-800 hover:bg-slate-800 hover:text-white transition-all disabled:opacity-50"
+          >
+            <Download className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="hidden sm:inline">Export CSV</span>
+          </button>
+
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            disabled={saving}
+            title="Import shelves from CSV file"
+            className="inline-flex items-center justify-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 bg-slate-900 border border-slate-800 hover:bg-slate-800 hover:text-white transition-all disabled:opacity-50"
+          >
+            <Upload className="w-3.5 h-3.5 text-teal-400" />
+            <span className="hidden sm:inline">Import CSV</span>
+          </button>
+          <input
+            type="file"
+            ref={fileInputRef}
+            accept=".csv"
+            onChange={handleImportCSVFile}
+            className="hidden"
+          />
 
           <button
             onClick={handlePublishToGame}
@@ -656,15 +1138,21 @@ export default function DDCShelfManagerPage() {
                         </label>
                         <div className="flex items-center space-x-2">
                           <span className="text-[10px] text-teal-400 font-mono">
-                            {(editingShelf.subdivisions || []).length} items
+                            {(editingShelf.subdivisions || []).length} lines total
                           </span>
                           {hasSections && (
                             <button
                               type="button"
-                              onClick={() => setUseRawEditor(!useRawEditor)}
+                              onClick={() => {
+                                const nextRaw = !useRawEditor;
+                                setUseRawEditor(nextRaw);
+                                if (nextRaw) {
+                                  setBulkTextDraft((editingShelf.subdivisions || []).join("\n"));
+                                }
+                              }}
                               className="text-[11px] text-cyan-400 hover:text-cyan-300 font-medium underline"
                             >
-                              {useRawEditor ? "← Switch to Class Tabs" : "Raw Bulk Editor →"}
+                              {useRawEditor ? "← Switch to Class Tabs" : "Raw Bulk Catalog →"}
                             </button>
                           )}
                         </div>
@@ -672,45 +1160,92 @@ export default function DDCShelfManagerPage() {
 
                       {!useRawEditor && hasSections ? (
                         <div className="space-y-2.5">
-                          {/* Class Section Tabs */}
-                          <div className="flex flex-wrap gap-1 p-1 bg-slate-950/80 border border-slate-800 rounded-xl">
-                            {sections.map((sec, idx) => {
-                              const label = sec.title ? sec.title.split("–")[0].trim() : `Page ${idx + 1}`;
-                              const isActive = safeTabIndex === idx;
-                              return (
-                                <button
-                                  key={idx}
-                                  type="button"
-                                  onClick={() => setActiveSectionTab(idx)}
-                                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                                    isActive
-                                      ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 shadow-sm"
-                                      : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
-                                  }`}
-                                >
-                                  {label}
-                                </button>
-                              );
-                            })}
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const updated = [...sections, { title: "New Class Section", items: [] }];
-                                setEditingShelf({
-                                  ...editingShelf,
-                                  subdivisions: serializeSubdivisionSections(updated),
-                                });
-                                setActiveSectionTab(sections.length);
-                              }}
-                              className="px-2.5 py-1.5 rounded-lg text-xs text-slate-500 hover:text-slate-300 hover:bg-slate-900 border border-dashed border-slate-800"
-                              title="Add Class Section"
-                            >
-                              + Add Tab
-                            </button>
+                          {/* Class Section Tabs & Presets Popover */}
+                          <div className="relative">
+                            <div className="flex flex-wrap gap-1 p-1 bg-slate-950/80 border border-slate-800 rounded-xl">
+                              {sections.map((sec, idx) => {
+                                const label = sec.title ? sec.title.split("–")[0].trim() : `Page ${idx + 1}`;
+                                const isActive = safeTabIndex === idx;
+                                return (
+                                  <button
+                                    key={idx}
+                                    type="button"
+                                    onClick={() => {
+                                      setActiveSectionTab(idx);
+                                      setBulkTextDraft(sections[idx]?.items.join("\n") || "");
+                                    }}
+                                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                                      isActive
+                                        ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 shadow-sm"
+                                        : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
+                                    }`}
+                                  >
+                                    {label}
+                                  </button>
+                                );
+                              })}
+                              <button
+                                type="button"
+                                onClick={() => setShowAddTabMenu(!showAddTabMenu)}
+                                className="px-2.5 py-1.5 rounded-lg text-xs font-bold text-teal-400 hover:text-teal-300 hover:bg-teal-500/10 border border-dashed border-teal-500/40 flex items-center space-x-1 transition-all"
+                                title="Add Class Section / Tab"
+                              >
+                                <Plus className="w-3 h-3" />
+                                <span>Add Tab</span>
+                              </button>
+                            </div>
+
+                            {/* DDC Preset Tab Selector Menu */}
+                            {showAddTabMenu && (
+                              <div className="absolute top-full left-0 mt-2 z-30 w-full max-w-md p-3 rounded-2xl bg-slate-900 border-2 border-teal-500/50 shadow-2xl backdrop-blur-md animate-fade-in space-y-2">
+                                <div className="flex items-center justify-between pb-1.5 border-b border-slate-800">
+                                  <span className="text-[11px] font-bold text-white flex items-center space-x-1.5">
+                                    <Sparkles className="w-3.5 h-3.5 text-teal-400" />
+                                    <span>Pumili ng DDC Class Preset o Custom Tab</span>
+                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => setShowAddTabMenu(false)}
+                                    className="p-1 text-slate-400 hover:text-white"
+                                  >
+                                    <X className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-1.5 max-h-48 overflow-y-auto pr-1 text-[11px]">
+                                  {DDC_CLASS_PRESETS.map((preset) => (
+                                    <button
+                                      key={preset.code}
+                                      type="button"
+                                      onClick={() => handleAddClassSection(preset)}
+                                      className="p-2 text-left rounded-xl bg-slate-950 border border-slate-800 hover:border-teal-500 hover:bg-slate-800/80 transition-all text-slate-300 hover:text-white group"
+                                    >
+                                      <div className="font-bold text-teal-400 font-mono text-[10px]">
+                                        Class {preset.code}
+                                      </div>
+                                      <div className="text-[10px] truncate text-slate-400 group-hover:text-slate-200">
+                                        {preset.label.replace(/^[0-9]{3} – /, "")}
+                                      </div>
+                                    </button>
+                                  ))}
+                                </div>
+
+                                <div className="pt-1.5 border-t border-slate-800">
+                                  <button
+                                    type="button"
+                                    onClick={() => handleAddClassSection()}
+                                    className="w-full py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center justify-center space-x-1.5 transition-colors"
+                                  >
+                                    <Plus className="w-3.5 h-3.5" />
+                                    <span>Custom Blank Tab (Manu-manong Ilalagay)</span>
+                                  </button>
+                                </div>
+                              </div>
+                            )}
                           </div>
 
                           {/* Active Section Editor */}
-                          <div className="p-3 bg-slate-950/90 border border-slate-800/80 rounded-xl space-y-2.5">
+                          <div className="p-3 bg-slate-950/90 border border-slate-800/80 rounded-xl space-y-3">
                             <div>
                               <div className="flex items-center justify-between mb-1">
                                 <label className="text-[11px] font-bold text-cyan-400">
@@ -726,7 +1261,9 @@ export default function DDCShelfManagerPage() {
                                           ...editingShelf,
                                           subdivisions: serializeSubdivisionSections(updated),
                                         });
-                                        setActiveSectionTab(Math.max(0, safeTabIndex - 1));
+                                        const newIndex = Math.max(0, safeTabIndex - 1);
+                                        setActiveSectionTab(newIndex);
+                                        setBulkTextDraft(updated[newIndex]?.items.join("\n") || "");
                                       }
                                     }}
                                     className="text-[10px] text-rose-400 hover:text-rose-300"
@@ -754,51 +1291,177 @@ export default function DDCShelfManagerPage() {
                               />
                             </div>
 
-                            <div>
-                              <label className="block text-[11px] font-bold text-slate-300 mb-1">
-                                Mga Sakop na Paksa / Subdivisions para sa Tab na ito (Isang paksa bawat linya)
-                              </label>
-                              <textarea
-                                rows={4}
-                                value={currentSection.items.join("\n")}
-                                onChange={(e) => {
-                                  const updated = [...sections];
-                                  updated[safeTabIndex] = {
-                                    ...currentSection,
-                                    items: e.target.value
+                            {/* Mode Switcher: Item-by-Item List vs Raw Bulk Editor */}
+                            <div className="flex items-center justify-between pt-1 border-t border-slate-900">
+                              <span className="text-[11px] font-bold text-slate-300 flex items-center space-x-1.5">
+                                <span>Mga Sakop na Paksa sa Tab na ito:</span>
+                                <span className="px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 font-mono text-[10px]">
+                                  {currentSection.items.length} paksa
+                                </span>
+                              </span>
+                              <div className="flex items-center space-x-1 bg-slate-900 border border-slate-800 p-0.5 rounded-lg text-[10px]">
+                                <button
+                                  type="button"
+                                  onClick={() => setActiveItemEditMode("list")}
+                                  className={`px-2 py-1 rounded font-medium transition-all ${
+                                    activeItemEditMode === "list"
+                                      ? "bg-cyan-500 text-slate-950 font-bold shadow-sm"
+                                      : "text-slate-400 hover:text-white"
+                                  }`}
+                                >
+                                  📋 Item-by-Item (+ Add)
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setActiveItemEditMode("bulk");
+                                    setBulkTextDraft(currentSection.items.join("\n"));
+                                  }}
+                                  className={`px-2 py-1 rounded font-medium transition-all ${
+                                    activeItemEditMode === "bulk"
+                                      ? "bg-cyan-500 text-slate-950 font-bold shadow-sm"
+                                      : "text-slate-400 hover:text-white"
+                                  }`}
+                                >
+                                  📝 Raw Text
+                                </button>
+                              </div>
+                            </div>
+
+                            {activeItemEditMode === "list" ? (
+                              <div className="space-y-2">
+                                {/* Item-by-Item List with Re-order & Delete */}
+                                <div className="space-y-1.5 max-h-52 overflow-y-auto pr-1">
+                                  {currentSection.items.length === 0 ? (
+                                    <div className="p-3 rounded-xl bg-slate-900/60 border border-dashed border-slate-800 text-center text-slate-500 text-xs">
+                                      Walang nakalistang paksa sa tab na ito. Maglagay sa ibaba gamit ang input field o pindutin ang Enter.
+                                    </div>
+                                  ) : (
+                                    currentSection.items.map((item, itemIdx) => (
+                                      <div
+                                        key={itemIdx}
+                                        className="flex items-center gap-2 p-1.5 sm:p-2 rounded-xl bg-slate-900 border border-slate-800/80 hover:border-slate-700 transition-all group"
+                                      >
+                                        <span className="w-5 h-5 rounded-md bg-cyan-500/15 text-cyan-300 font-mono text-[10px] flex items-center justify-center font-bold flex-shrink-0">
+                                          {itemIdx + 1}
+                                        </span>
+                                        <input
+                                          type="text"
+                                          value={item}
+                                          onChange={(e) =>
+                                            handleUpdateTopicText(sections, safeTabIndex, itemIdx, e.target.value)
+                                          }
+                                          className="flex-1 bg-transparent text-white text-xs font-medium focus:outline-none focus:bg-slate-950 px-2 py-0.5 rounded border border-transparent focus:border-cyan-500/50"
+                                        />
+                                        <div className="flex items-center space-x-1">
+                                          <button
+                                            type="button"
+                                            disabled={itemIdx === 0}
+                                            onClick={() => handleMoveTopic(sections, safeTabIndex, itemIdx, -1)}
+                                            title="Move Up"
+                                            className="p-1 text-slate-500 hover:text-slate-200 disabled:opacity-30 disabled:hover:text-slate-500 transition-colors"
+                                          >
+                                            <ArrowUp className="w-3.5 h-3.5" />
+                                          </button>
+                                          <button
+                                            type="button"
+                                            disabled={itemIdx === currentSection.items.length - 1}
+                                            onClick={() => handleMoveTopic(sections, safeTabIndex, itemIdx, 1)}
+                                            title="Move Down"
+                                            className="p-1 text-slate-500 hover:text-slate-200 disabled:opacity-30 disabled:hover:text-slate-500 transition-colors"
+                                          >
+                                            <ArrowDown className="w-3.5 h-3.5" />
+                                          </button>
+                                          <button
+                                            type="button"
+                                            onClick={() => handleDeleteTopic(sections, safeTabIndex, itemIdx)}
+                                            title="Delete Topic"
+                                            className="p-1 text-slate-500 hover:text-rose-400 transition-colors"
+                                          >
+                                            <Trash2 className="w-3.5 h-3.5" />
+                                          </button>
+                                        </div>
+                                      </div>
+                                    ))
+                                  )}
+                                </div>
+
+                                {/* Single-line input with + Magdagdag button and Enter key listener */}
+                                <div className="flex items-center gap-2 pt-1.5">
+                                  <input
+                                    type="text"
+                                    value={newTopicInput}
+                                    onChange={(e) => setNewTopicInput(e.target.value)}
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter") {
+                                        e.preventDefault();
+                                        handleAddTopicToCurrentSection(sections, safeTabIndex);
+                                      }
+                                    }}
+                                    placeholder="Ilagay ang bagong paksa (e.g. 010 Bibliography) sabay pindutin ang Enter..."
+                                    className="flex-1 bg-slate-900 border border-slate-700 focus:border-cyan-400 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none"
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={() => handleAddTopicToCurrentSection(sections, safeTabIndex)}
+                                    className="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-teal-400 to-cyan-400 hover:from-teal-300 hover:to-cyan-300 flex items-center space-x-1 shadow-md shadow-teal-500/20 transition-all cursor-pointer flex-shrink-0"
+                                  >
+                                    <Plus className="w-3.5 h-3.5" />
+                                    <span>Magdagdag</span>
+                                  </button>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="space-y-1.5">
+                                <textarea
+                                  rows={5}
+                                  value={bulkTextDraft}
+                                  onChange={(e) => {
+                                    setBulkTextDraft(e.target.value);
+                                    const lines = e.target.value
                                       .split("\n")
                                       .map((s) => s.trim())
-                                      .filter((s) => s.length > 0),
-                                  };
-                                  setEditingShelf({
-                                    ...editingShelf,
-                                    subdivisions: serializeSubdivisionSections(updated),
-                                  });
-                                }}
-                                placeholder="e.g.&#10;Bibliography&#10;Library & Information Sciences"
-                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-cyan-400 leading-relaxed"
-                              />
-                            </div>
+                                      .filter((s) => s.length > 0);
+                                    const updatedSections = [...sections];
+                                    updatedSections[safeTabIndex] = {
+                                      ...currentSection,
+                                      items: lines,
+                                    };
+                                    setEditingShelf({
+                                      ...editingShelf,
+                                      subdivisions: serializeSubdivisionSections(updatedSections),
+                                    });
+                                  }}
+                                  placeholder="Isang paksa bawat linya (e.g.&#10;010 Bibliography&#10;020 Library Sciences)"
+                                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-cyan-400 leading-relaxed"
+                                />
+                                <p className="text-[10px] text-slate-500">
+                                  Maaaring mag-paste ng maramihang linya. Awtomatikong magkakaroon ng bullet point ang bawat linya sa mobile app.
+                                </p>
+                              </div>
+                            )}
                           </div>
                         </div>
                       ) : (
-                        <div>
+                        <div className="space-y-2">
                           <textarea
                             rows={5}
-                            value={(editingShelf.subdivisions || []).join("\n")}
-                            onChange={(e) =>
+                            value={bulkTextDraft}
+                            onChange={(e) => {
+                              setBulkTextDraft(e.target.value);
+                              const lines = e.target.value
+                                .split("\n")
+                                .map((s) => s.trim())
+                                .filter((s) => s.length > 0);
                               setEditingShelf({
                                 ...editingShelf,
-                                subdivisions: e.target.value
-                                  .split("\n")
-                                  .map((s) => s.trim())
-                                  .filter((s) => s.length > 0),
-                              })
-                            }
+                                subdivisions: lines,
+                              });
+                            }}
                             placeholder="e.g.&#10;630 - Agriculture & Related Technologies&#10;631 - Techniques, Equipment & Materials&#10;632 - Plant Injuries, Diseases & Pests"
                             className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-teal-400 leading-relaxed"
                           />
-                          <p className="text-[10px] text-slate-500 mt-1">
+                          <p className="text-[10px] text-slate-500">
                             Tip: Gumamit ng <code className="text-cyan-400 font-mono">[000 - Title]</code> para awtomatikong lumikha ng panibagong class section o pahina sa mobile app.
                           </p>
                         </div>
