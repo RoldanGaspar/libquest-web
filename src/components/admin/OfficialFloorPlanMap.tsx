@@ -32,7 +32,7 @@ import {
   Crosshair
 } from "lucide-react";
 
-export type FloorTab = "ground" | "second";
+export type FloorTab = "ground" | "second" | "third";
 export type HotspotFilter = "all" | "circulation_stacks" | "ddc_shelves" | "theses" | "services";
 
 export interface HotspotDefinition {
@@ -42,25 +42,23 @@ export interface HotspotDefinition {
   code: string;
   subtitle: string;
   category: "circulation" | "ddc" | "thesis" | "service" | "facility";
-  x: number; // percentage 0 to 100 exactly on user yellow boxes
-  y: number; // percentage 0 to 100 exactly on user yellow boxes
+  x: number; // percentage 0 to 100
+  y: number; // percentage 0 to 100
   floor: FloorTab;
   color: "teal" | "emerald" | "amber" | "cyan" | "purple" | "blue";
 }
 
-// Exactly calibrated positions derived from the user-marked yellow boxes
+// Exactly calibrated positions derived from 3D library objects and floor plan blueprints
 export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
   // =========================================================================
-  // GROUND FLOOR HOTSPOTS (Exact Yellow Box Centroids)
+  // GROUND FLOOR HOTSPOTS (18 Objects)
   // =========================================================================
-
-  // --- 1. TOP VERTICAL STACKS (3 Yellow Boxes) ---
   {
     id: "gf_box_ddc_000_cs",
-    shelfIDMatch: "Shelf_DDC_000_ComputerScience",
-    label: "Computer Science & Programming",
-    code: "SHELF 004–006",
-    subtitle: "Software, algorithms, IT & computer systems",
+    shelfIDMatch: "00.01 - 320.99 to 321.00 - 424.99",
+    label: "General Works, Philosophy, Religion & Social Sciences",
+    code: "00.01 - 320.99 to 321.00 - 424.99",
+    subtitle: "DDC 000–424: Computer Science, Philosophy, Religion, Social Sciences",
     category: "ddc",
     x: 12.4,
     y: 16.2,
@@ -69,10 +67,10 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
   },
   {
     id: "gf_box_ddc_500_pure_sci",
-    shelfIDMatch: "Shelf_DDC_500_PureSciences",
-    label: "Pure Sciences & Mathematics",
-    code: "SHELF 500–599",
-    subtitle: "Mathematics, physics, chemistry, ecology",
+    shelfIDMatch: "425.00 - 550.00 to 550.01 - 612.00",
+    label: "Languages, Pure Sciences & Early Applied Sciences",
+    code: "425.00 - 550.00 to 550.01 - 612.00",
+    subtitle: "DDC 425–612: Linguistics, Math, Physics, Chemistry, Biology, Physiology",
     category: "ddc",
     x: 16.4,
     y: 16.2,
@@ -81,18 +79,16 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
   },
   {
     id: "gf_box_ddc_600_agri",
-    shelfIDMatch: "Shelf_DDC_600_Agriculture",
-    label: "Agriculture & Animal Science",
-    code: "SHELF 630–639",
-    subtitle: "Crops, farming systems, forestry, agro-tech",
+    shelfIDMatch: "612.01 - 631.29 to 631.30 - 634.69",
+    label: "Medical Sciences, Engineering & Crop Agriculture",
+    code: "612.01 - 631.29 to 631.30 - 634.69",
+    subtitle: "DDC 612–634: Medicine, Engineering, Agronomy, Soil Science, Crops",
     category: "ddc",
     x: 20.5,
     y: 16.2,
     floor: "ground",
     color: "emerald"
   },
-
-  // --- 2. FOUR MAIN HORIZONTAL STACKS (4 Yellow Boxes at Left Ends) ---
   {
     id: "gf_box_grad_studies",
     shelfIDMatch: "GRADUATE STUDIES",
@@ -107,10 +103,10 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
   },
   {
     id: "gf_box_recency_b",
-    shelfIDMatch: "TEN YEARS RECENCY (1)",
+    shelfIDMatch: "TEN YEARS RECENCY B",
     label: "Ten Years Recency (Stack B)",
     code: "10-YR RECENCY (B)",
-    subtitle: "Books published within the last 10 years (Part 2)",
+    subtitle: "Curriculum textbooks published within the last 10 years (Part 2)",
     category: "circulation",
     x: 25.8,
     y: 55.8,
@@ -119,7 +115,7 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
   },
   {
     id: "gf_box_recency_a",
-    shelfIDMatch: "TEN YEARS RECENCY",
+    shelfIDMatch: "TEN YEARS RECENCY A",
     label: "Ten Years Recency (Stack A)",
     code: "10-YR RECENCY (A)",
     subtitle: "Recent academic acquisitions (2014–Present)",
@@ -130,37 +126,11 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
     color: "teal"
   },
   {
-    id: "gf_box_ddc_400_lang",
-    shelfIDMatch: "Shelf_DDC_400_Language",
-    label: "Language & Linguistics",
-    code: "SHELF 400–499",
-    subtitle: "Grammar, dictionaries, foreign languages",
-    category: "ddc",
-    x: 25.8,
-    y: 65.3,
-    floor: "ground",
-    color: "emerald"
-  },
-
-  // --- 3. MIDDLE COLUMN STUDY STACKS (4 Yellow Boxes) ---
-  {
-    id: "gf_box_ddc_600_tech",
-    shelfIDMatch: "Shelf_DDC_600_Technology",
-    label: "Technology & Applied Sciences",
-    code: "SHELF 600–629",
-    subtitle: "Engineering, mechanics, manufacturing",
-    category: "ddc",
-    x: 10.6,
-    y: 48.4,
-    floor: "ground",
-    color: "emerald"
-  },
-  {
-    id: "gf_box_ddc_636_husbandry",
-    shelfIDMatch: "Shelf_DDC_636_AnimalHusbandry",
-    label: "Animal Husbandry & Livestock",
-    code: "SHELF 636",
-    subtitle: "Livestock management, poultry, swine breeding",
+    id: "gf_box_ddc_634_hort",
+    shelfIDMatch: "634.70 - 636.29 to 636.30 - 658.09",
+    label: "Horticulture, Animal Husbandry & Commercial Tech",
+    code: "634.70 - 636.29 to 636.30 - 658.09",
+    subtitle: "DDC 634–658: Forestry, Animal Breeding, Vet Care, Commerce",
     category: "ddc",
     x: 10.6,
     y: 53.9,
@@ -168,37 +138,35 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
     color: "emerald"
   },
   {
-    id: "gf_box_ddc_637_vet",
-    shelfIDMatch: "Shelf_DDC_637_Veterinary",
-    label: "Veterinary & Dairy Science",
-    code: "SHELF 637–658",
-    subtitle: "Veterinary clinical medicine, dairy processing",
-    category: "ddc",
-    x: 10.6,
-    y: 62.8,
-    floor: "ground",
-    color: "emerald"
-  },
-  {
     id: "gf_box_ddc_658_mgmt",
-    shelfIDMatch: "Shelf_DDC_658_Management",
-    label: "Management & Commerce",
-    code: "SHELF 658",
-    subtitle: "Business management, accounting, entrepreneurship",
+    shelfIDMatch: "658.10 - 658.79",
+    label: "Business Administration & Management",
+    code: "658.10 - 658.79",
+    subtitle: "DDC 658: Corporate organization, financial management, executive ops",
     category: "ddc",
     x: 10.6,
     y: 67.9,
     floor: "ground",
     color: "emerald"
   },
-
-  // --- 4. BOTTOM ROW STACKS (3 Yellow Boxes) ---
+  {
+    id: "gf_box_ddc_658_chem",
+    shelfIDMatch: "658.10 - 699.99",
+    label: "Applied Management, Chemical Tech & Manufacturing",
+    code: "658.10 - 699.99",
+    subtitle: "DDC 658–699: Chemical technology, manufacturing, building construction",
+    category: "ddc",
+    x: 10.6,
+    y: 48.4,
+    floor: "ground",
+    color: "emerald"
+  },
   {
     id: "gf_box_ddc_700_arts",
-    shelfIDMatch: "Shelf_DDC_700_Arts",
-    label: "Arts & Recreation",
-    code: "SHELF 700–799",
-    subtitle: "Music, visual arts, architecture, sports",
+    shelfIDMatch: "700.00 - 807.99",
+    label: "The Arts, Recreation & World Literature Stacks",
+    code: "700.00 - 807.99",
+    subtitle: "DDC 700–807: Visual arts, architecture, music, recreation, literary theory",
     category: "ddc",
     x: 15.2,
     y: 70.4,
@@ -207,10 +175,10 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
   },
   {
     id: "gf_box_ddc_800_lit",
-    shelfIDMatch: "Shelf_DDC_800_Literature",
-    label: "Literature",
-    code: "SHELF 800–899",
-    subtitle: "Poetry, drama, rhetoric, literary criticism",
+    shelfIDMatch: "808.00 - 808.819",
+    label: "Rhetoric, Literary Composition & Poetry Anthologies",
+    code: "808.00 - 808.819",
+    subtitle: "DDC 808: Creative writing, rhetoric, speech, poetry anthologies",
     category: "ddc",
     x: 20.6,
     y: 70.4,
@@ -219,77 +187,49 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
   },
   {
     id: "gf_box_ddc_900_hist",
-    shelfIDMatch: "Shelf_DDC_900_History",
-    label: "History & Geography",
-    code: "SHELF 900–999",
-    subtitle: "World history, geography, biographies, maps",
+    shelfIDMatch: "808.82 - 939.99",
+    label: "Drama, World Literature & Ancient World History",
+    code: "808.82 - 939.99",
+    subtitle: "DDC 808–939: International drama, travel, biographies, ancient history",
     category: "ddc",
     x: 25.4,
     y: 70.4,
     floor: "ground",
     color: "emerald"
   },
-
-  // --- 5. PERIMETER & WEST WALL STACKS (4 Yellow Boxes) ---
   {
-    id: "gf_box_ddc_100_phil",
-    shelfIDMatch: "Shelf_DDC_100_Philosophy",
-    label: "Philosophy & Psychology",
-    code: "SHELF 100–199",
-    subtitle: "Ethics, logic, behavioral sciences",
-    category: "ddc",
+    id: "gf_box_fiction_1",
+    shelfIDMatch: "Fiction 1",
+    label: "Fiction & Novels (Authors A–H)",
+    code: "FICTION 1",
+    subtitle: "Novels, contemporary fiction, literary prose (Authors A–H)",
+    category: "circulation",
     x: 6.0,
     y: 47.4,
     floor: "ground",
-    color: "emerald"
+    color: "teal"
   },
   {
-    id: "gf_box_ddc_200_rel",
-    shelfIDMatch: "Shelf_DDC_200_Religion",
-    label: "Religion & Mythology",
-    code: "SHELF 200–299",
-    subtitle: "Theology, world faiths, comparative religion",
-    category: "ddc",
+    id: "gf_box_fiction_2",
+    shelfIDMatch: "Fiction 2",
+    label: "Fiction & Literature (Authors I–P)",
+    code: "FICTION 2",
+    subtitle: "International bestsellers, novels (Authors I–P)",
+    category: "circulation",
     x: 6.0,
     y: 56.4,
     floor: "ground",
-    color: "emerald"
+    color: "teal"
   },
   {
-    id: "gf_box_ddc_300_soc_sci",
-    shelfIDMatch: "Shelf_DDC_300_SocialSciences",
-    label: "Social Sciences & Education",
-    code: "SHELF 300–399",
-    subtitle: "Sociology, education, economics, governance",
-    category: "ddc",
+    id: "gf_box_fiction_3",
+    shelfIDMatch: "Fiction 3",
+    label: "Classic Literature (Authors Q–Z)",
+    code: "FICTION 3",
+    subtitle: "Classic literature, anthologies, novels (Authors Q–Z)",
+    category: "circulation",
     x: 6.0,
     y: 66.8,
-    floor: "ground",
-    color: "emerald"
-  },
-  {
-    id: "gf_box_ddc_660_chem",
-    shelfIDMatch: "Shelf_DDC_660_ChemicalEngg",
-    label: "Chemical Engineering",
-    code: "SHELF 660–699",
-    subtitle: "Chemical technology, food science, processing",
-    category: "ddc",
-    x: 6.0,
-    y: 78.1,
-    floor: "ground",
-    color: "emerald"
-  },
-
-  // --- 6. SERVICES & LOBBY ENTRANCE ---
-  {
-    id: "gf_box_circ_desk",
-    shelfIDMatch: "OPAC TERMINAL ",
-    label: "Circulation Desk (Sir Tirso)",
-    code: "CIRCULATION DESK",
-    subtitle: "Keyhole service counter for book borrowing & returns",
-    category: "service",
-    x: 28.3,
-    y: 33.9,
     floor: "ground",
     color: "teal"
   },
@@ -298,7 +238,7 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
     shelfIDMatch: "OPAC TERMINAL ",
     label: "OPAC Search Terminals",
     code: "OPAC TERMINAL",
-    subtitle: "Digital public catalog terminals for book call numbers",
+    subtitle: "Digital public catalog terminals for book call numbers and locations",
     category: "service",
     x: 28.8,
     y: 28.0,
@@ -322,31 +262,31 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
     shelfIDMatch: "BAGGAGE",
     label: "Baggage Drop-off Counter",
     code: "BAGGAGE",
-    subtitle: "Student baggage deposit bin at room entrance",
+    subtitle: "Designated student baggage deposit bin at room entrance",
     category: "service",
     x: 39.1,
     y: 69.0,
     floor: "ground",
     color: "cyan"
   },
+
+  // =========================================================================
+  // SECOND FLOOR HOTSPOTS (28 Objects)
+  // =========================================================================
   {
-    id: "gf_box_info_desk",
-    shelfIDMatch: "COMPUTER ID SCANNER",
-    label: "Library Info & Assistance Desk",
-    code: "INFO DESK",
-    subtitle: "Student verification, directory & inquiries",
+    id: "2f_box_book_return",
+    shelfIDMatch: "Facility_BookReturn",
+    label: "Circulation Book Return Station",
+    code: "RETURN BOX",
+    subtitle: "Drop box for returning borrowed library books (₱5.00/day overdue penalty)",
     category: "service",
-    x: 52.7,
-    y: 52.1,
-    floor: "ground",
-    color: "blue"
+    x: 21.0,
+    y: 52.3,
+    floor: "second",
+    color: "cyan"
   },
 
-  // =========================================================================
-  // SECOND FLOOR HOTSPOTS (Exact Yellow Box Centroids)
-  // =========================================================================
-
-  // --- 1. THESIS SECTION TOP ROW (3 Yellow Boxes) ---
+  // --- THESIS SECTION (Shelving Units 01–13) ---
   {
     id: "2f_box_thesis_01",
     shelfIDMatch: "SHELVING UNIT 01 BS ENTREPRENURSHIP UT AND TR",
@@ -361,10 +301,10 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
   },
   {
     id: "2f_box_thesis_02",
-    shelfIDMatch: "SHELVING UNIT 04 BS INFORMATION TECHNOLOGY UNDERGRADUATE THESIS (UT)  CAPSTONE PROJECT (CP)",
+    shelfIDMatch: "SHELVING UNIT 02 BS BIOLOGY UNDERGRADUATE THESIS (UT) & BS FISHERIES UNDERGRADUATE THESIS (UT)",
     label: "BS Biology & Fisheries (UT)",
     code: "THESIS UNIT 02",
-    subtitle: "Biological research & marine sciences theses",
+    subtitle: "Aquatic biodiversity, marine ecology, and biological sciences theses",
     category: "thesis",
     x: 23.7,
     y: 35.8,
@@ -373,24 +313,22 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
   },
   {
     id: "2f_box_thesis_03",
-    shelfIDMatch: "SHELVING UNIT 05 BSA ANIMAL SCIENCE UNDERGRADUATE THESIS (UT)  FARM PRACTICES (FP)",
-    label: "BS Agribusiness (UT / SP)",
+    shelfIDMatch: "SHELVING UNIT 03 BS AGRICULTURAL BUSINESS UNDERGRADUATE THESIS (UT)  SPECIAL PROBLEM (SP)",
+    label: "BS Agricultural Business (UT / SP)",
     code: "THESIS UNIT 03",
-    subtitle: "Agricultural business & economic special problems",
+    subtitle: "Agricultural business value chain & economic special problems",
     category: "thesis",
     x: 28.0,
     y: 35.8,
     floor: "second",
     color: "teal"
   },
-
-  // --- 2. THESIS SECTION BOTTOM ROW (4 Yellow Boxes) ---
   {
     id: "2f_box_thesis_04",
     shelfIDMatch: "SHELVING UNIT 04 BS INFORMATION TECHNOLOGY UNDERGRADUATE THESIS (UT)  CAPSTONE PROJECT (CP)",
-    label: "BS Information Technology (CP / UT)",
+    label: "BS Information Technology (UT / CP)",
     code: "THESIS UNIT 04",
-    subtitle: "Software engineering, capstone projects, and IT systems",
+    subtitle: "Software engineering, capstone projects, and IT systems documentation",
     category: "thesis",
     x: 16.5,
     y: 46.2,
@@ -400,9 +338,9 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
   {
     id: "2f_box_thesis_05",
     shelfIDMatch: "SHELVING UNIT 05 BSA ANIMAL SCIENCE UNDERGRADUATE THESIS (UT)  FARM PRACTICES (FP)",
-    label: "BSA Animal Science (UT / FP)",
+    label: "BSA Animal Science (UT / FP - Vol 1)",
     code: "THESIS UNIT 05",
-    subtitle: "Farm practices and livestock research papers",
+    subtitle: "Livestock management, swine breeding, and poultry farm practices",
     category: "thesis",
     x: 21.3,
     y: 46.2,
@@ -411,10 +349,10 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
   },
   {
     id: "2f_box_thesis_06",
-    shelfIDMatch: "SHELVING UNIT 05 BSA ANIMAL SCIENCE UNDERGRADUATE THESIS (UT)  FARM PRACTICES (FP)",
-    label: "BSA Animal Science Research",
+    shelfIDMatch: "SHELVING UNIT 06 BSA ANIMAL SCIENCE UNDERGRADUATE THESIS (UT) FARM PRACTICES (FP)",
+    label: "BSA Animal Science (UT / FP - Vol 2)",
     code: "THESIS UNIT 06",
-    subtitle: "Animal nutrition, breeding & livestock papers",
+    subtitle: "Animal nutrition, breeding experiments, and livestock research",
     category: "thesis",
     x: 25.0,
     y: 46.2,
@@ -422,11 +360,83 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
     color: "teal"
   },
   {
+    id: "2f_box_thesis_07",
+    shelfIDMatch: "SHELVING UNIT 07 BSA ANIMAL SCIENCE FARM PRACTICES (FP), BSA MATHEMATICS UNDERGRADUATE THESIS (UT), BSA AGROFORESTRY UNDERGRADUATE THESIS (UT) FIELD PRACTICUM (FP)",
+    label: "Animal Sci / Math / Agroforestry (UT / FP)",
+    code: "THESIS UNIT 07",
+    subtitle: "Interdisciplinary agriculture, mathematics, and agroforestry field practicums",
+    category: "thesis",
+    x: 16.5,
+    y: 53.0,
+    floor: "second",
+    color: "teal"
+  },
+  {
+    id: "2f_box_thesis_08",
+    shelfIDMatch: "SHELVING UNIT 08 BS DEVELOPEMTN COMMUNICATION UNDERGRADAUTE THESIS (UT), BS FORESTRY UNDERGRADUATE THESIS (UT)",
+    label: "BS DevComm & BS Forestry (UT)",
+    code: "THESIS UNIT 08",
+    subtitle: "Community extension, development communication, and forestry theses",
+    category: "thesis",
+    x: 21.3,
+    y: 53.0,
+    floor: "second",
+    color: "teal"
+  },
+  {
+    id: "2f_box_thesis_09",
+    shelfIDMatch: "SHELVING UNIT 09 BS HOSPITALITY MANAGEMENT PRACTICUM REPORT (PR)",
+    label: "BS Hospitality Management (PR - Vol 1)",
+    code: "THESIS UNIT 09",
+    subtitle: "Practicum and terminal industry training in hotel & restaurant operations",
+    category: "thesis",
+    x: 25.0,
+    y: 53.0,
+    floor: "second",
+    color: "teal"
+  },
+  {
+    id: "2f_box_thesis_10",
+    shelfIDMatch: "SHELVING UNIT 10 BS HOSPITALITY MANAGEMENT PRACTICUM REPORT (PR) UNDERGRADAUTE THESIS REASEARCH PAPER (PR)",
+    label: "BS Hospitality Management (PR / UT - Vol 2)",
+    code: "THESIS UNIT 10",
+    subtitle: "Advanced undergraduate research papers on hospitality and food service",
+    category: "thesis",
+    x: 29.8,
+    y: 53.0,
+    floor: "second",
+    color: "teal"
+  },
+  {
+    id: "2f_box_thesis_11",
+    shelfIDMatch: "SHELVING UNIT 11 BAELS UNDERGRADAUTE THESIS (UT), BS GEODETIC ENGINEERING UNDERGRADUATE THESIS (UT)",
+    label: "BAELS & BS Geodetic Engineering (UT)",
+    code: "THESIS UNIT 11",
+    subtitle: "English language discourse analysis and geodetic surveying theses",
+    category: "thesis",
+    x: 16.5,
+    y: 59.5,
+    floor: "second",
+    color: "teal"
+  },
+  {
+    id: "2f_box_thesis_12",
+    shelfIDMatch: "SHELVING UNIT 12 BSA ABE UNDERGRADAUTE THESIS (UT)",
+    label: "BS Agricultural & Biosystems Engineering (UT)",
+    code: "THESIS UNIT 12",
+    subtitle: "Agricultural mechanization, post-harvest engineering, and renewable energy",
+    category: "thesis",
+    x: 21.3,
+    y: 59.5,
+    floor: "second",
+    color: "teal"
+  },
+  {
     id: "2f_box_thesis_13",
     shelfIDMatch: "SHELVING UNIT 13 BS CROP SCIENCE UNDERGRADAUTE THESIS (UT) FARM PRACTICES (FP), BS AGRICULTURE UNDERGRADUATE THESIS (UT)",
-    label: "BS Crop Science & Agriculture (UT)",
+    label: "BS Crop Science & Agriculture (UT / FP)",
     code: "THESIS UNIT 13",
-    subtitle: "Agronomy, pest management, and crop breeding research",
+    subtitle: "Agronomy, pest management, and crop breeding research papers",
     category: "thesis",
     x: 29.8,
     y: 46.2,
@@ -434,27 +444,13 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
     color: "teal"
   },
 
-  // --- 3. THESIS SECTION SIDE WALLS (2 Yellow Boxes) ---
+  // --- FILIPINIANA & SPECIAL STACKS ---
   {
-    id: "2f_box_thesis_07",
-    shelfIDMatch: "SHELVING UNIT 01 BS ENTREPRENURSHIP UT AND TR",
-    label: "Animal Sci / Math / Agroforestry",
-    code: "THESIS UNIT 07",
-    subtitle: "Interdisciplinary agriculture & mathematics theses",
-    category: "thesis",
-    x: 11.5,
-    y: 41.1,
-    floor: "second",
-    color: "teal"
-  },
-
-  // --- 4. FILIPINIANA SECTION RIGHT AISLE (2 Yellow Boxes) ---
-  {
-    id: "2f_box_filipiniana_main",
-    shelfIDMatch: "Shelf_DDC_FIL_Filipiniana",
-    label: "Filipiniana Collection Main Stacks",
-    code: "FILIPINIANA (FIL)",
-    subtitle: "Pampanga history, Philippine culture, and Filipiniana authors",
+    id: "2f_box_fil_01",
+    shelfIDMatch: "SHELVING UNIT 01: FIL 001.3 — FIL 304.6",
+    label: "Filipiniana: Generalities to Social Groups",
+    code: "FIL 001.3 — FIL 304.6",
+    subtitle: "Philippine research, humanities, and sociological studies",
     category: "ddc",
     x: 21.0,
     y: 64.3,
@@ -462,25 +458,47 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
     color: "amber"
   },
   {
-    id: "2f_box_filipiniana_stack2",
-    shelfIDMatch: "Shelf_DDC_FIL_Filipiniana",
-    label: "Filipiniana Archival Collection",
-    code: "FIL ARCHIVES",
-    subtitle: "Philippine government documents, law, and history",
+    id: "2f_box_fil_02",
+    shelfIDMatch: "SHELVING UNIT 02: FIL 305.3 — FIL 338.16",
+    label: "Filipiniana: Social Structure & Agrarian Economics",
+    code: "FIL 305.3 — FIL 338.16",
+    subtitle: "Philippine gender studies and agricultural economics",
     category: "ddc",
     x: 21.0,
     y: 71.5,
     floor: "second",
     color: "amber"
   },
-
-  // --- 5. FILIPINIANA BOTTOM ROW (4 Yellow Boxes) ---
   {
-    id: "2f_box_fil_pampanga",
-    shelfIDMatch: "Shelf_DDC_FIL_Filipiniana",
-    label: "Pampanga & Kapampangan Heritage",
-    code: "FIL PAMPANGA",
-    subtitle: "Local studies, folklore, and Kapampangan heritage books",
+    id: "2f_box_fil_03",
+    shelfIDMatch: "SHELVING UNIT 03: FIL 338.4 — FIL 371.10",
+    label: "Filipiniana: Philippine Industry & Education",
+    code: "FIL 338.4 — FIL 371.10",
+    subtitle: "Philippine economic industries, labor laws, and education",
+    category: "ddc",
+    x: 21.0,
+    y: 78.0,
+    floor: "second",
+    color: "amber"
+  },
+  {
+    id: "2f_box_fil_04",
+    shelfIDMatch: "SHELVING UNIT 04: FIL 371.27 — FIL 428",
+    label: "Filipiniana: Educational Assessment & Tagalog Linguistics",
+    code: "FIL 371.27 — FIL 428",
+    subtitle: "School administration, educational testing, Filipino language",
+    category: "ddc",
+    x: 21.0,
+    y: 84.0,
+    floor: "second",
+    color: "amber"
+  },
+  {
+    id: "2f_box_fil_05",
+    shelfIDMatch: "SHELVING UNIT 05: FIL 428 — FIL 574.07",
+    label: "Filipiniana: Philippine Languages & Local Flora/Fauna",
+    code: "FIL 428 — FIL 574.07",
+    subtitle: "Philippine linguistics, mathematics, and biodiversity",
     category: "ddc",
     x: 10.1,
     y: 82.9,
@@ -488,11 +506,11 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
     color: "amber"
   },
   {
-    id: "2f_box_fil_authors",
-    shelfIDMatch: "Shelf_DDC_FIL_Filipiniana",
-    label: "Philippine National Authors",
-    code: "FIL AUTHORS",
-    subtitle: "Rizal, Balagtas, Nick Joaquin, and Filipino classics",
+    id: "2f_box_fil_06",
+    shelfIDMatch: "SHELVING UNIT 06: FIL 574.88 — FIL 630",
+    label: "Filipiniana: Philippine Biology & Tropical Agriculture",
+    code: "FIL 574.88 — FIL 630",
+    subtitle: "Tropical ecosystems, Philippine medicinal plants, agriculture",
     category: "ddc",
     x: 12.5,
     y: 82.8,
@@ -500,11 +518,11 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
     color: "amber"
   },
   {
-    id: "2f_box_fil_reference",
-    shelfIDMatch: "Shelf_DDC_FIL_Filipiniana",
-    label: "Philippine Reference & Bibliography",
-    code: "FIL REFERENCE",
-    subtitle: "Philippine encyclopedias, bibliographies, atlases",
+    id: "2f_box_fil_07",
+    shelfIDMatch: "SHELVING UNIT 07: FIL 630 — FIL 633.18",
+    label: "Filipiniana: Philippine Rice Farming & Crop Production",
+    code: "FIL 630 — FIL 633.18",
+    subtitle: "Philippine rice farming (Palay), irrigation, field crops",
     category: "ddc",
     x: 15.1,
     y: 82.7,
@@ -512,78 +530,188 @@ export const OFFICIAL_HOTSPOTS: HotspotDefinition[] = [
     color: "amber"
   },
   {
-    id: "2f_box_fil_rare",
-    shelfIDMatch: "Shelf_DDC_FIL_Filipiniana",
-    label: "Special Collections & Monographs",
-    code: "FIL SPECIAL",
-    subtitle: "Curated academic monographs and rare reprints",
+    id: "2f_box_fil_08",
+    shelfIDMatch: "SHELVING UNIT 08: FIL 633.18 — FIL 693.3",
+    label: "Filipiniana: Livestock, Fisheries & Applied Philippine Tech",
+    code: "FIL 633.18 — FIL 693.3",
+    subtitle: "Philippine animal husbandry, aquaculture, culinary arts",
     category: "ddc",
     x: 17.4,
     y: 82.8,
     floor: "second",
     color: "amber"
   },
-
-  // --- 6. SECOND FLOOR FACILITIES & SERVICES ---
   {
-    id: "2f_box_book_return",
-    shelfIDMatch: "Facility_BookReturn",
-    label: "Circulation Book Return Drop Box",
-    code: "RETURN BOX",
-    subtitle: "24/7 drop box for returning borrowed library books",
-    category: "service",
+    id: "2f_box_fil_09",
+    shelfIDMatch: "SHELVING UNIT 09: FIL 641.33 — FIL 659.1",
+    label: "Filipiniana: Philippine Commerce, Accounting & Marketing",
+    code: "FIL 641.33 — FIL 659.1",
+    subtitle: "Filipino entrepreneurship, accounting, business marketing",
+    category: "ddc",
+    x: 10.1,
+    y: 90.0,
+    floor: "second",
+    color: "amber"
+  },
+  {
+    id: "2f_box_fil_10",
+    shelfIDMatch: "SHELVING UNIT 10: FIL 660.6 — FIL 808.84",
+    label: "Filipiniana: Philippine Arts & Literature Anthologies",
+    code: "FIL 660.6 — FIL 808.84",
+    subtitle: "Philippine art history, music, film, folk traditions",
+    category: "ddc",
+    x: 12.5,
+    y: 90.0,
+    floor: "second",
+    color: "amber"
+  },
+  {
+    id: "2f_box_fil_11",
+    shelfIDMatch: "SHELVING UNIT 11: FIL 808.85 — FIL 899.9",
+    label: "Filipiniana: Tagalog & Kapampangan Literary Works",
+    code: "FIL 808.85 — FIL 899.9",
+    subtitle: "Kapampangan poetry, plays, contemporary Philippine novels",
+    category: "ddc",
+    x: 15.1,
+    y: 90.0,
+    floor: "second",
+    color: "amber"
+  },
+  {
+    id: "2f_box_fil_12",
+    shelfIDMatch: "SHELVING UNIT 12: FIL 900 — FIL 920",
+    label: "Filipiniana: Philippine History & Provincial Biographies",
+    code: "FIL 900 — FIL 920",
+    subtitle: "General Philippine history, chronicles, hero biographies",
+    category: "ddc",
+    x: 17.4,
+    y: 90.0,
+    floor: "second",
+    color: "amber"
+  },
+  {
+    id: "2f_box_rizaliana",
+    shelfIDMatch: "RIZALIANA: FIL 920 — FIL 959",
+    label: "Rizaliana Collection & Local Heritage",
+    code: "RIZALIANA: FIL 920 — FIL 959",
+    subtitle: "Life and works of Dr. Jose Rizal and Pampanga historical records",
+    category: "ddc",
     x: 21.0,
-    y: 52.3,
+    y: 90.0,
     floor: "second",
-    color: "cyan"
+    color: "amber"
   },
   {
-    id: "2f_box_collab_1",
-    shelfIDMatch: "Shelf_DDC_FIL_Filipiniana",
-    label: "Collaborative Research Room 1",
-    code: "RESEARCH RM 1",
-    subtitle: "Equipped group study room for thesis brainstorming",
-    category: "facility",
-    x: 15.0,
-    y: 15.6,
+    id: "2f_box_recency",
+    shelfIDMatch: "SPECIAL SECTION: TEN YEARS RECENCY",
+    label: "Second Floor 10-Years Recency Special Stacks",
+    code: "SPECIAL: 10-YR RECENCY",
+    subtitle: "Recent acquisitions and reference textbooks in Filipiniana",
+    category: "circulation",
+    x: 11.5,
+    y: 41.1,
     floor: "second",
+    color: "teal"
+  },
+
+  // =========================================================================
+  // THIRD FLOOR HOTSPOTS (8 Objects)
+  // =========================================================================
+  {
+    id: "3f_box_admin_desk",
+    shelfIDMatch: "Facility_AdminInfoDesk",
+    label: "Admin & Information Desk (OLM)",
+    code: "ADMIN & INFO DESK",
+    subtitle: "Office of the Library Director Sharon G. Rulloda",
+    category: "facility",
+    x: 48.0,
+    y: 35.0,
+    floor: "third",
     color: "blue"
   },
   {
-    id: "2f_box_collab_2",
-    shelfIDMatch: "Shelf_DDC_FIL_Filipiniana",
-    label: "Collaborative Research Room 2",
-    code: "RESEARCH RM 2",
-    subtitle: "Group discussion and multimedia research room",
-    category: "facility",
-    x: 29.6,
-    y: 14.6,
-    floor: "second",
-    color: "blue"
-  },
-  {
-    id: "2f_box_reading_balcony",
-    shelfIDMatch: "Shelf_DDC_FIL_Filipiniana",
-    label: "Second Floor Reading Area & Balcony",
-    code: "READING AREA",
-    subtitle: "Spacious study tables overlooking campus scenery",
-    category: "facility",
-    x: 37.3,
-    y: 60.3,
-    floor: "second",
+    id: "3f_box_ref_1",
+    shelfIDMatch: "SHELVE REF 1",
+    label: "General Reference: Dictionaries & Encyclopedias",
+    code: "REF SHELF 1",
+    subtitle: "General encyclopedias, multilingual dictionaries, biographical references",
+    category: "ddc",
+    x: 18.0,
+    y: 40.0,
+    floor: "third",
     color: "purple"
   },
   {
-    id: "2f_box_avr",
-    shelfIDMatch: "Shelf_DDC_FIL_Filipiniana",
-    label: "Audio Visual Room (AVR)",
-    code: "AVR HALL",
-    subtitle: "Library orientation lectures and university presentations",
+    id: "3f_box_ref_2",
+    shelfIDMatch: "SHELVE REF 2",
+    label: "Scientific & Technical Reference Handbooks",
+    code: "REF SHELF 2",
+    subtitle: "Engineering handbooks, science compendiums, environmental data",
+    category: "ddc",
+    x: 22.0,
+    y: 40.0,
+    floor: "third",
+    color: "purple"
+  },
+  {
+    id: "3f_box_ref_3",
+    shelfIDMatch: "SHELVE REF 3",
+    label: "Agricultural & Biological Reference Manuals",
+    code: "REF SHELF 3",
+    subtitle: "Veterinary medicine, botany, crop science, and agricultural encyclopedias",
+    category: "ddc",
+    x: 26.0,
+    y: 40.0,
+    floor: "third",
+    color: "purple"
+  },
+  {
+    id: "3f_box_ref_4",
+    shelfIDMatch: "SHELVE REF 4",
+    label: "Social Sciences, Law & Statistical Yearbooks",
+    code: "REF SHELF 4",
+    subtitle: "Philippine statistics, legal codes, education directories",
+    category: "ddc",
+    x: 18.0,
+    y: 55.0,
+    floor: "third",
+    color: "purple"
+  },
+  {
+    id: "3f_box_ref_5",
+    shelfIDMatch: "SHELVE REF 5",
+    label: "Atlases, Gazetteers & Geographic Indices",
+    code: "REF SHELF 5",
+    subtitle: "World atlases, Philippine maps, gazetteers, topographical surveys",
+    category: "ddc",
+    x: 22.0,
+    y: 55.0,
+    floor: "third",
+    color: "purple"
+  },
+  {
+    id: "3f_box_periodicals",
+    shelfIDMatch: "Shelf_REF_ReferencePeriodicals",
+    label: "Bound Periodicals & Academic Journals",
+    code: "PERIODICALS & SERIALS",
+    subtitle: "Peer-reviewed research journals, bulletins, and magazines",
+    category: "ddc",
+    x: 28.0,
+    y: 55.0,
+    floor: "third",
+    color: "purple"
+  },
+  {
+    id: "3f_box_reading_area",
+    shelfIDMatch: "READING AREA",
+    label: "Third Floor Quiet Study & Reading Zone",
+    code: "QUIET STUDY AREA",
+    subtitle: "Spacious individual study carrels and silent research zone",
     category: "facility",
-    x: 66.4,
-    y: 38.5,
-    floor: "second",
-    color: "blue"
+    x: 45.0,
+    y: 65.0,
+    floor: "third",
+    color: "purple"
   }
 ];
 
@@ -894,14 +1022,14 @@ export default function OfficialFloorPlanMap({
 
   // Determine which background image to show (marked with user yellow boxes vs clean)
   const getMapImageSrc = () => {
-    if (showMarkedOverlay) {
-      return activeFloor === "ground" 
-        ? "/maps/ground_floor_marked.jpg" 
-        : "/maps/second_floor_marked.jpg";
+    if (activeFloor === "ground") {
+      return showMarkedOverlay ? "/maps/ground_floor_marked.jpg" : "/maps/ground_floor_plan.jpg";
+    } else if (activeFloor === "second") {
+      return showMarkedOverlay ? "/maps/second_floor_marked.jpg" : "/maps/second_floor_plan.jpg";
+    } else {
+      // Third Floor Prototype (Uses upper floor architectural blueprint)
+      return "/maps/second_floor_plan.jpg";
     }
-    return activeFloor === "ground" 
-      ? "/maps/ground_floor_plan.jpg" 
-      : "/maps/second_floor_plan.jpg";
   };
 
   return (
@@ -922,7 +1050,7 @@ export default function OfficialFloorPlanMap({
             <span className={`px-1.5 py-0.5 rounded text-[10px] ${
               activeFloor === "ground" ? "bg-slate-950/20 text-slate-950 font-mono" : "bg-slate-800 text-slate-400"
             }`}>
-              Circulation & DDC Stacks
+              Circulation & DDC
             </span>
           </button>
 
@@ -938,7 +1066,23 @@ export default function OfficialFloorPlanMap({
             <span className={`px-1.5 py-0.5 rounded text-[10px] ${
               activeFloor === "second" ? "bg-slate-950/20 text-slate-950 font-mono" : "bg-slate-800 text-slate-400"
             }`}>
-              Filipiniana & Thesis
+              Filipiniana & Theses
+            </span>
+          </button>
+
+          <button
+            onClick={() => onFloorChange("third")}
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl font-bold transition-all ${
+              activeFloor === "third"
+                ? "bg-gradient-to-r from-purple-500 to-indigo-500 text-slate-950 shadow-md shadow-purple-500/20"
+                : "text-slate-400 hover:text-white hover:bg-slate-800"
+            }`}
+          >
+            <span>🏢 Third Floor</span>
+            <span className={`px-1.5 py-0.5 rounded text-[10px] ${
+              activeFloor === "third" ? "bg-slate-950/20 text-slate-950 font-mono" : "bg-slate-800 text-slate-400"
+            }`}>
+              Reference & Periodicals
             </span>
           </button>
         </div>
@@ -1017,13 +1161,26 @@ export default function OfficialFloorPlanMap({
             </>
           )}
 
+          {activeFloor === "third" && (
+            <>
+              <button
+                onClick={() => setFilterCategory("ddc_shelves")}
+                className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
+                  filterCategory === "ddc_shelves" ? "bg-purple-500/20 text-purple-300 font-bold border border-purple-500/30" : "text-slate-400 hover:text-white"
+                }`}
+              >
+                Reference & Periodicals
+              </button>
+            </>
+          )}
+
           <button
             onClick={() => setFilterCategory("services")}
             className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
               filterCategory === "services" ? "bg-cyan-500/20 text-cyan-300 font-bold border border-cyan-500/30" : "text-slate-400 hover:text-white"
             }`}
           >
-            Services & OPAC
+            {activeFloor === "third" ? "Admin & Reading Area" : "Services & Facilities"}
           </button>
         </div>
 
@@ -1116,17 +1273,17 @@ export default function OfficialFloorPlanMap({
               <Search className="w-3.5 h-3.5" />
             </span>
             <span>
-              May <strong className="text-white font-mono">{visibleHotspots.length}</strong> {visibleHotspots.length === 1 ? "hotspot" : "mga hotspot"} na tumugma sa <strong className="text-cyan-300">"{searchQuery}"</strong> sa {activeFloor === "ground" ? "Ground Floor" : "Second Floor"}
+              May <strong className="text-white font-mono">{visibleHotspots.length}</strong> {visibleHotspots.length === 1 ? "hotspot" : "mga hotspot"} na tumugma sa <strong className="text-cyan-300">"{searchQuery}"</strong> sa {activeFloor === "ground" ? "Ground Floor" : activeFloor === "second" ? "Second Floor" : "Third Floor"}
             </span>
           </div>
 
           <div className="flex items-center space-x-2">
             {otherFloorMatches.length > 0 && (
               <button
-                onClick={() => onFloorChange(activeFloor === "ground" ? "second" : "ground")}
+                onClick={() => onFloorChange(otherFloorMatches[0].floor)}
                 className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-xl bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500/30 text-[11px] font-bold border border-cyan-500/40 transition-colors shadow-sm"
               >
-                <span>Tingnan ang {otherFloorMatches.length} resulta sa {activeFloor === "ground" ? "Second Floor" : "Ground Floor"}</span>
+                <span>Tingnan ang {otherFloorMatches.length} resulta sa {otherFloorMatches[0].floor === "ground" ? "Ground Floor" : otherFloorMatches[0].floor === "second" ? "Second Floor" : "Third Floor"}</span>
                 <ChevronRight className="w-3 h-3" />
               </button>
             )}
@@ -1468,10 +1625,10 @@ export default function OfficialFloorPlanMap({
                   <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
                     {otherFloorMatches.length > 0 && (
                       <button
-                        onClick={() => onFloorChange(activeFloor === "ground" ? "second" : "ground")}
+                        onClick={() => onFloorChange(otherFloorMatches[0].floor)}
                         className="px-3.5 py-1.5 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs hover:bg-cyan-400 transition-colors shadow-md"
                       >
-                        Tingnan sa {activeFloor === "ground" ? "Second Floor" : "Ground Floor"} ({otherFloorMatches.length})
+                        Tingnan sa {otherFloorMatches[0].floor === "ground" ? "Ground Floor" : otherFloorMatches[0].floor === "second" ? "Second Floor" : "Third Floor"} ({otherFloorMatches.length})
                       </button>
                     )}
                     <button

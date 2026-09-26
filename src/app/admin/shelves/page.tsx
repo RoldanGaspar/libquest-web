@@ -47,7 +47,7 @@ export default function DDCShelfManagerPage() {
 
   // Search & Filter for List View
   const [searchQuery, setSearchQuery] = useState("");
-  const [floorFilter, setFloorFilter] = useState<"all" | "ground" | "second">("all");
+  const [floorFilter, setFloorFilter] = useState<"all" | "ground" | "second" | "third">("all");
 
   // Editing & Preview state
   const [editingShelf, setEditingShelf] = useState<DDCShelf | null>(null);
@@ -61,13 +61,13 @@ export default function DDCShelfManagerPage() {
         if (snap.exists()) {
           const data = snap.data() as DDCShelfCatalog;
           if (data.shelves && Array.isArray(data.shelves)) {
-            // Reconcile with INITIAL_DDC_SHELVES so all PSAU shelves (including Circulation Room)
-            // are available, while preserving any custom changes already published to Firestore.
+            // Reconcile with INITIAL_DDC_SHELVES so all 54 PSAU 3D objects are available,
+            // while preserving any custom changes already published to Firestore.
             const shelfMap = new Map<string, DDCShelf>();
             INITIAL_DDC_SHELVES.forEach((def) => shelfMap.set(def.shelfID, def));
             data.shelves.forEach((custom) => {
-              if (custom && custom.shelfID) {
-                shelfMap.set(custom.shelfID, custom);
+              if (custom && custom.shelfID && shelfMap.has(custom.shelfID)) {
+                shelfMap.set(custom.shelfID, { ...shelfMap.get(custom.shelfID)!, ...custom });
               }
             });
             setShelves(Array.from(shelfMap.values()));
@@ -163,7 +163,7 @@ export default function DDCShelfManagerPage() {
     setSuccessMessage("");
 
     const newCatalog: DDCShelfCatalog = {
-      version: `1.${Date.now()}`,
+      version: `2.${Date.now()}`,
       lastUpdated: new Date().toISOString(),
       shelves: shelves,
     };
@@ -431,6 +431,7 @@ export default function DDCShelfManagerPage() {
                 <option value="all">All Floors</option>
                 <option value="ground">Ground Floor</option>
                 <option value="second">Second Floor</option>
+                <option value="third">Third Floor (Reference & Facilities)</option>
               </select>
             </div>
           </div>

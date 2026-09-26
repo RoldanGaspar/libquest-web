@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { INITIAL_CATALOG } from "@/lib/ddcDefaults";
-import { DDCShelfCatalog } from "@/types/shelf";
+import { DDCShelf, DDCShelfCatalog } from "@/types/shelf";
 
 export const dynamic = "force-dynamic";
 
@@ -15,14 +15,35 @@ export async function GET(request: NextRequest) {
       const catalogRef = doc(db, "catalogs", "ddc_shelves");
       const snap = await getDoc(catalogRef);
       if (snap.exists()) {
-        catalog = snap.data() as DDCShelfCatalog;
+        const data = snap.data() as DDCShelfCatalog;
+        if (data && data.shelves && Array.isArray(data.shelves)) {
+          // Reconcile with INITIAL_CATALOG.shelves so all 54 PSAU 3D objects are always returned,
+          // while preserving any custom changes already published to Firestore.
+          const shelfMap = new Map<string, DDCShelf>();
+          INITIAL_CATALOG.shelves.forEach((def) => shelfMap.set(def.shelfID, def));
+          data.shelves.forEach((custom) => {
+            if (custom && custom.shelfID && shelfMap.has(custom.shelfID)) {
+              shelfMap.set(custom.shelfID, { ...shelfMap.get(custom.shelfID)!, ...custom });
+            }
+          });
+
+          const effectiveVersion = (data.version && !data.version.startsWith("1."))
+            ? data.version
+            : INITIAL_CATALOG.version;
+
+          catalog = {
+            version: effectiveVersion,
+            lastUpdated: data.lastUpdated || INITIAL_CATALOG.lastUpdated,
+            shelves: Array.from(shelfMap.values()),
+          };
+        }
       }
     } catch (firestoreError) {
       console.warn("[API /api/shelves] Firestore read failed, serving default catalog:", firestoreError);
       catalog = INITIAL_CATALOG;
     }
 
-    const versionTag = `"${catalog.version || "1.0"}"`;
+    const versionTag = `"${catalog.version || "2.0"}"`;
 
     // 1. Check client ETag for 304 Not Modified optimization
     const ifNoneMatch = request.headers.get("if-none-match");

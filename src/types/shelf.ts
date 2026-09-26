@@ -7,7 +7,7 @@ export interface DDCShelf {
   generalCollectionSummary: string;
   studentGuidance: string;
   floor: "ground" | "second" | "third";
-  zone?: "circulation" | "ddc_stacks" | "filipiniana" | "periodicals" | "general";
+  zone?: "circulation" | "ddc_stacks" | "filipiniana" | "theses" | "periodicals" | "reference" | "facility" | "general";
   position?: { x: number; y: number };
   lastUpdated: string;
 }
