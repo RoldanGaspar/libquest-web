@@ -364,22 +364,10 @@ export default function DDCShelfManagerPage() {
             // Reconcile with INITIAL_DDC_SHELVES so all 54 PSAU 3D objects are available,
             // while preserving any custom changes already published to Firestore.
             const shelfMap = new Map<string, DDCShelf>();
-            const hasBracketedHeaders = (subs?: string[]) =>
-              Array.isArray(subs) && subs.some((s) => typeof s === "string" && s.trim().startsWith("[") && s.trim().endsWith("]"));
-
+            INITIAL_DDC_SHELVES.forEach((def) => shelfMap.set(def.shelfID, def));
             data.shelves.forEach((custom) => {
               if (custom && custom.shelfID && shelfMap.has(custom.shelfID)) {
-                const defaultShelf = shelfMap.get(custom.shelfID)!;
-                // Preserve custom subdivisions only if they already follow the multi-tab bracketed structure
-                const effectiveSubdivisions = hasBracketedHeaders(custom.subdivisions)
-                  ? custom.subdivisions
-                  : defaultShelf.subdivisions;
-
-                shelfMap.set(custom.shelfID, {
-                  ...defaultShelf,
-                  ...custom,
-                  subdivisions: effectiveSubdivisions
-                });
+                shelfMap.set(custom.shelfID, { ...shelfMap.get(custom.shelfID)!, ...custom });
               }
             });
             setShelves(Array.from(shelfMap.values()));
