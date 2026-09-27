@@ -5,9 +5,6 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { DDCShelf, DDCShelfCatalog } from "@/types/shelf";
 import { INITIAL_DDC_SHELVES } from "@/lib/ddcDefaults";
-import CirculationRoomMap from "@/components/admin/CirculationRoomMap";
-import GeneralStacksMap from "@/components/admin/GeneralStacksMap";
-import FilipinianaMap from "@/components/admin/FilipinianaMap";
 import OfficialFloorPlanMap, { FloorTab } from "@/components/admin/OfficialFloorPlanMap";
 import { 
   BookMarked, 
@@ -38,8 +35,6 @@ import {
 } from "lucide-react";
 
 type ViewMode = "map" | "list";
-type MapStyle = "official_blueprint" | "vector_schematic";
-type SelectedZone = "circulation" | "ddc_stacks" | "filipiniana";
 
 export interface SectionData {
   title: string;
@@ -337,9 +332,7 @@ export default function DDCShelfManagerPage() {
 
   // View state
   const [viewMode, setViewMode] = useState<ViewMode>("map");
-  const [mapStyle, setMapStyle] = useState<MapStyle>("official_blueprint");
   const [activeFloor, setActiveFloor] = useState<FloorTab>("ground");
-  const [selectedZone, setSelectedZone] = useState<SelectedZone>("circulation");
   const [selectedShelf, setSelectedShelf] = useState<DDCShelf | null>(null);
 
   // Search & Filter for List View
@@ -371,10 +364,22 @@ export default function DDCShelfManagerPage() {
             // Reconcile with INITIAL_DDC_SHELVES so all 54 PSAU 3D objects are available,
             // while preserving any custom changes already published to Firestore.
             const shelfMap = new Map<string, DDCShelf>();
-            INITIAL_DDC_SHELVES.forEach((def) => shelfMap.set(def.shelfID, def));
+            const hasBracketedHeaders = (subs?: string[]) =>
+              Array.isArray(subs) && subs.some((s) => typeof s === "string" && s.trim().startsWith("[") && s.trim().endsWith("]"));
+
             data.shelves.forEach((custom) => {
               if (custom && custom.shelfID && shelfMap.has(custom.shelfID)) {
-                shelfMap.set(custom.shelfID, { ...shelfMap.get(custom.shelfID)!, ...custom });
+                const defaultShelf = shelfMap.get(custom.shelfID)!;
+                // Preserve custom subdivisions only if they already follow the multi-tab bracketed structure
+                const effectiveSubdivisions = hasBracketedHeaders(custom.subdivisions)
+                  ? custom.subdivisions
+                  : defaultShelf.subdivisions;
+
+                shelfMap.set(custom.shelfID, {
+                  ...defaultShelf,
+                  ...custom,
+                  subdivisions: effectiveSubdivisions
+                });
               }
             });
             setShelves(Array.from(shelfMap.values()));
@@ -803,137 +808,18 @@ export default function DDCShelfManagerPage() {
       )}
 
       {/* ========================================================================= */}
-      {/* VIEW MODE 1: INTERACTIVE FLOOR MAP                                        */}
+      {/* VIEW MODE 1: INTERACTIVE FLOOR MAP (OFFICIAL PSAU BLUEPRINT)           */}
       {/* ========================================================================= */}
       {viewMode === "map" && (
         <div className="space-y-4">
-          {/* Map Display Style Switcher */}
-          <div className="flex flex-wrap items-center justify-between gap-3 p-2 rounded-2xl bg-slate-900 border border-slate-800 text-xs">
-            <div className="flex items-center space-x-2">
-              <span className="text-slate-400 font-semibold px-2 text-[11px]">Map Display:</span>
-              <button
-                onClick={() => setMapStyle("official_blueprint")}
-                className={`flex items-center space-x-2 px-3 py-1.5 rounded-xl font-bold transition-all ${
-                  mapStyle === "official_blueprint"
-                    ? "bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20"
-                    : "text-slate-400 hover:text-white hover:bg-slate-800"
-                }`}
-              >
-                <span>🏛️ Official PSAU Library Blueprint</span>
-                <span className="px-1.5 py-0.5 rounded text-[9px] bg-slate-950/20 text-slate-950 font-mono">
-                  Real Floor Plan
-                </span>
-              </button>
-
-              <button
-                onClick={() => setMapStyle("vector_schematic")}
-                className={`flex items-center space-x-2 px-3 py-1.5 rounded-xl font-bold transition-all ${
-                  mapStyle === "vector_schematic"
-                    ? "bg-teal-500 text-slate-950 shadow-md shadow-teal-500/20"
-                    : "text-slate-400 hover:text-white hover:bg-slate-800"
-                }`}
-              >
-                <span>📐 Room Vector Schematics</span>
-              </button>
-            </div>
-
-            <div className="text-[11px] text-slate-400 pr-2 hidden sm:block">
-              {mapStyle === "official_blueprint" 
-                ? "Official high-resolution architectural layout with interactive hotspot beacons"
-                : "Individual room vector diagrams"}
-            </div>
-          </div>
-
-          {/* Style 1: Official PSAU Library Blueprint Map */}
-          {mapStyle === "official_blueprint" && (
-            <OfficialFloorPlanMap
-              shelves={shelves}
-              selectedShelf={selectedShelf}
-              onSelectShelf={handleSelectShelfFromMap}
-              activeFloor={activeFloor}
-              onFloorChange={setActiveFloor}
-              onUpdateHotspotPosition={handleUpdateHotspotPosition}
-            />
-          )}
-
-          {/* Style 2: Room Vector Detail Schematics */}
-          {mapStyle === "vector_schematic" && (
-            <div className="space-y-4">
-              <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs">
-                <button
-                  onClick={() => setSelectedZone("circulation")}
-                  className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg font-semibold transition-all ${
-                    selectedZone === "circulation"
-                      ? "bg-teal-500 text-slate-950 shadow-md font-bold"
-                      : "text-slate-400 hover:text-white hover:bg-slate-800/60"
-                  }`}
-                >
-                  <span>🏢 Circulation & Reservation Room</span>
-                  <span className={`px-1.5 py-0.2 rounded text-[10px] ${
-                    selectedZone === "circulation" ? "bg-slate-950/20 text-slate-950 font-mono" : "bg-slate-800 text-slate-400"
-                  }`}>
-                    East Wing
-                  </span>
-                </button>
-
-                <button
-                  onClick={() => setSelectedZone("ddc_stacks")}
-                  className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg font-semibold transition-all ${
-                    selectedZone === "ddc_stacks"
-                      ? "bg-cyan-500 text-slate-950 shadow-md font-bold"
-                      : "text-slate-400 hover:text-white hover:bg-slate-800/60"
-                  }`}
-                >
-                  <span>📚 General DDC Stacks (000–900)</span>
-                  <span className={`px-1.5 py-0.2 rounded text-[10px] ${
-                    selectedZone === "ddc_stacks" ? "bg-slate-950/20 text-slate-950 font-mono" : "bg-slate-800 text-slate-400"
-                  }`}>
-                    West Wing
-                  </span>
-                </button>
-
-                <button
-                  onClick={() => setSelectedZone("filipiniana")}
-                  className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg font-semibold transition-all ${
-                    selectedZone === "filipiniana"
-                      ? "bg-amber-500 text-slate-950 shadow-md font-bold"
-                      : "text-slate-400 hover:text-white hover:bg-slate-800/60"
-                  }`}
-                >
-                  <span>🇵🇭 Filipiniana & Theses Hall</span>
-                  <span className={`px-1.5 py-0.2 rounded text-[10px] ${
-                    selectedZone === "filipiniana" ? "bg-slate-950/20 text-slate-950 font-mono" : "bg-slate-800 text-slate-400"
-                  }`}>
-                    2nd Floor
-                  </span>
-                </button>
-              </div>
-
-              {selectedZone === "circulation" && (
-                <CirculationRoomMap
-                  shelves={shelves}
-                  selectedShelf={selectedShelf}
-                  onSelectShelf={handleSelectShelfFromMap}
-                />
-              )}
-
-              {selectedZone === "ddc_stacks" && (
-                <GeneralStacksMap
-                  shelves={shelves}
-                  selectedShelf={selectedShelf}
-                  onSelectShelf={handleSelectShelfFromMap}
-                />
-              )}
-
-              {selectedZone === "filipiniana" && (
-                <FilipinianaMap
-                  shelves={shelves}
-                  selectedShelf={selectedShelf}
-                  onSelectShelf={handleSelectShelfFromMap}
-                />
-              )}
-            </div>
-          )}
+          <OfficialFloorPlanMap
+            shelves={shelves}
+            selectedShelf={selectedShelf}
+            onSelectShelf={handleSelectShelfFromMap}
+            activeFloor={activeFloor}
+            onFloorChange={setActiveFloor}
+            onUpdateHotspotPosition={handleUpdateHotspotPosition}
+          />
         </div>
       )}
 

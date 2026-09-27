@@ -79,14 +79,25 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "ddc_stacks",
     position: { x: 16.4, y: 16.2 },
     subdivisions: [
-      "425 - English Grammar & Syntax",
-      "500 - Pure Sciences & Natural Sciences",
-      "510 - Mathematics & Geometry",
-      "530 - Physics & Chemistry",
-      "550 - Earth Sciences & Geology",
-      "570 - Life Sciences & Biology",
-      "610 - Human Anatomy & Medical Sciences"
-],
+      "[400 – LANGUAGE & LINGUISTICS]",
+      "425 English Grammar & Syntax",
+      "428 Standard English Usage",
+      "Linguistics & Comparative Grammar",
+      "Historical & Descriptive Linguistics",
+      "[500 – NATURAL SCIENCES & MATHEMATICS]",
+      "510 Mathematics, Algebra & Geometry",
+      "520 Astronomy & Allied Sciences",
+      "530 Physics & Classical Mechanics",
+      "540 Chemistry & Allied Sciences",
+      "550 Earth Sciences & Geology",
+      "570 Life Sciences & Biology",
+      "580 Botanical Sciences & Plant Biology",
+      "590 Zoological Sciences & Animal Biology",
+      "[600 – TECHNOLOGY & APPLIED SCIENCES]",
+      "610 Medical Sciences & Medicine",
+      "611 Human Anatomy & Cytology",
+      "612 Human Physiology & Biophysics"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -101,14 +112,24 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "ddc_stacks",
     position: { x: 20.5, y: 16.2 },
     subdivisions: [
-      "612 - Human Physiology & Health",
-      "620 - Engineering & Applied Sciences",
-      "630 - Agriculture & Farming Systems",
-      "631 - Agronomy, Soil Sciences & Irrigation",
-      "632 - Plant Pathology & Pest Management",
-      "633 - Field Crops & Cereals",
-      "634 - Orchards, Fruit Culture & Forestry"
-],
+      "[610 – MEDICAL SCIENCES & HEALTH]",
+      "Human Physiology & Metabolic Systems",
+      "Pharmacology, Therapeutics & Toxicology",
+      "Public Health & Preventive Medicine",
+      "Pathology & Disease Management",
+      "[620 – ENGINEERING & APPLIED OPERATIONS]",
+      "Engineering & Allied Operations",
+      "Mechanical & Electrical Engineering",
+      "Civil, Environmental & Agricultural Engineering",
+      "Sanitary & Municipal Engineering",
+      "[630 – AGRICULTURE & CROP PRODUCTION]",
+      "Farming Systems & Agricultural Operations",
+      "Agronomy, Soil Chemistry & Fertility",
+      "Soil Conservation & Irrigation Systems",
+      "Plant Pathology, Pests & Weed Management",
+      "Field Crops, Cereals & Grain Production",
+      "Industrial Crops & Legumes"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -123,13 +144,23 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "ddc_stacks",
     position: { x: 10.6, y: 53.9 },
     subdivisions: [
-      "635 - Garden Crops & Horticulture",
-      "636 - Animal Husbandry & Poultry",
-      "637 - Dairy Products & Processing",
-      "639 - Fisheries, Aquaculture & Wildlife",
-      "640 - Home Economics & Food Management",
-      "650 - Business & Management Auxiliaries"
-],
+      "[630 – HORTICULTURE & ANIMAL HUSBANDRY]",
+      "Orchards, Fruit Culture & Pomology",
+      "Forestry & Agroforestry Systems",
+      "Garden Crops, Horticulture & Vegetables",
+      "Animal Husbandry & Livestock Production",
+      "Poultry Science, Breeding & Nutrition",
+      "Dairy Products & Milk Processing",
+      "Fisheries, Aquaculture & Wildlife Conservation",
+      "[640 – HOME ECONOMICS & MANAGEMENT]",
+      "Home Economics & Family Living",
+      "Food, Nutrition & Commercial Hospitality",
+      "Sewing, Clothing & Personal Living",
+      "[650 – MANAGEMENT & AUXILIARY SERVICES]",
+      "Management & Auxiliary Services",
+      "Business Communication & Records",
+      "Accounting & Bookkeeping Methods"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -144,12 +175,18 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "ddc_stacks",
     position: { x: 10.6, y: 67.9 },
     subdivisions: [
-      "658.1 - Corporate Organization & Finance",
-      "658.3 - Human Resource Management",
-      "658.4 - Executive Leadership & Strategy",
-      "658.5 - Production & Operations Management",
-      "658.7 - Materials Management & Logistics"
-],
+      "[658 – CORPORATE ORGANIZATION & FINANCE]",
+      "Corporate Organization & Business Formation",
+      "Financial Administration & Capital Budgeting",
+      "Managerial Accounting & Cost Control",
+      "Risk Management & Business Insurance",
+      "[658 – HUMAN RESOURCES & OPERATIONS]",
+      "Human Resource Management & Labor Relations",
+      "Executive Leadership & Strategic Management",
+      "Production Management & Operations Research",
+      "Supply Chain Management & Material Logistics",
+      "Quality Control & Total Quality Management"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -164,12 +201,24 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "ddc_stacks",
     position: { x: 10.6, y: 48.4 },
     subdivisions: [
-      "658 - Enterprise & Business Management",
-      "660 - Chemical Engineering & Technology",
-      "670 - Manufacturing & Factory Operations",
-      "680 - Manufacture for Specific Uses",
-      "690 - Construction & Building Trades"
-],
+      "[650 – MANAGEMENT & AUXILIARY SERVICES]",
+      "Enterprise & Strategic Management",
+      "Marketing, Sales Promotion & Distribution",
+      "Executive Decision Making",
+      "[660 – CHEMICAL & RELATED TECHNOLOGIES]",
+      "Chemical Engineering & Industrial Chemistry",
+      "Food Biotechnology & Commercial Processing",
+      "Biochemical Engineering & Fermentation",
+      "Agricultural Chemicals & Fertilizers",
+      "[670 – MANUFACTURING & FABRICATION]",
+      "Manufacturing & Industrial Operations",
+      "Metal Fabrication & Machine Technologies",
+      "Manufacture for Specific Uses & Woodwork",
+      "[690 – BUILDINGS & CONSTRUCTION]",
+      "Building Construction & Structural Design",
+      "Construction Materials & Concrete Technology",
+      "HVAC, Plumbing & Electrical Installations"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -184,14 +233,20 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "ddc_stacks",
     position: { x: 15.2, y: 70.4 },
     subdivisions: [
-      "700 - The Arts & Art History",
-      "720 - Architectural Design & Spaces",
-      "740 - Graphic Arts & Drawing",
-      "770 - Photography & Digital Imaging",
-      "780 - Music & Performing Arts",
-      "790 - Sports, Recreation & Athletics",
-      "800 - Literature, Criticism & Rhetoric"
-],
+      "[700 – THE ARTS & RECREATION]",
+      "Civic, Environmental & Landscape Art",
+      "Architecture, Design & Preservation",
+      "Plastic Arts, Sculpture & Ceramics",
+      "Drawing, Decorative & Graphic Arts",
+      "Painting & Fine Arts Collections",
+      "Photography, Digital Imaging & Video",
+      "Music, Composition & Performance",
+      "Recreation, Sports & Athletic Training",
+      "[800 – LITERATURE & RHETORIC]",
+      "General Literature & Literary Theory",
+      "Rhetoric, Criticism & Literary Analysis",
+      "Comparative Literature Studies"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -206,12 +261,18 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "ddc_stacks",
     position: { x: 20.6, y: 70.4 },
     subdivisions: [
-      "808.0 - Composition & Style Guides",
-      "808.1 - Poetry Analysis & Anthologies",
-      "808.3 - Fiction Writing Techniques",
-      "808.5 - Public Speaking & Debate",
-      "808.8 - World Literary Collections"
-],
+      "[800 – RHETORIC & COMPOSITION]",
+      "Composition, Rhetoric & Style Guides",
+      "Research Writing & Academic Paper Drafting",
+      "Creative Writing, Fiction & Prose Techniques",
+      "Speech Communication & Public Speaking",
+      "Debate, Argumentation & Persuasion",
+      "[808 – LITERARY ANTHOLOGIES & POETRY]",
+      "World Poetry Anthologies & Classical Verse",
+      "Poetic Forms, Meter & Lyric Criticism",
+      "Modern & Contemporary Poetic Works",
+      "Collections of Literary Speeches & Essays"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -226,14 +287,19 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "ddc_stacks",
     position: { x: 25.4, y: 70.4 },
     subdivisions: [
-      "808.82 - Drama & Theatrical Works",
-      "820 - English Literature & Essays",
-      "899 - Philippine & Austronesian Literatures",
-      "900 - World History & Civilization",
-      "910 - Geography, Cartography & Travel",
-      "920 - Biography & Memoir Collections",
-      "930 - Ancient History to 499 AD"
-],
+      "[800 – DRAMA & WORLD LITERATURE]",
+      "Dramatic Literature & Theatrical Masterpieces",
+      "English & Old English Literature",
+      "Literatures of Romance & Germanic Languages",
+      "Philippine & Austronesian Literatures",
+      "Asian, African & Middle Eastern Literatures",
+      "[900 – GEOGRAPHY & WORLD HISTORY]",
+      "Geography, Travel & World Cartography",
+      "Biography, Genealogy & Historical Insignia",
+      "History of Ancient World to 499 AD",
+      "Ancient Civilizations: Egypt, Greece & Rome",
+      "General History of Europe, Asia & Africa"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -248,10 +314,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "circulation",
     position: { x: 6.0, y: 47.4 },
     subdivisions: [
-      "Contemporary Philippine Novels (A-H)",
-      "Young Adult Fiction & Bestsellers",
-      "Literary Classics & Drama (A-H)"
-],
+      "[Koleksyon ng Nobela (Authors A–H)]",
+      "Contemporary Philippine Novels (A–H)",
+      "Young Adult Fiction & Global Bestsellers",
+      "Literary Classics & Drama (A–H)",
+      "Historical Fiction & Narrative Prose",
+      "[Patakaran at Gabay sa Fiction]",
+      "Maximum 2 Fiction Books bawat hiram",
+      "1 linggo loan period na maaaring i-renew",
+      "Open shelves para sa lahat ng PSAU students",
+      "Ingatan ang mga pahina at cover ng aklat"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -266,10 +339,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "circulation",
     position: { x: 6.0, y: 56.4 },
     subdivisions: [
-      "World Literature & Novels (I-P)",
-      "Mystery, Adventure & Historical Fiction",
-      "Filipino Contemporary Literature (I-P)"
-],
+      "[Koleksyon ng Nobela (Authors I–P)]",
+      "World Literature & Translated Works (I–P)",
+      "Mystery, Thriller & Detective Fiction",
+      "Science Fiction & Speculative Novels",
+      "Filipino Contemporary Literature (I–P)",
+      "[Patakaran at Gabay sa Fiction]",
+      "Maximum 2 Fiction Books bawat hiram",
+      "1 linggo loan period na maaaring i-renew",
+      "Open shelves para sa lahat ng PSAU students",
+      "Ingatan ang mga pahina at cover ng aklat"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -284,10 +364,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "circulation",
     position: { x: 6.0, y: 66.8 },
     subdivisions: [
-      "Classic Masterpieces & Anthologies (Q-Z)",
-      "Science Fiction & Modern Fantasy",
-      "Literature & Translated Works (Q-Z)"
-],
+      "[Koleksyon ng Nobela (Authors Q–Z)]",
+      "Classic Masterpieces & Anthologies (Q–Z)",
+      "Modern Fantasy & Graphic Literature",
+      "Short Story Collections & Anthologies",
+      "World Literary Classics (Q–Z)",
+      "[Patakaran at Gabay sa Fiction]",
+      "Maximum 2 Fiction Books bawat hiram",
+      "1 linggo loan period na maaaring i-renew",
+      "Open shelves para sa lahat ng PSAU students",
+      "Ingatan ang mga pahina at cover ng aklat"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -302,11 +389,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "circulation",
     position: { x: 25.8, y: 51.2 },
     subdivisions: [
-      "Doctoral Dissertations (Ph.D. / Ed.D.)",
-      "Master of Science Theses (M.S. Agriculture / Forestry)",
-      "Master in Business Administration (MBA Papers)",
-      "Educational Leadership & Curriculum Studies"
-],
+      "[Graduate Studies Collection]",
+      "Masteral & Doctoral Theses (MA, MS, PhD)",
+      "Advanced Post-Graduate Research Monographs",
+      "Specialized Research Methodologies & Statistics",
+      "Curriculum Design & Educational Leadership Volumes",
+      "[Patakaran sa Paggamit]",
+      "Eksklusibo para sa Graduate School at Advanced Researchers",
+      "Room Use Only & Restricted Circulation",
+      "Kinakailangan ang faculty endorsement o Graduate ID",
+      "Mahigpit na ipinagbabawal ang pag-duplicate nang walang pahintulot"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -321,10 +414,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "circulation",
     position: { x: 25.8, y: 60.6 },
     subdivisions: [
-      "Agriculture & Life Sciences (2016-Present)",
-      "Veterinary & Animal Science Recent Titles",
-      "Environmental Science & Agroforestry"
-],
+      "[10 Years Recency Collection (A)]",
+      "Academic Textbooks published within the last 10 years",
+      "CHED & AACCUP Accreditation Standard References",
+      "Updated College Curriculum Syllabi Textbooks",
+      "Recent Editions for Sciences & Engineering",
+      "[Patakaran at Akreditasyon]",
+      "Regular circulation loan privileges apply",
+      "3 Professional books for 3 days loan period",
+      "Priority access para sa mga kumukuha ng major subjects",
+      "Standard renewal policy via circulation desk or online"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -339,10 +439,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "circulation",
     position: { x: 25.8, y: 55.8 },
     subdivisions: [
-      "Engineering & Computer Science (2016-Present)",
-      "Business & Hospitality Recent Publications",
-      "Teacher Education & Social Sciences"
-],
+      "[10 Years Recency Collection (B)]",
+      "Recent Technical & Professional Acquisitions",
+      "Modern Veterinary, Agriculture & Forestry Volumes",
+      "Professional Licensure Exam Review Textbooks",
+      "Latest Applied Sciences & Technology Manuals",
+      "[Patakaran at Akreditasyon]",
+      "Regular circulation loan privileges apply",
+      "3 Professional books for 3 days loan period",
+      "Priority access para sa mga kumukuha ng major subjects",
+      "Standard renewal policy via circulation desk or online"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -357,11 +464,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "facility",
     position: { x: 43.5, y: 76.8 },
     subdivisions: [
-      "Biometric Fingerprint Scanner",
-      "Barcode & RFID Student ID Reader",
-      "Automated Turnstile Gate Entry",
-      "Library Attendance Monitoring System"
-],
+      "[Client Monitoring Log System]",
+      "Barcode & RFID PSAU Student ID Reader",
+      "Automated Daily Attendance & Foot Traffic Counter",
+      "Real-time Patron Entry Verification",
+      "College & Department Statistical Monitoring",
+      "[Patakaran sa Pagpasok]",
+      "I-tap o i-scan ang valid School ID bago pumasok",
+      "Prescribed School Uniform, PE Uniform, o College Shirt ang required",
+      "Bawal ang walang ID o gumamit ng ID ng ibang estudyante",
+      "Mag-log out o mag-scan muli sa paglabas"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -376,11 +489,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "facility",
     position: { x: 39.1, y: 69.0 },
     subdivisions: [
-      "Bag Deposit Counter",
-      "Personal Belongings Security Cubbies",
-      "Visitor Baggage Pass Verification",
-      "Library Security Checkpoint"
-],
+      "[Baggage Counter & Depository]",
+      "Designated Personal Belongings Cubbies",
+      "Backpack & Large Bag Depository Shelves",
+      "Baggage Number Tag Issuance System",
+      "Secure Monitored Counter Area",
+      "[Patakaran sa Baggage Counter]",
+      "Iwan ang lahat ng bag bago pumasok sa reading area",
+      "Dalhin ang mahahalagang gamit (wallet, gadgets, valid ID)",
+      "Bawal mag-iwan ng pagkain at inumin",
+      "Huwag mag-iwan ng personal na gamit magdamag"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -395,11 +514,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "facility",
     position: { x: 28.8, y: 28.0 },
     subdivisions: [
-      "Koha Online Public Access Catalog",
-      "Title, Author & Subject Search",
-      "Book Call Number & Shelf Location Finder",
-      "Real-Time Book Availability Check"
-],
+      "[Online Public Access Catalog (OPAC)]",
+      "Catalog Search by Title, Author, Keyword, or Subject",
+      "Call Number & Shelf Location Identification",
+      "Real-Time Book Circulation Status & Due Date Check",
+      "Access to PSAU Integrated Library System (ILS)",
+      "[Gabay sa Paggamit ng OPAC]",
+      "Hakbang 1: I-type ang pamagat, may-akda, o paksa sa search bar",
+      "Hakbang 2: Kopyahin ang kumpletong Call Number sa ibinigay na call slip",
+      "Hakbang 3: Alamin ang lokasyon (C, FIL, REF, FIC, GS, TH)",
+      "Hakbang 4: Tumungo sa kaukulang floor at hanapin ang estante"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
 
@@ -418,11 +543,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "facility",
     position: { x: 21.0, y: 52.3 },
     subdivisions: [
-      "Automated Book Return Drop Slot",
-      "Circulation Check-In Station",
-      "Barcode Return Scanner",
-      "Cleared Borrowing Account Status"
-],
+      "[Book Return Station]",
+      "Circulation Book Return Slot & Receiving Counter",
+      "Automated Check-In via Integrated Library System",
+      "Condition & Physical Integrity Inspection",
+      "Overdue Verification & Clearance Desk",
+      "[Patakaran sa Pagbabalik]",
+      "Ibalik ang mga aklat sa o bago ang itinakdang due date",
+      "₱5.00 bawat araw na multa sa bawat regular na aklat kapag overdue",
+      "₱5.00 bawat oras + ₱50/araw para sa reserve books",
+      "Magbayad ng kaukulang multa sa University Cashier kung overdue"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -437,11 +568,23 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "filipiniana",
     position: { x: 21.0, y: 64.3 },
     subdivisions: [
-      "FIL 001 - Philippine Generalities & Research",
-      "FIL 100 - Filipino Philosophy & Values",
-      "FIL 200 - Philippine Church History & Faith",
-      "FIL 300 - Filipino Social Systems & Culture"
-],
+      "[000 – FILIPINIANA GENERALITIES]",
+      "Philippine Bibliographies & National Catalogues",
+      "Library & Information Science in the Philippines",
+      "General Philippine Serials & Research Indexes",
+      "Philippine Manuscripts & Rare Historical Prints",
+      "[100 – FILIPINO PHILOSOPHY & PSYCHOLOGY]",
+      "Sikolohiyang Pilipino (Virgilio Enriquez)",
+      "Filipino Ethics, Values & Moral Philosophy",
+      "Indigenous Thought & Worldviews",
+      "[200 – RELIGION IN THE PHILIPPINES]",
+      "Philippine Church History & Evangelization",
+      "Folk Christianity & Indigenous Spirituality",
+      "Comparative Religions & Interfaith Dialogue in PH",
+      "[300 – PHILIPPINE SOCIAL SCIENCES]",
+      "Philippine Demography & Population Studies",
+      "Social Systems, Family & Community Dynamics"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -456,11 +599,19 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "filipiniana",
     position: { x: 21.0, y: 71.5 },
     subdivisions: [
-      "FIL 305 - Social Groups & Philippine Communities",
-      "FIL 320 - Philippine Politics & Governance",
-      "FIL 330 - Philippine Economics & Agrarian Reform",
-      "FIL 338 - Philippine Agricultural Industries"
-],
+      "[300 – PHILIPPINE SOCIAL STRUCTURES]",
+      "Gender Studies & Roles in Philippine Society",
+      "Indigenous Peoples & Cultural Communities",
+      "Social Classes, Urban & Rural Sociology",
+      "[320 – PHILIPPINE POLITICS & GOVERNMENT]",
+      "Philippine Political Science & Institutions",
+      "Local Government Code & Public Administration",
+      "Elections, Civil Society & Political Parties",
+      "[330 – PHILIPPINE ECONOMY & INDUSTRY]",
+      "Philippine Agricultural Economics & Agribusiness",
+      "Agrarian Reform & Comprehensive Agrarian Reform Program (CARP)",
+      "Rural Development & Cooperative Enterprise"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -475,11 +626,19 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "filipiniana",
     position: { x: 21.0, y: 78.0 },
     subdivisions: [
-      "FIL 338.4 - Philippine Services & Manufacturing",
-      "FIL 340 - Philippine Constitution & Laws",
-      "FIL 350 - Public Administration & Local Government",
-      "FIL 370 - Philippine Education System"
-],
+      "[330 – PHILIPPINE INDUSTRIES & COMMERCE]",
+      "Philippine Manufacturing & Agro-Industries",
+      "Internal Trade, Commerce & Cooperative Movements",
+      "Energy Resources & National Utilities",
+      "[340 – PHILIPPINE LAW & JURISPRUDENCE]",
+      "1987 Philippine Constitution & Constitutional Law",
+      "Civil Code, Revised Penal Code & Labor Laws",
+      "Philippine Agricultural, Environmental & Land Laws",
+      "Supreme Court Decisions & Annotated Statutes",
+      "[370 – PHILIPPINE EDUCATION & PEDAGOGY]",
+      "Philippine Educational System & Foundations",
+      "Teacher Education, Pedagogy & Classroom Management"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -494,11 +653,20 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "filipiniana",
     position: { x: 21.0, y: 84.0 },
     subdivisions: [
-      "FIL 371 - School Management & Educational Tests",
-      "FIL 380 - Philippine Commerce & Trade",
-      "FIL 390 - Filipino Customs, Folklore & Traditions",
-      "FIL 400 - Wikang Filipino & Katutubong Wika"
-],
+      "[370 – PHILIPPINE HIGHER EDUCATION]",
+      "Higher Education Administration & CHED Policies",
+      "Educational Testing, Measurement & Evaluation",
+      "Curriculum Development in Philippine Schools",
+      "[390 – CUSTOMS & FILIPINO FOLKLORE]",
+      "Philippine Customs, Etiquette & Traditions",
+      "Filipino Folklore, Myths, Legends & Epics",
+      "Kapampangan Cultural Traditions & Festivities",
+      "[400 – FILIPINO & PHILIPPINE LANGUAGES]",
+      "Balarila ng Wikang Pambansa at Ortograpiya",
+      "Amanung Sisuan: Kapampangan Grammar & Lexicon",
+      "Tagalog, Ilokano, Cebuano & Regional Dialects",
+      "English Language Teaching in the Philippine Context"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -513,11 +681,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "filipiniana",
     position: { x: 10.1, y: 82.9 },
     subdivisions: [
-      "FIL 428 - Philippine English & Bilingualism",
-      "FIL 499 - Tagalog, Kapampangan & Regional Dialects",
-      "FIL 500 - Philippine Flora, Fauna & Natural Sciences",
-      "FIL 550 - Philippine Geology & Natural Hazards"
-],
+      "[400 – PHILIPPINE LINGUISTICS & USAGE]",
+      "Bilingual Education & Sociolinguistics in the Philippines",
+      "Philippine Lexicography & Dictionaries",
+      "English & Filipino Stylistics & Grammar Usage",
+      "[500 – NATURAL SCIENCES IN THE PHILIPPINES]",
+      "General Mathematics & Statistics in Local Researches",
+      "Philippine Geology, Volcanology & Seismology",
+      "Philippine Weather, Climatology & Typhoon Tracking",
+      "Philippine Flora & Fauna Surveys",
+      "Philippine Biodiversity, Ecology & Wildlife"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -532,11 +706,19 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "filipiniana",
     position: { x: 12.5, y: 82.8 },
     subdivisions: [
-      "FIL 574 - Philippine Ecology & Biodiversity",
-      "FIL 610 - Traditional Philippine Herbal Medicine",
-      "FIL 620 - Philippine Engineering Innovations",
-      "FIL 630 - Tropical Agriculture & Crop Production"
-],
+      "[570 – PHILIPPINE LIFE SCIENCES]",
+      "Philippine Molecular Biology & Biochemistry",
+      "Mount Arayat Biodiversity & Forest Ecology",
+      "Candaba Swamp Wetland Ecology & Avian Biology",
+      "Philippine Botanical Taxonomy & Medicinal Plants",
+      "[610 – PHILIPPINE MEDICINE & HEALTH]",
+      "Public Health Administration in the Philippines",
+      "Philippine Herbal Medicine & Indigenous Healing (PITAHC)",
+      "Epidemiology & Community Health Care",
+      "[620 – PHILIPPINE ENGINEERING & INFRASTRUCTURE]",
+      "Philippine Agricultural Engineering Projects",
+      "Rural Electrification & Appropriate Technologies"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -551,11 +733,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "filipiniana",
     position: { x: 15.1, y: 82.7 },
     subdivisions: [
-      "FIL 631 - Philippine Soil Science & Irrigation",
-      "FIL 632 - Tropical Pest Management in PH",
-      "FIL 633 - Rice (Palay) Cultivation & Corn Crops",
-      "FIL 633.18 - Comprehensive Philippine Rice Studies"
-],
+      "[630 – PHILIPPINE AGRICULTURE & FARMING]",
+      "Tropical Agriculture in Central Luzon",
+      "Soil Science, Soil Fertility & Conservation in PH",
+      "Irrigation Management & NIA River Systems",
+      "Plant Pathology & Pest Management in PH",
+      "[633 – PHILIPPINE FIELD CROPS & RICE]",
+      "Rice Cultivation & PhilRice Research Compendiums",
+      "Corn, Sorghum & Cereal Crop Production",
+      "Sugarcane Agriculture & Sugar Industry in Pampanga",
+      "Cassava, Sweet Potato & Root Crops"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -570,11 +758,19 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "filipiniana",
     position: { x: 17.4, y: 82.8 },
     subdivisions: [
-      "FIL 634 - Philippine Fruit Crops & Agroforestry",
-      "FIL 636 - Carabao, Cattle & Poultry in PH",
-      "FIL 639 - Philippine Freshwater & Marine Aquaculture",
-      "FIL 641 - Kapampangan & Regional Filipino Cuisine"
-],
+      "[634 – PHILIPPINE HORTICULTURE & FORESTRY]",
+      "Philippine Fruit Crops (Carabao Mango, Banana, Papaya)",
+      "Vegetable Production & Urban Gardening in PH",
+      "Bamboo Farming & Utilization (PSAU Bamboo Project)",
+      "Philippine Reforestation & Agroforestry Practices",
+      "[636 – PHILIPPINE ANIMAL SCIENCE & VETERINARY]",
+      "Water Buffalo (Carabao) Production & PCC Studies",
+      "Native Chicken, Duck & Poultry Farming in PH",
+      "Swine & Goat Husbandry in Central Luzon",
+      "[690 – PHILIPPINE BUILDING & CRAFTS]",
+      "Philippine Architecture & Indigenous Building Materials",
+      "Bamboo, Rattan & Native Wood Construction"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -589,11 +785,16 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "filipiniana",
     position: { x: 10.1, y: 90.0 },
     subdivisions: [
-      "FIL 641 - Culinary Arts & Food Technology",
-      "FIL 650 - Philippine Small & Medium Enterprises (SMEs)",
-      "FIL 657 - Philippine Accounting & Taxation",
-      "FIL 658 - Filipino Corporate Management Styles"
-],
+      "[640 – FILIPINO FOOD & HOME ECONOMICS]",
+      "Kulinaryang Kapampangan & Regional Cuisines",
+      "Philippine Food Preservation, Processing & Meat Technology",
+      "Hospitality & Restaurant Management in the Philippines",
+      "Family Living, Home Economics & Nutrition in PH",
+      "[650 – PHILIPPINE BUSINESS & MARKETING]",
+      "Micro, Small & Medium Enterprises (MSMEs) in Central Luzon",
+      "Philippine Marketing, Consumer Behavior & Advertising",
+      "Business Logistics & Distribution in the Philippines"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -608,11 +809,18 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "filipiniana",
     position: { x: 12.5, y: 90.0 },
     subdivisions: [
-      "FIL 660 - Philippine Biotechnology & Sugar Tech",
-      "FIL 700 - Traditional Filipino Arts & Architecture",
-      "FIL 780 - Kundiman & Original Pilipino Music (OPM)",
-      "FIL 800 - Panitikang Pilipino & Sanaysay"
-],
+      "[660 – PHILIPPINE AGRO-INDUSTRIAL PROCESSING]",
+      "Food Biotechnology & Fermentation in the Philippines",
+      "Sugar, Alcohol & Biofuel Processing",
+      "Philippine Wood & Paper Industries",
+      "[700 – PHILIPPINE ARTS & CULTURE]",
+      "Philippine Visual Arts, Painting & Sculpture",
+      "Kapampangan Ecclesiastical & Sacred Art",
+      "Traditional Philippine Music & Performing Arts",
+      "[800 – FILIPINO ESSAYS & RHETORIC]",
+      "Panitikang Pilipino: Sanaysay at Talumpati",
+      "Rhetoric, Creative Non-Fiction & Feature Writing in PH"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -627,11 +835,16 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "filipiniana",
     position: { x: 15.1, y: 90.0 },
     subdivisions: [
-      "FIL 808 - Philippine Speeches & Balagtasan",
-      "FIL 899 - Tagalog, Ilokano & Kapampangan Literature",
-      "FIL 899.2 - Mga Maikling Kwento at Nobela",
-      "FIL 899.3 - Contemporary Philippine Poetry"
-],
+      "[800 – PHILIPPINE SPEECH & DRAMA]",
+      "Talumpating Pilipino & Public Oratory",
+      "Dulaang Filipino & Theatrical Plays",
+      "Philippine Short Story Anthologies & Novels",
+      "[899 – PANITIKANG KAPAMPANGAN AT REGIONAL]",
+      "Amado Yuzon, Juan Crisostomo Soto (Crissotan) Works",
+      "Kapampangan Poetry, Zarzuelas & Kuriru",
+      "Tagalog Literary Classics (Florante at Laura, Urbana at Felisa)",
+      "Ilokano, Bikolano, Bisaya & Regional Literatures"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -646,11 +859,15 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "filipiniana",
     position: { x: 17.4, y: 90.0 },
     subdivisions: [
-      "FIL 900 - Kasaysayan ng Pilipinas (Pre-Colonial to Present)",
-      "FIL 910 - Heograpiya at Turismo ng Pilipinas",
-      "FIL 920 - Talambuhay ng mga Bayani at Pangulo",
-      "FIL 929 - Talaangkanan at Historical Chronicles"
-],
+      "[900 – PHILIPPINE GEOGRAPHY & ATLASES]",
+      "Philippine Cartography, Provincial Profiles & Gazetteers",
+      "Geography & Natural Hazards of Central Luzon",
+      "Historical Geography of Pampanga & Mount Arayat",
+      "[920 – BIOGRAPHIES OF FILIPINO HEROES]",
+      "Lives of Philippine National Heroes & Patriots",
+      "Biographies of Philippine Presidents & Statesmen",
+      "Prominent Historical Leaders & Educators of Pampanga"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -665,11 +882,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "filipiniana",
     position: { x: 21.0, y: 90.0 },
     subdivisions: [
-      "Buhay, Ginawa at Sinulat ni Dr. Jose Rizal",
-      "Noli Me Tangere & El Filibusterismo Analyses",
-      "Rizal's Letters, Poems & Historical Essays",
-      "The Philippine Revolution & Katipunan History"
-],
+      "[Rizaliana Collection (Buhay at mga Akda)]",
+      "Noli Me Tangere & El Filibusterismo (Original & Translations)",
+      "Mi Ultimo Adios, Poems & Scholarly Essays",
+      "Letters & Epistolary Collections (Rizal-Blumentritt)",
+      "Historical & Literary Critiques on Jose Rizal",
+      "[Kasaysayan ng Rebolusyong Pilipino]",
+      "Propaganda Movement & La Solidaridad",
+      "Katipunan, Andres Bonifacio & 1896 Revolution",
+      "Republic of Biak-na-Bato & Malolos Republic",
+      "Philippine-American War & Historical Documents"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -684,11 +907,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "filipiniana",
     position: { x: 11.5, y: 41.1 },
     subdivisions: [
-      "Recent Philippine Academic Publications",
-      "Updated Philippine Law & Jurisprudence (2016-Present)",
-      "Philippine Statistics Authority (PSA) Compendiums",
-      "Contemporary Philippine Agricultural Research"
-],
+      "[Ten Years Recency (Filipiniana)]",
+      "Recently Published Philippine Academic Books (Last 10 Years)",
+      "CHED & AACCUP Accredited Local Course References",
+      "Recent Philippine Laws, Statutes & Administrative Orders",
+      "Updated Local Agriculture, Science & Education Textbooks",
+      "[Patakaran sa Paggamit]",
+      "Priority circulation para sa mga mag-aaral ng Filipiniana",
+      "3 Professional books for 3 days loan period",
+      "Maaaring basahin sa General Reading Area o ipa-photocopy",
+      "Mag-log sa Filipiniana Section desk bago hiramin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
 
@@ -705,11 +934,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "theses",
     position: { x: 19.3, y: 35.8 },
     subdivisions: [
-      "Business Feasibility Studies & Business Plans",
-      "Agri-Enterprise Startup Models",
-      "Market Demand & Product Innovation Theses",
-      "Terminal Reports on Small Business Incubation"
-],
+      "[BS Entrepreneurship Manuscripts]",
+      "Undergraduate Theses (UT) on Enterprise Feasibility",
+      "Technical Reports (TR) on Business Incubation",
+      "Market Opportunity Analysis & Business Models",
+      "Agri-Enterprise Innovation & Startup Case Studies",
+      "[Patakaran sa Paggamit ng Thesis]",
+      "For Room Use Only - mahigpit na bawal ilabas ng Theses Section",
+      "Iwan ang School ID sa Theses Section Desk bago magbasa",
+      "Bawal kumuha ng litrato o mag-photocopy nang walang pahintulot",
+      "Ibalik ang manuskrito sa tamang shelving unit matapos basahin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -724,11 +959,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "theses",
     position: { x: 23.7, y: 35.8 },
     subdivisions: [
-      "Plant & Animal Botanical Surveys (Mt. Arayat)",
-      "Microbiology & Ethnobotanical Studies",
-      "Freshwater Tilapia & Catfish Aquaculture",
-      "Fish Nutrition, Water Quality & Hatchery Studies"
-],
+      "[BS Biology & Fisheries Manuscripts]",
+      "BS Biology Undergraduate Theses (UT) on Botany & Zoology",
+      "Microbiology, Genetics & Local Biodiversity Theses",
+      "BS Fisheries Undergraduate Theses (UT) on Aquaculture",
+      "Freshwater Ecology, Fish Breeding & Water Quality Researches",
+      "[Patakaran sa Paggamit ng Thesis]",
+      "For Room Use Only - mahigpit na bawal ilabas ng Theses Section",
+      "Iwan ang School ID sa Theses Section Desk bago magbasa",
+      "Bawal kumuha ng litrato o mag-photocopy nang walang pahintulot",
+      "Ibalik ang manuskrito sa tamang shelving unit matapos basahin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -743,11 +984,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "theses",
     position: { x: 28.0, y: 35.8 },
     subdivisions: [
-      "Agribusiness Supply Chain Management",
-      "Value Chain Analysis of Rice & Sweet Potato",
-      "Agricultural Cooperative Management",
-      "Special Problem Practicum Research"
-],
+      "[BS Agricultural Business Manuscripts]",
+      "Undergraduate Theses (UT) on Agribusiness Economics",
+      "Special Problems (SP) on Agricultural Commodity Supply Chains",
+      "Value Chain Analysis for Rice, Corn & Vegetable Crops",
+      "Farm Financial Management & Agricultural Cooperative Researches",
+      "[Patakaran sa Paggamit ng Thesis]",
+      "For Room Use Only - mahigpit na bawal ilabas ng Theses Section",
+      "Iwan ang School ID sa Theses Section Desk bago magbasa",
+      "Bawal kumuha ng litrato o mag-photocopy nang walang pahintulot",
+      "Ibalik ang manuskrito sa tamang shelving unit matapos basahin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -762,11 +1009,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "theses",
     position: { x: 16.5, y: 46.2 },
     subdivisions: [
-      "Web & Mobile Information Systems",
-      "Internet of Things (IoT) in Smart Agriculture",
-      "Library Management & E-Learning Portals",
-      "Database & Android Mobile Applications"
-],
+      "[BS Information Technology Capstones & Manuscripts]",
+      "BS Information Technology Capstone Projects (CP)",
+      "Web & Mobile Application System Documentation",
+      "Database Architecture, IoT & Embedded Systems",
+      "AI, Machine Learning & Agriculture Support Systems",
+      "[Patakaran sa Paggamit ng Thesis]",
+      "For Room Use Only - mahigpit na bawal ilabas ng Theses Section",
+      "Iwan ang School ID sa Theses Section Desk bago magbasa",
+      "Bawal kumuha ng litrato o mag-photocopy nang walang pahintulot",
+      "Ibalik ang manuskrito sa tamang shelving unit matapos basahin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -781,11 +1034,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "theses",
     position: { x: 21.3, y: 46.2 },
     subdivisions: [
-      "Swine & Broiler Growth Performance Studies",
-      "Alternative Forage & Feed Formulations",
-      "Ruminant Nutrition (Goat, Cattle, Carabao)",
-      "Poultry Farm Practicum Operations"
-],
+      "[BSA Animal Science Theses & Farm Practices]",
+      "BSA Animal Science Undergraduate Theses (UT)",
+      "Farm Practices (FP) Reports on Swine Nutrition & Production",
+      "Poultry Broiler & Layer Feeding Trials",
+      "Ruminant Management & Pasture Development Researches",
+      "[Patakaran sa Paggamit ng Thesis]",
+      "For Room Use Only - mahigpit na bawal ilabas ng Theses Section",
+      "Iwan ang School ID sa Theses Section Desk bago magbasa",
+      "Bawal kumuha ng litrato o mag-photocopy nang walang pahintulot",
+      "Ibalik ang manuskrito sa tamang shelving unit matapos basahin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -800,11 +1059,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "theses",
     position: { x: 25.0, y: 46.2 },
     subdivisions: [
-      "Livestock Disease Prevention & Sanitation",
-      "Animal Breeding & Reproductive Physiology",
-      "Pasture Management & Silage Production",
-      "Commercial Livestock Farm Practices"
-],
+      "[BSA Animal Science Farm Practices Reports]",
+      "Farm Practices (FP) on Dairy Carabao & Cattle Production",
+      "Forage Production, Silage & Animal Nutrition Studies",
+      "Animal Breeding, Reproductive Technologies & Health",
+      "Commercial Livestock Farm Management Documentation",
+      "[Patakaran sa Paggamit ng Thesis]",
+      "For Room Use Only - mahigpit na bawal ilabas ng Theses Section",
+      "Iwan ang School ID sa Theses Section Desk bago magbasa",
+      "Bawal kumuha ng litrato o mag-photocopy nang walang pahintulot",
+      "Ibalik ang manuskrito sa tamang shelving unit matapos basahin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -819,11 +1084,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "theses",
     position: { x: 16.5, y: 53.0 },
     subdivisions: [
-      "Livestock Production Management",
-      "Applied Statistical Models & Mathematical Research",
-      "Agroforestry Farming Systems & Carbon Sequestration",
-      "Watershed & Forest Nursery Practicum"
-],
+      "[Agroforestry, Math & Animal Science Practicums]",
+      "BSA Agroforestry Undergraduate Theses (UT) & Field Practicum (FP)",
+      "Upland Agroforestry Systems & Watershed Management",
+      "BSA Mathematics Undergraduate Theses (UT) on Applied Models",
+      "BSA Animal Science Farm Practicum Documentation",
+      "[Patakaran sa Paggamit ng Thesis]",
+      "For Room Use Only - mahigpit na bawal ilabas ng Theses Section",
+      "Iwan ang School ID sa Theses Section Desk bago magbasa",
+      "Bawal kumuha ng litrato o mag-photocopy nang walang pahintulot",
+      "Ibalik ang manuskrito sa tamang shelving unit matapos basahin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -838,11 +1109,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "theses",
     position: { x: 21.3, y: 53.0 },
     subdivisions: [
-      "Community Journalism & Development Broadcasting",
-      "Educational Information Campaigns in Agriculture",
-      "Silviculture & Forest Tree Species Ecology",
-      "Timber & Non-Timber Forest Product Valuation"
-],
+      "[Development Communication & Forestry Researches]",
+      "BS Development Communication Undergraduate Theses (UT)",
+      "Community Radio, Agricultural Extension & Multimedia Studies",
+      "BS Forestry Undergraduate Theses (UT) on Silviculture",
+      "Forest Resource Management & Dendrology in Mount Arayat",
+      "[Patakaran sa Paggamit ng Thesis]",
+      "For Room Use Only - mahigpit na bawal ilabas ng Theses Section",
+      "Iwan ang School ID sa Theses Section Desk bago magbasa",
+      "Bawal kumuha ng litrato o mag-photocopy nang walang pahintulot",
+      "Ibalik ang manuskrito sa tamang shelving unit matapos basahin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -857,11 +1134,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "theses",
     position: { x: 25.0, y: 53.0 },
     subdivisions: [
-      "Hotel & Resort Front Office Operations",
-      "Food & Beverage Management Practicum",
-      "Housekeeping Operations & Customer Service",
-      "Culinary Industry On-the-Job Training Archives"
-],
+      "[Hospitality Management Practicum Reports]",
+      "BS Hospitality Management Practicum Reports (PR)",
+      "Hotel & Resort Operations Practicum Documentation",
+      "Food & Beverage Service Industry Practicums",
+      "Culinary Arts & Event Management On-the-Job Reports",
+      "[Patakaran sa Paggamit ng Thesis]",
+      "For Room Use Only - mahigpit na bawal ilabas ng Theses Section",
+      "Iwan ang School ID sa Theses Section Desk bago magbasa",
+      "Bawal kumuha ng litrato o mag-photocopy nang walang pahintulot",
+      "Ibalik ang manuskrito sa tamang shelving unit matapos basahin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -876,11 +1159,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "theses",
     position: { x: 29.8, y: 53.0 },
     subdivisions: [
-      "Tourism Destination Planning & Development",
-      "Food Safety & Sanitation Compliance Studies",
-      "Event Management & Catering Case Studies",
-      "Hospitality Customer Satisfaction Research"
-],
+      "[Hospitality Management Research Papers & Reports]",
+      "Undergraduate Theses (UT) on Hospitality Marketing",
+      "Eco-Tourism & Agri-Tourism Development Studies in Pampanga",
+      "Customer Service Quality & Sanitation Standards Researches",
+      "Advanced Practicum Research Papers (PR)",
+      "[Patakaran sa Paggamit ng Thesis]",
+      "For Room Use Only - mahigpit na bawal ilabas ng Theses Section",
+      "Iwan ang School ID sa Theses Section Desk bago magbasa",
+      "Bawal kumuha ng litrato o mag-photocopy nang walang pahintulot",
+      "Ibalik ang manuskrito sa tamang shelving unit matapos basahin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -895,11 +1184,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "theses",
     position: { x: 16.5, y: 59.5 },
     subdivisions: [
-      "Discourse Analysis & Sociolinguistic Studies",
-      "English Language Teaching & Pedagogy",
-      "Topographic Land Surveying & Cadastral Mapping",
-      "Geographic Information Systems (GIS) Remote Sensing"
-],
+      "[BAELS & Geodetic Engineering Manuscripts]",
+      "BA English Language Studies (BAELS) Undergraduate Theses (UT)",
+      "Discourse Analysis, Sociolinguistics & Stylistics Theses",
+      "BS Geodetic Engineering Undergraduate Theses (UT)",
+      "GIS, Remote Sensing, Cadastral & Topographic Surveys",
+      "[Patakaran sa Paggamit ng Thesis]",
+      "For Room Use Only - mahigpit na bawal ilabas ng Theses Section",
+      "Iwan ang School ID sa Theses Section Desk bago magbasa",
+      "Bawal kumuha ng litrato o mag-photocopy nang walang pahintulot",
+      "Ibalik ang manuskrito sa tamang shelving unit matapos basahin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -914,11 +1209,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "theses",
     position: { x: 21.3, y: 59.5 },
     subdivisions: [
-      "Farm Power & Agricultural Machinery Design",
-      "Postharvest Handling, Drying & Processing Systems",
-      "Soil & Water Conservation Engineering",
-      "Farm Structures & Renewable Energy Applications"
-],
+      "[Agricultural & Biosystems Engineering (ABE) Theses]",
+      "BSA Agricultural and Biosystems Engineering (ABE) Theses",
+      "Farm Power, Machinery & Agricultural Mechanization",
+      "Soil and Water Conservation & Irrigation Engineering",
+      "Post-Harvest Processing & Agricultural Waste Management",
+      "[Patakaran sa Paggamit ng Thesis]",
+      "For Room Use Only - mahigpit na bawal ilabas ng Theses Section",
+      "Iwan ang School ID sa Theses Section Desk bago magbasa",
+      "Bawal kumuha ng litrato o mag-photocopy nang walang pahintulot",
+      "Ibalik ang manuskrito sa tamang shelving unit matapos basahin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -933,11 +1234,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "theses",
     position: { x: 29.8, y: 46.2 },
     subdivisions: [
-      "Organic Fertilizer & Biostimulant Field Trials",
-      "Crop Protection against Pests & Fungi",
-      "Varietal Evaluation of Corn, Rice & Vegetables",
-      "Seed Technology, Propagation & Farm Practicum"
-],
+      "[Crop Science & Agriculture Farm Practices and Theses]",
+      "BS Crop Science Undergraduate Theses (UT)",
+      "Agronomic Trials, Crop Breeding & Tissue Culture Studies",
+      "Farm Practices (FP) on Organic Farming & Crop Management",
+      "BS Agriculture General Theses & Farming Innovations",
+      "[Patakaran sa Paggamit ng Thesis]",
+      "For Room Use Only - mahigpit na bawal ilabas ng Theses Section",
+      "Iwan ang School ID sa Theses Section Desk bago magbasa",
+      "Bawal kumuha ng litrato o mag-photocopy nang walang pahintulot",
+      "Ibalik ang manuskrito sa tamang shelving unit matapos basahin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
 
@@ -956,11 +1263,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "facility",
     position: { x: 48.0, y: 35.0 },
     subdivisions: [
-      "Office of Library Services Management",
-      "Student Clearance & Account Validation",
-      "Reference Librarian Consultation Desk",
-      "Inter-Library Loan & External Resource Inquiries"
-],
+      "[Office of Library Services & Museum (OLM)]",
+      "Office of the Director (Sharon G. Rulloda, MLIS, RL)",
+      "Technical Processing & Cataloging Section",
+      "Strategic Communications & Patron Records Desk",
+      "Senior Museum Researcher Consultation Office",
+      "[Mga Serbisyo at Konsultasyon]",
+      "Pag-isyu ng Referral Letters para sa visiting researchers",
+      "Pagpili at pag-endorso ng bagong aklat at online journals",
+      "Library Orientation, OPAC training at information literacy guidance",
+      "Thesis archival and institutional repository submission"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -975,11 +1288,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "reference",
     position: { x: 18.0, y: 40.0 },
     subdivisions: [
-      "General Encyclopedias (Britannica, Americana)",
-      "English & Multilingual Dictionaries (Oxford, Webster)",
-      "Thesauri & Language Reference Handbooks",
-      "Biographical Dictionaries & World Almanacs"
-],
+      "[General Encyclopedias & Dictionaries]",
+      "Encyclopaedia Britannica & Encyclopedia Americana",
+      "Merriam-Webster International Unabridged Dictionaries",
+      "Roget's International Thesaurus Collections",
+      "Oxford English Reference Compendiums",
+      "[Patakaran sa Reference Section]",
+      "For Room Use Only - mahigpit na bawal iuwi o i-checkout sa gabi",
+      "Maaaring basahin sa 3rd Floor study carrels o ipa-photocopy",
+      "Iwan ang School ID sa Reference Desk bago kumuha ng aklat",
+      "Ibalik ang aklat sa book cart matapos gamitin (huwag ibalik sa shelf)"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -994,11 +1313,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "reference",
     position: { x: 22.0, y: 40.0 },
     subdivisions: [
-      "Science & Technology Reference Handbooks",
-      "CRC Handbooks of Chemistry & Physics",
-      "Engineering Formulas & Technical Tables",
-      "Biological & Environmental Science Encyclopedias"
-],
+      "[Science, Technology & Agricultural Handbooks]",
+      "CRC Handbook of Chemistry and Physics",
+      "Perry's Chemical Engineers' Handbook",
+      "Agricultural Engineering & Agronomy Field Handbooks",
+      "Tropical Plant Protection & Crop Production Compendiums",
+      "[Patakaran sa Reference Section]",
+      "For Room Use Only - mahigpit na bawal iuwi o i-checkout sa gabi",
+      "Maaaring basahin sa 3rd Floor study carrels o ipa-photocopy",
+      "Iwan ang School ID sa Reference Desk bago kumuha ng aklat",
+      "Ibalik ang aklat sa book cart matapos gamitin (huwag ibalik sa shelf)"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -1013,11 +1338,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "reference",
     position: { x: 26.0, y: 40.0 },
     subdivisions: [
-      "Agricultural Reference Encyclopedias",
-      "Soil, Fertilizer & Plant Nutrient Manuals",
-      "Veterinary Drug Compendiums & Disease Handbooks",
-      "Pest & Weed Control Global Manuals"
-],
+      "[Medical, Veterinary & Biological Encyclopedias]",
+      "The Merck Veterinary Manual & Clinical References",
+      "Veterinary Pharmacology & Therapeutics Handbooks",
+      "Gray's Anatomy & Human Physiology Reference Atlases",
+      "Encyclopedia of Life Sciences & Biological Systems",
+      "[Patakaran sa Reference Section]",
+      "For Room Use Only - mahigpit na bawal iuwi o i-checkout sa gabi",
+      "Maaaring basahin sa 3rd Floor study carrels o ipa-photocopy",
+      "Iwan ang School ID sa Reference Desk bago kumuha ng aklat",
+      "Ibalik ang aklat sa book cart matapos gamitin (huwag ibalik sa shelf)"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -1032,11 +1363,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "reference",
     position: { x: 18.0, y: 55.0 },
     subdivisions: [
-      "Social Science & Law Reference Collections",
-      "Philippine Law Reprints & Legal Dictionaries",
-      "Education & Educational Research Handbooks",
-      "Business & Financial Reference Manuals"
-],
+      "[Social Sciences, Education & Law Compendiums]",
+      "International Encyclopedia of the Social & Behavioral Sciences",
+      "Philippine Annotated Laws & Legal Compendiums",
+      "Handbook of Research on Educational Pedagogy",
+      "Public Administration & Economic Development Handbooks",
+      "[Patakaran sa Reference Section]",
+      "For Room Use Only - mahigpit na bawal iuwi o i-checkout sa gabi",
+      "Maaaring basahin sa 3rd Floor study carrels o ipa-photocopy",
+      "Iwan ang School ID sa Reference Desk bago kumuha ng aklat",
+      "Ibalik ang aklat sa book cart matapos gamitin (huwag ibalik sa shelf)"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -1051,11 +1388,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "reference",
     position: { x: 22.0, y: 55.0 },
     subdivisions: [
-      "Literature Reference & Poetry Indexes",
-      "Historical Atlases & World Gazetteers",
-      "Philosophical & Theological Reference Works",
-      "Bibliographical Directories & Citation Guides"
-],
+      "[Humanities, History & World Atlases]",
+      "The Times Comprehensive Atlas of the World",
+      "Historical Atlases & World Civilization Timelines",
+      "International Who's Who & Global Biographical Dictionaries",
+      "Encyclopedia of World Philosophy & Religions",
+      "[Patakaran sa Reference Section]",
+      "For Room Use Only - mahigpit na bawal iuwi o i-checkout sa gabi",
+      "Maaaring basahin sa 3rd Floor study carrels o ipa-photocopy",
+      "Iwan ang School ID sa Reference Desk bago kumuha ng aklat",
+      "Ibalik ang aklat sa book cart matapos gamitin (huwag ibalik sa shelf)"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -1070,11 +1413,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "periodicals",
     position: { x: 28.0, y: 55.0 },
     subdivisions: [
-      "Philippine Agricultural Research Journals",
-      "CHED-Accredited Scholarly Journals",
-      "International Science & Technology Serials",
-      "Bound Scholarly Periodicals & Archives"
-],
+      "[Periodicals & Serials Section]",
+      "Philippine Journal of Science & Agricultural Research",
+      "Academic Peer-Reviewed Research Journals",
+      "National & Local Daily Newspapers (Inquirer, Star, Bulletin)",
+      "Professional Magazines & Agricultural Extension Bulletins",
+      "[Patakaran sa Periodicals]",
+      "For Library Use Only - bawal ilabas ng 3rd Floor Periodicals Room",
+      "Basahin sa designated periodical carrels at ibalik sa display rack",
+      "Mag-iwan ng ID sa Periodicals Desk kung hihiramin para i-photocopy",
+      "Bawal gupitin o punitin ang mga artikulo sa diyaryo o magasin"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
@@ -1089,11 +1438,16 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "facility",
     position: { x: 45.0, y: 65.0 },
     subdivisions: [
-      "Designated Silent Study Booths",
-      "Wide Collaborative Research Desks",
-      "Comfortable Ergonomic Seating",
-      "Power Outlets for Academic Laptops"
-],
+      "[Third Floor Quiet Study & Research Carrels]",
+      "Individual High-Focus Academic Study Carrels",
+      "Spacious Natural-Lit Reading Tables",
+      "Panoramic View of Mount Arayat & Campus Boulevard",
+      "Distraction-Free Environment for Thesis Writing & Review",
+      "[Patakaran sa Katahimikan]",
+      "Strict 'Silence is Golden' policy sa buong 3rd floor",
+      "I-set sa Silent Mode o i-off ang lahat ng cellular phones",
+      "Bawal ang group discussions o maiingay na meeting dito"
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   }
 ];
