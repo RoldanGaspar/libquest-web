@@ -79,14 +79,17 @@ export const INITIAL_DDC_SHELVES: DDCShelf[] = [
     zone: "ddc_stacks",
     position: { x: 16.4, y: 16.2 },
     subdivisions: [
+      "[400 – LANGUAGE & LINGUISTICS]",
       "425 - English Grammar & Syntax",
+      "[500 – NATURAL SCIENCES & MATHEMATICS]",
       "500 - Pure Sciences & Natural Sciences",
       "510 - Mathematics & Geometry",
       "530 - Physics & Chemistry",
       "550 - Earth Sciences & Geology",
       "570 - Life Sciences & Biology",
+      "[600 – TECHNOLOGY & APPLIED SCIENCES]",
       "610 - Human Anatomy & Medical Sciences"
-],
+    ],
     lastUpdated: "2026-09-27T00:00:00Z"
   },
   {
