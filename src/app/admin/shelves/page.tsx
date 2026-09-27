@@ -285,7 +285,20 @@ export function parseCSV(csvText: string): Record<string, string>[] {
   return data;
 }
 
-export function parseSubdivisionSections(subs: string[] = []): SectionData[] {
+export function formatTabLabel(title: string | undefined | null, idx: number): string {
+  if (!title || !title.trim()) return `Tab ${idx + 1}`;
+  const clean = title.trim();
+  const splitDash = clean.split(/\s*[-–—]\s*/);
+  if (splitDash.length > 1 && splitDash[0].trim().length <= 14) {
+    return splitDash[0].trim();
+  }
+  if (clean.length > 16) {
+    return clean.slice(0, 14).trim() + "…";
+  }
+  return clean;
+}
+
+export function parseSubdivisionSections(subs: string[] = [], defaultTitle?: string): SectionData[] {
   const sections: SectionData[] = [];
   let currentTitle = "";
   let currentItems: string[] = [];
@@ -306,6 +319,15 @@ export function parseSubdivisionSections(subs: string[] = []): SectionData[] {
 
   if (currentTitle || currentItems.length > 0) {
     sections.push({ title: currentTitle, items: currentItems });
+  }
+
+  if (sections.length === 0) {
+    return [{ title: defaultTitle || "Pangunahing Sakop", items: [] }];
+  }
+
+  // If the first section has no title (i.e. lines existed before any bracket or no brackets at all), assign defaultTitle
+  if (sections.length > 0 && !sections[0].title) {
+    sections[0].title = defaultTitle || "Pangunahing Sakop";
   }
 
   return sections;
@@ -391,7 +413,7 @@ export default function DDCShelfManagerPage() {
     setActiveItemEditMode("list");
     setNewTopicInput("");
     setShowAddTabMenu(false);
-    const sections = parseSubdivisionSections(shelf.subdivisions || []);
+    const sections = parseSubdivisionSections(shelf.subdivisions || [], shelf.categoryTitle || shelf.shelfCode);
     setBulkTextDraft(sections[0]?.items.join("\n") || (shelf.subdivisions || []).join("\n"));
   };
 
@@ -404,7 +426,7 @@ export default function DDCShelfManagerPage() {
     setNewTopicInput("");
     setShowAddTabMenu(false);
     setPreviewPageIndex(0);
-    const sections = parseSubdivisionSections(shelf.subdivisions || []);
+    const sections = parseSubdivisionSections(shelf.subdivisions || [], shelf.categoryTitle || shelf.shelfCode);
     setBulkTextDraft(sections[0]?.items.join("\n") || (shelf.subdivisions || []).join("\n"));
   };
 
@@ -605,8 +627,9 @@ export default function DDCShelfManagerPage() {
 
   const handleAddClassSection = (preset?: typeof DDC_CLASS_PRESETS[0]) => {
     if (!editingShelf) return;
-    const sections = parseSubdivisionSections(editingShelf.subdivisions || []);
-    const newTitle = preset ? preset.label : `Panibagong Seksyon (Page ${sections.length + 1})`;
+    const defaultTitle = editingShelf.categoryTitle || editingShelf.shelfCode || "Pangunahing Sakop";
+    const sections = parseSubdivisionSections(editingShelf.subdivisions || [], defaultTitle);
+    const newTitle = preset ? preset.label : `Panibagong Seksyon (Tab ${sections.length + 1})`;
     const newItems = preset ? [...preset.defaultItems] : [];
 
     const updatedSections = [...sections, { title: newTitle, items: newItems }];
@@ -615,6 +638,7 @@ export default function DDCShelfManagerPage() {
       subdivisions: serializeSubdivisionSections(updatedSections),
     });
     setActiveSectionTab(sections.length);
+    setBulkTextDraft(newItems.join("\n"));
     setShowAddTabMenu(false);
   };
 
@@ -999,10 +1023,10 @@ export default function DDCShelfManagerPage() {
               {/* Subdivisions & Subject Areas (Smart Tabbed / Sectioned Form) */}
               <div>
                 {(() => {
-                  const sections = parseSubdivisionSections(editingShelf.subdivisions || []);
-                  const hasSections = sections.length > 1 || (sections.length === 1 && !!sections[0]?.title);
+                  const defaultSecTitle = editingShelf.categoryTitle || editingShelf.shelfCode || "Pangunahing Sakop";
+                  const sections = parseSubdivisionSections(editingShelf.subdivisions || [], defaultSecTitle);
                   const safeTabIndex = Math.min(activeSectionTab, Math.max(0, sections.length - 1));
-                  const currentSection = sections[safeTabIndex] || { title: "", items: [] };
+                  const currentSection = sections[safeTabIndex] || { title: defaultSecTitle, items: [] };
 
                   return (
                     <div>
@@ -1014,36 +1038,39 @@ export default function DDCShelfManagerPage() {
                           <span className="text-[10px] text-teal-400 font-mono">
                             {(editingShelf.subdivisions || []).length} lines total
                           </span>
-                          {hasSections && (
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const nextRaw = !useRawEditor;
-                                setUseRawEditor(nextRaw);
-                                if (nextRaw) {
-                                  setBulkTextDraft((editingShelf.subdivisions || []).join("\n"));
-                                }
-                              }}
-                              className="text-[11px] text-cyan-400 hover:text-cyan-300 font-medium underline"
-                            >
-                              {useRawEditor ? "← Switch to Class Tabs" : "Raw Bulk Catalog →"}
-                            </button>
-                          )}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const nextRaw = !useRawEditor;
+                              setUseRawEditor(nextRaw);
+                              if (nextRaw) {
+                                setBulkTextDraft((editingShelf.subdivisions || []).join("\n"));
+                              } else {
+                                const reparsed = parseSubdivisionSections(editingShelf.subdivisions || [], defaultSecTitle);
+                                setActiveSectionTab(0);
+                                setBulkTextDraft(reparsed[0]?.items.join("\n") || "");
+                              }
+                            }}
+                            className="text-[11px] text-cyan-400 hover:text-cyan-300 font-medium underline cursor-pointer"
+                          >
+                            {useRawEditor ? "← Switch to Class Tabs" : "Raw Bulk Catalog →"}
+                          </button>
                         </div>
                       </div>
 
-                      {!useRawEditor && hasSections ? (
+                      {!useRawEditor ? (
                         <div className="space-y-2.5">
                           {/* Class Section Tabs & Presets Popover */}
                           <div className="relative">
                             <div className="flex flex-wrap gap-1 p-1 bg-slate-950/80 border border-slate-800 rounded-xl">
                               {sections.map((sec, idx) => {
-                                const label = sec.title ? sec.title.split("–")[0].trim() : `Page ${idx + 1}`;
+                                const label = formatTabLabel(sec.title, idx);
                                 const isActive = safeTabIndex === idx;
                                 return (
                                   <button
                                     key={idx}
                                     type="button"
+                                    title={sec.title || `Tab ${idx + 1}`}
                                     onClick={() => {
                                       setActiveSectionTab(idx);
                                       setBulkTextDraft(sections[idx]?.items.join("\n") || "");
@@ -1061,7 +1088,7 @@ export default function DDCShelfManagerPage() {
                               <button
                                 type="button"
                                 onClick={() => setShowAddTabMenu(!showAddTabMenu)}
-                                className="px-2.5 py-1.5 rounded-lg text-xs font-bold text-teal-400 hover:text-teal-300 hover:bg-teal-500/10 border border-dashed border-teal-500/40 flex items-center space-x-1 transition-all"
+                                className="px-2.5 py-1.5 rounded-lg text-xs font-bold text-teal-400 hover:text-teal-300 hover:bg-teal-500/10 border border-dashed border-teal-500/40 flex items-center space-x-1 transition-all cursor-pointer"
                                 title="Add Class Section / Tab"
                               >
                                 <Plus className="w-3 h-3" />
@@ -1319,7 +1346,7 @@ export default function DDCShelfManagerPage() {
                       ) : (
                         <div className="space-y-2">
                           <textarea
-                            rows={5}
+                            rows={8}
                             value={bulkTextDraft}
                             onChange={(e) => {
                               setBulkTextDraft(e.target.value);
@@ -1332,11 +1359,11 @@ export default function DDCShelfManagerPage() {
                                 subdivisions: lines,
                               });
                             }}
-                            placeholder="e.g.&#10;630 - Agriculture & Related Technologies&#10;631 - Techniques, Equipment & Materials&#10;632 - Plant Injuries, Diseases & Pests"
+                            placeholder="e.g.&#10;[000 – GENERALITIES & INFORMATION]&#10;Bibliography&#10;Library & Information Sciences&#10;&#10;[100 – PHILOSOPHY & PSYCHOLOGY]&#10;Ethics"
                             className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-teal-400 leading-relaxed"
                           />
                           <p className="text-[10px] text-slate-500">
-                            Tip: Gumamit ng <code className="text-cyan-400 font-mono">[000 - Title]</code> para awtomatikong lumikha ng panibagong class section o pahina sa mobile app.
+                            Tip: Gumamit ng <code className="text-cyan-400 font-mono">[Pamagat ng Tab o Seksyon]</code> para awtomatikong lumikha ng hiwalay na tab at pahina sa mobile app.
                           </p>
                         </div>
                       )}
@@ -1402,13 +1429,14 @@ export default function DDCShelfManagerPage() {
       {/* LIVE IN-GAME HOLOGRAM PREVIEW MODAL                                       */}
       {/* ========================================================================= */}
       {previewShelf && (() => {
-        const previewSections = parseSubdivisionSections(previewShelf.subdivisions || []);
+        const defaultTitle = previewShelf.categoryTitle || previewShelf.shelfCode || "Pangunahing Sakop";
+        const previewSections = parseSubdivisionSections(previewShelf.subdivisions || [], defaultTitle);
         const hasMultiPages = previewSections.length > 1;
-        const totalPages = hasMultiPages ? previewSections.length : 1;
+        const totalPages = previewSections.length;
         const safePageIndex = Math.min(previewPageIndex, Math.max(0, totalPages - 1));
-        const currentSec = hasMultiPages ? previewSections[safePageIndex] : null;
+        const currentSec = previewSections[safePageIndex];
         const displayTitle = currentSec?.title || previewShelf.categoryTitle;
-        const displayItems = currentSec ? currentSec.items : previewShelf.subdivisions || [];
+        const displayItems = currentSec ? currentSec.items : [];
 
         return (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
